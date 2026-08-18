@@ -3,50 +3,38 @@
 
   const root = document.getElementById('prospero-great-library');
   if (!root) return;
-
   const $ = (id) => document.getElementById(id);
+  const CATEGORY_ORDER = ['book', 'comic', 'movie', 'drama', 'anime', 'game', 'music'];
+  const DEFAULT_STATUSES = new Set(['in_progress', 'completed']);
+  const OTHER_STATUSES = new Set(['on_hold', 'dropped']);
+  const PAGE_SIZE = Math.max(1, Number(root.dataset.pageSize || 24));
+
+  const rootView = $('pgl-root-view');
+  const browserView = $('pgl-browser-view');
+  const cardView = $('pgl-card-view');
+  const wishlistLedger = $('pgl-wishlist-ledger');
   const grid = $('pgl-grid');
-  if (!grid) return;
-
-  const controls = {
-    search: $('pgl-search'),
-    category: $('pgl-category'),
-    status: $('pgl-status'),
-    source: $('pgl-source'),
-    year: $('pgl-year'),
-    sort: $('pgl-sort'),
-    count: $('pgl-result-count'),
-    loadMore: $('pgl-load-more'),
-    layout: $('pgl-layout'),
-  };
-
-  const initialLimit = Math.max(1, Number(root.dataset.initialLimit || 60));
-  const lazyRender = root.dataset.lazyRender !== 'false';
+  const pagination = $('pgl-pagination');
+  const browserTitle = $('pgl-browser-title');
+  const resultCount = $('pgl-result-count');
+  const search = $('pgl-search');
+  const searchToggle = $('pgl-search-toggle');
+  const sort = $('pgl-sort');
+  const source = $('pgl-source');
+  const year = $('pgl-year');
+  const clearFilters = $('pgl-clear-filters');
+  const layoutGrid = $('pgl-layout-grid');
+  const layoutList = $('pgl-layout-list');
+  const back = $('pgl-back');
   const drawerEnabled = root.dataset.drawerEnabled !== 'false';
-  const showSources = root.dataset.showSources !== 'false';
   const showSteamPlaytime = root.dataset.showSteamPlaytime !== 'false';
   const showAchievements = root.dataset.showAchievements !== 'false';
-  const initialCards = [...grid.querySelectorAll('.pgl-card')];
-  let items = null;
+
+  let items = [];
+  let stats = {};
   let itemById = new Map();
-  let renderLimit = lazyRender ? initialLimit : Number.POSITIVE_INFINITY;
-  let libraryPromise = null;
-  let lastFocused = null;
-
-  const params = new URLSearchParams(location.search);
-  if (controls.category && params.get('type')) controls.category.value = params.get('type');
-  if (controls.status && params.get('status')) controls.status.value = params.get('status');
-  if (controls.search && params.get('q')) controls.search.value = params.get('q');
-  if (controls.source && params.get('source')) controls.source.value = params.get('source');
-  if (controls.sort && params.get('sort')) controls.sort.value = params.get('sort');
-
-  if (params.get('view') === 'list') {
-    grid.classList.add('is-list');
-    controls.layout?.setAttribute('aria-pressed', 'true');
-  } else if (params.get('view') === 'grid') {
-    grid.classList.remove('is-list');
-    controls.layout?.setAttribute('aria-pressed', 'false');
-  }
+  let searchTimer = null;
+  let previousNonSearchState = null;
 
   const normalizeText = (value) => String(value ?? '').normalize('NFKC').toLocaleLowerCase();
   const safeUrl = (value) => {
@@ -59,59 +47,193 @@
     }
   };
   const clamp = (value, low, high) => Math.min(high, Math.max(low, Number(value) || 0));
+  const toPascal = (value) => String(value || '').split(/[_-]/).filter(Boolean).map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join('');
+  const categoryLabel = (category) => root.dataset[`category${toPascal(category)}`] || category || '';
+  const statusLabel = (status) => root.dataset[`status${toPascal(status)}`] || status || '';
   const formatRating = (value) => {
-    if (value === null || value === undefined || value === '') return '';
     const n = Number(value);
-    return Number.isFinite(n) ? (Number.isInteger(n) ? String(n) : n.toFixed(1)) : '';
+    if (!Number.isFinite(n)) return '';
+    return Number.isInteger(n) ? String(n) : n.toFixed(1);
   };
   const formatHours = (minutes) => {
     const hours = (Number(minutes) || 0) / 60;
     return hours >= 100 ? String(Math.round(hours)) : hours.toFixed(1);
   };
-  const categoryLabel = (category) => root.dataset[`category${toPascal(category)}`] || category || '';
-  const statusLabel = (status) => root.dataset[`status${toPascal(status)}`] || status || '';
-  function toPascal(value) {
-    return String(value || '')
-      .split(/[_-]/)
-      .filter(Boolean)
-      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-      .join('');
-  }
-  function make(tag, className, text) {
+  function make(tag, className = '', text = null) {
     const node = document.createElement(tag);
     if (className) node.className = className;
-    if (text !== undefined && text !== null) node.textContent = String(text);
+    if (text !== null && text !== undefined) node.textContent = String(text);
     return node;
   }
 
-  function itemSearchText(item) {
-    return normalizeText([item.title, item.title_original, ...(item.alternate_titles || [])].filter(Boolean).join(' '));
+  function cloneState(value) {
+    return JSON.parse(JSON.stringify(value));
   }
 
-  function itemSources(item) {
-    return Object.keys(item.sources || {});
+  function defaultState() {
+    return { view: 'index', category: null, status: null, q: '', page: 1, sort: 'updated', source: '', year: '' };
   }
+
+  function parseState() {
+    const params = new URLSearchParams(location.search);
+    const next = defaultState();
+    const legacyType = params.get('type');
+    const category = params.get('category') || legacyType;
+    const rawView = params.get('view');
+
+    // alpha.3 used view=grid|list. Preserve it as a local preference while the
+    // new router reserves `view` for semantic Library views.
+    if (rawView === 'grid' || rawView === 'list') {
+      try { localStorage.setItem('pgl.layout', rawView); } catch { /* ignore */ }
+    }
+
+    next.q = (params.get('q') || '').trim();
+    next.category = CATEGORY_ORDER.includes(category) ? category : null;
+    next.status = OTHER_STATUSES.has(params.get('status')) ? params.get('status') : null;
+    next.page = Math.max(1, Number.parseInt(params.get('page') || '1', 10) || 1);
+    next.sort = ['updated', 'rating', 'year', 'playtime', 'title'].includes(params.get('sort')) ? params.get('sort') : 'updated';
+    next.source = ['bangumi', 'neodb', 'steam'].includes(params.get('source')) ? params.get('source') : '';
+    next.year = params.get('year') || '';
+
+    if (next.q) { next.view = 'search'; next.category = null; next.status = null; }
+    else if (rawView === 'wishlist') next.view = 'wishlist';
+    else if (next.category) next.view = next.status ? 'other' : 'category';
+    return next;
+  }
+
+  let state = parseState();
+
+  function stateUrl(next) {
+    const params = new URLSearchParams();
+    if (next.view === 'wishlist') params.set('view', 'wishlist');
+    if (next.category) params.set('category', next.category);
+    if (next.view === 'other' && next.status) params.set('status', next.status);
+    if (next.view === 'search' && next.q) params.set('q', next.q);
+    if (next.page > 1) params.set('page', String(next.page));
+    if (next.sort && next.sort !== 'updated') params.set('sort', next.sort);
+    if (next.source) params.set('source', next.source);
+    if (next.year) params.set('year', next.year);
+    const query = params.toString();
+    return `${location.pathname}${query ? `?${query}` : ''}${location.hash}`;
+  }
+
+  function writeHistory(next, { replace = false } = {}) {
+    const method = replace ? 'replaceState' : 'pushState';
+    if (history[method]) history[method]({ pgl: true }, '', stateUrl(next));
+  }
+
+  function navigate(next, options = {}) {
+    if (state.view !== 'search' && next.view === 'search') previousNonSearchState = cloneState(state);
+    state = { ...defaultState(), ...next };
+    state.page = Math.max(1, Number(state.page) || 1);
+    writeHistory(state, options);
+    render();
+  }
+
+  function itemSources(item) { return Object.keys(item.sources || {}); }
+
+  function itemSearchText(item) {
+    return normalizeText([
+      item.title,
+      item.title_original,
+      ...(item.alternate_titles || []),
+      ...(item.tags || []),
+      item.year,
+      categoryLabel(item.category),
+      ...itemSources(item),
+    ].filter(Boolean).join(' '));
+  }
+
+  function steam(item) { return item.telemetry?.steam || {}; }
+  function recentMinutes(item) { return Number(steam(item).recent_playtime_minutes || steam(item).playtime_2weeks_minutes || 0); }
 
   function itemSortValue(item, key) {
-    if (key === 'rating') return Number(item.rating?.normalized_10 || 0);
-    if (key === 'playtime') return Number(item.telemetry?.steam?.playtime_minutes || 0);
+    if (key === 'rating') return Number(item.rating?.normalized_10 || -1);
+    if (key === 'playtime') return Number(steam(item).playtime_minutes || 0);
+    if (key === 'year') return Number(item.year || 0);
     if (key === 'title') return normalizeText(item.title);
-    return item.timestamps?.canonical_updated_at || '';
+    return item.timestamps?.canonical_updated_at || item.release_date || '';
+  }
+
+  function compareByKey(a, b, key) {
+    const av = itemSortValue(a, key);
+    const bv = itemSortValue(b, key);
+    if (key === 'rating' || key === 'playtime' || key === 'year') return bv - av;
+    if (key === 'title') return String(av).localeCompare(String(bv));
+    return String(bv).localeCompare(String(av));
+  }
+
+  function stableTie(a, b) {
+    return normalizeText(a.title).localeCompare(normalizeText(b.title)) || String(a.id || '').localeCompare(String(b.id || ''));
+  }
+
+  function sortCategoryItems(input) {
+    return [...input].sort((a, b) => {
+      // The locked display contract always keeps in_progress above completed,
+      // regardless of the secondary sort selected by the visitor.
+      if (!state.status && state.view === 'category') {
+        const ar = a.status === 'in_progress' ? 0 : 1;
+        const br = b.status === 'in_progress' ? 0 : 1;
+        if (ar !== br) return ar - br;
+      }
+      return compareByKey(a, b, state.sort) || stableTie(a, b);
+    });
+  }
+
+  function filterAdvanced(input) {
+    return input.filter((item) => {
+      if (state.source && !itemSources(item).includes(state.source)) return false;
+      if (state.year && String(item.year || '') !== state.year) return false;
+      return true;
+    });
+  }
+
+  function selectedItems() {
+    if (state.view === 'category') {
+      return sortCategoryItems(filterAdvanced(items.filter((item) => item.category === state.category && DEFAULT_STATUSES.has(item.status))));
+    }
+    if (state.view === 'wishlist' && state.category) {
+      return sortCategoryItems(filterAdvanced(items.filter((item) => item.category === state.category && item.status === 'wishlist')));
+    }
+    if (state.view === 'other' && state.category && state.status) {
+      return sortCategoryItems(filterAdvanced(items.filter((item) => item.category === state.category && item.status === state.status)));
+    }
+    if (state.view === 'search') {
+      const q = normalizeText(state.q);
+      const matched = filterAdvanced(items.filter((item) => itemSearchText(item).includes(q)));
+      return [...matched].sort((a, b) => {
+        const ac = CATEGORY_ORDER.indexOf(a.category);
+        const bc = CATEGORY_ORDER.indexOf(b.category);
+        if (ac !== bc) return ac - bc;
+        return compareByKey(a, b, state.sort) || stableTie(a, b);
+      });
+    }
+    return [];
+  }
+
+  function currentLayout() {
+    try {
+      const saved = localStorage.getItem('pgl.layout');
+      if (saved === 'grid' || saved === 'list') return saved;
+    } catch { /* ignore */ }
+    return grid?.classList.contains('is-list') ? 'list' : 'grid';
+  }
+
+  function setLayout(layout) {
+    if (!grid) return;
+    grid.classList.toggle('is-list', layout === 'list');
+    layoutGrid?.classList.toggle('is-active', layout === 'grid');
+    layoutList?.classList.toggle('is-active', layout === 'list');
+    layoutGrid?.setAttribute('aria-pressed', String(layout === 'grid'));
+    layoutList?.setAttribute('aria-pressed', String(layout === 'list'));
+    try { localStorage.setItem('pgl.layout', layout); } catch { /* ignore */ }
   }
 
   function buildCard(item) {
     const card = make('article', 'pgl-card');
     card.dataset.pglId = item.id || '';
     card.dataset.category = item.category || '';
-    card.dataset.categoryLabel = categoryLabel(item.category);
     card.dataset.status = item.status || '';
-    card.dataset.statusLabel = statusLabel(item.status);
-    card.dataset.year = item.year || '';
-    card.dataset.title = itemSearchText(item);
-    card.dataset.rating = String(item.rating?.normalized_10 || 0);
-    card.dataset.playtime = String(item.telemetry?.steam?.playtime_minutes || 0);
-    card.dataset.updated = item.timestamps?.canonical_updated_at || '';
-    card.dataset.sources = itemSources(item).join(' ');
     if (drawerEnabled) {
       card.tabIndex = 0;
       card.setAttribute('role', 'button');
@@ -124,9 +246,7 @@
       const image = make('img', 'pgl-cover');
       image.src = coverUrl;
       image.alt = item.title || '';
-      image.loading = 'lazy';
-      image.decoding = 'async';
-      image.referrerPolicy = 'no-referrer';
+      image.loading = 'lazy'; image.decoding = 'async'; image.referrerPolicy = 'no-referrer';
       coverWrap.append(image);
     } else {
       const placeholder = make('div', 'pgl-cover pgl-cover-placeholder', 'PGL');
@@ -136,327 +256,397 @@
 
     const body = make('div', 'pgl-card-body');
     const kickers = make('div', 'pgl-card-kickers');
-    kickers.append(make('span', 'pgl-type', categoryLabel(item.category)));
-    if ((item.tags || []).includes('performance')) {
-      kickers.append(make('span', 'pgl-badge', root.dataset.performance || 'Performance'));
-    }
-    body.append(kickers);
+    if ((item.tags || []).includes('performance')) kickers.append(make('span', 'pgl-badge', root.dataset.performance || 'Performance'));
+    const showStatus = item.status === 'in_progress' || state.view === 'other' || state.view === 'search';
+    if (showStatus && item.status && item.status !== 'completed') kickers.append(make('span', `pgl-status${item.status === 'in_progress' ? ' pgl-status-active' : ''}`, statusLabel(item.status)));
+    if (kickers.childNodes.length) body.append(kickers);
     body.append(make('h3', 'pgl-card-title', item.title || ''));
-    if (item.title_original && item.title_original !== item.title) {
-      body.append(make('div', 'pgl-alt-title', item.title_original));
-    }
 
     const meta = make('div', 'pgl-meta');
     if (item.year) meta.append(make('span', '', item.year));
-    if (item.status) meta.append(make('span', 'pgl-status', statusLabel(item.status)));
     if (item.rating) meta.append(make('span', '', `★ ${formatRating(item.rating.normalized_10)}`));
-    const playtime = item.telemetry?.steam?.playtime_minutes;
-    if (showSteamPlaytime && playtime) meta.append(make('span', '', `Steam ${formatHours(playtime)}h`));
-    body.append(meta);
+    const playtime = steam(item).playtime_minutes;
+    if (showSteamPlaytime && item.category === 'game' && playtime) meta.append(make('span', '', `Steam ${formatHours(playtime)}h`));
+    if (meta.childNodes.length) body.append(meta);
 
     if (item.progress && item.progress.current !== null && item.progress.current !== undefined) {
       const progress = make('div', 'pgl-progress');
       progress.title = `${item.progress.current} / ${item.progress.total ?? '?'}`;
-      const bar = make('span');
-      bar.style.width = `${clamp(item.progress.percent, 0, 100)}%`;
-      progress.append(bar);
-      body.append(progress);
+      const bar = make('span'); bar.style.width = `${clamp(item.progress.percent, 0, 100)}%`; progress.append(bar); body.append(progress);
     }
-
-    if (showSources) {
-      const sourceRow = make('div', 'pgl-source-row');
-      for (const sourceName of itemSources(item)) {
-        const badge = make('span', 'pgl-source', sourceName);
-        badge.dataset.source = sourceName;
-        sourceRow.append(badge);
-      }
-      if ((item.articles || []).length) {
-        sourceRow.append(make('span', 'pgl-source', `${root.dataset.blog || 'Blog'} ×${item.articles.length}`));
-      }
-      body.append(sourceRow);
-    }
-
     card.append(coverWrap, body);
     return card;
   }
 
-  function filteredItems() {
-    if (!items) return [];
-    const q = normalizeText(controls.search?.value || '').trim();
-    return items.filter((item) => {
-      if (q && !itemSearchText(item).includes(q)) return false;
-      if (controls.category?.value && item.category !== controls.category.value) return false;
-      if (controls.status?.value && item.status !== controls.status.value) return false;
-      if (controls.source?.value && !itemSources(item).includes(controls.source.value)) return false;
-      if (controls.year?.value && String(item.year || '') !== controls.year.value) return false;
-      return true;
-    });
+  function makeGroupHeading(category, count) {
+    const heading = make('div', 'pgl-search-group-heading');
+    heading.append(make('strong', '', categoryLabel(category)), make('span', '', `${count} ${root.dataset.items || 'items'}`));
+    return heading;
   }
 
-  function sortedItems(input) {
-    const key = controls.sort?.value || 'updated';
-    return [...input].sort((a, b) => {
-      const av = itemSortValue(a, key);
-      const bv = itemSortValue(b, key);
-      if (key === 'rating' || key === 'playtime') return bv - av;
-      if (key === 'title') return String(av).localeCompare(String(bv));
-      return String(bv).localeCompare(String(av));
-    });
-  }
+  function renderCards(allSelected) {
+    if (!grid) return;
+    const totalPages = Math.max(1, Math.ceil(allSelected.length / PAGE_SIZE));
+    if (state.page > totalPages) state.page = totalPages;
+    const start = (state.page - 1) * PAGE_SIZE;
+    const pageItems = allSelected.slice(start, start + PAGE_SIZE);
+    const fragment = document.createDocumentFragment();
 
-  function legacyEligibleCards() {
-    const q = normalizeText(controls.search?.value || '').trim();
-    return initialCards.filter((card) => {
-      if (q && !normalizeText(card.dataset.title).includes(q)) return false;
-      if (controls.category?.value && card.dataset.category !== controls.category.value) return false;
-      if (controls.status?.value && card.dataset.status !== controls.status.value) return false;
-      if (controls.source?.value && !String(card.dataset.sources || '').split(/\s+/).includes(controls.source.value)) return false;
-      if (controls.year?.value && card.dataset.year !== controls.year.value) return false;
-      return true;
-    });
-  }
-
-  function updateCount(visible, total, all) {
-    if (controls.count) controls.count.textContent = `${visible} / ${total} (${all})`;
-  }
-
-  function apply(reset = false) {
-    if (reset) renderLimit = lazyRender ? initialLimit : Number.POSITIVE_INFINITY;
-
-    if (items) {
-      const selected = sortedItems(filteredItems());
-      const visibleCount = Math.min(selected.length, renderLimit);
-      const fragment = document.createDocumentFragment();
-      for (const item of selected.slice(0, visibleCount)) fragment.append(buildCard(item));
-      grid.replaceChildren(fragment);
-      updateCount(visibleCount, selected.length, items.length);
-      if (controls.loadMore) controls.loadMore.hidden = !lazyRender || selected.length <= renderLimit;
+    if (state.view === 'search') {
+      let lastCategory = null;
+      for (const item of pageItems) {
+        if (item.category !== lastCategory) {
+          const count = allSelected.filter((candidate) => candidate.category === item.category).length;
+          fragment.append(makeGroupHeading(item.category, count));
+          lastCategory = item.category;
+        }
+        fragment.append(buildCard(item));
+      }
     } else {
-      const selected = legacyEligibleCards();
-      selected.sort((a, b) => {
-        const key = controls.sort?.value || 'updated';
-        if (key === 'rating' || key === 'playtime') return Number(b.dataset[key] || 0) - Number(a.dataset[key] || 0);
-        if (key === 'title') return String(a.dataset.title || '').localeCompare(String(b.dataset.title || ''));
-        return String(b.dataset.updated || '').localeCompare(String(a.dataset.updated || ''));
-      });
-      const visibleCount = Math.min(selected.length, renderLimit);
-      initialCards.forEach((card) => { card.hidden = true; });
-      selected.forEach((card, index) => {
-        grid.append(card);
-        card.hidden = index >= visibleCount;
-      });
-      updateCount(visibleCount, selected.length, initialCards.length);
-      if (controls.loadMore) controls.loadMore.hidden = !lazyRender || selected.length <= renderLimit;
+      let insertedCompletedDivider = false;
+      const hasInProgress = state.view === 'category' && allSelected.some((candidate) => candidate.status === 'in_progress');
+      if (hasInProgress && state.page === 1 && pageItems[0]?.status === 'in_progress') {
+        fragment.append(make('div', 'pgl-status-divider pgl-status-divider-active', root.dataset.inProgressSection || 'In progress'));
+      }
+      for (const item of pageItems) {
+        if (state.view === 'category' && item.status === 'completed' && !insertedCompletedDivider && hasInProgress) {
+          const divider = make('div', 'pgl-status-divider', root.dataset.completedSection || 'Completed');
+          fragment.append(divider);
+          insertedCompletedDivider = true;
+        }
+        fragment.append(buildCard(item));
+      }
     }
-
-    syncUrlState();
+    if (!pageItems.length) fragment.append(make('p', 'pgl-empty', state.view === 'search' ? (root.dataset.searchEmpty || 'No matching items') : (root.dataset.noItems || 'No records')));
+    grid.replaceChildren(fragment);
+    if (resultCount) resultCount.textContent = `${allSelected.length} ${root.dataset.items || 'items'}`;
+    renderPagination(allSelected.length);
   }
 
-  function syncUrlState() {
-    if (!history.replaceState) return;
-    const next = new URLSearchParams(location.search);
-    const setOrDelete = (key, value, defaultValue = '') => {
-      if (value && value !== defaultValue) next.set(key, value);
-      else next.delete(key);
-    };
-    setOrDelete('type', controls.category?.value || '');
-    setOrDelete('status', controls.status?.value || '');
-    setOrDelete('q', (controls.search?.value || '').trim());
-    setOrDelete('source', controls.source?.value || '');
-    setOrDelete('year', controls.year?.value || '');
-    setOrDelete('sort', controls.sort?.value || '', 'updated');
-    setOrDelete('view', grid.classList.contains('is-list') ? 'list' : 'grid', 'grid');
-    const query = next.toString();
-    history.replaceState(null, '', `${location.pathname}${query ? `?${query}` : ''}${location.hash}`);
+  function pageTokens(current, total) {
+    const keep = new Set([1, total]);
+    for (let i = current - 2; i <= current + 2; i += 1) if (i >= 1 && i <= total) keep.add(i);
+    const sorted = [...keep].sort((a, b) => a - b);
+    const tokens = [];
+    sorted.forEach((value, index) => {
+      if (index && value - sorted[index - 1] > 1) tokens.push('…');
+      tokens.push(value);
+    });
+    return tokens;
   }
 
-  function populateYears(values) {
-    if (!controls.year) return;
-    const selected = params.get('year') || controls.year.value;
-    const first = controls.year.options[0];
-    controls.year.replaceChildren(first);
-    [...new Set(values.filter(Boolean).map(String))]
-      .sort((a, b) => Number(b) - Number(a))
-      .forEach((value) => controls.year.add(new Option(value, value)));
-    if ([...controls.year.options].some((option) => option.value === selected)) controls.year.value = selected;
-  }
-
-  function loadLibrary() {
-    if (!libraryPromise) {
-      libraryPromise = fetch(root.dataset.libraryUrl, { credentials: 'same-origin' }).then((response) => {
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return response.json();
-      });
+  function renderPagination(total) {
+    if (!pagination) return;
+    const pages = Math.ceil(total / PAGE_SIZE);
+    if (pages <= 1) { pagination.hidden = true; pagination.replaceChildren(); return; }
+    pagination.hidden = false;
+    const fragment = document.createDocumentFragment();
+    const prev = make('button', 'pgl-page-nav', '‹'); prev.disabled = state.page <= 1; prev.setAttribute('aria-label', root.dataset.previousPage || 'Previous page'); prev.dataset.page = String(state.page - 1); fragment.append(prev);
+    for (const token of pageTokens(state.page, pages)) {
+      if (token === '…') { fragment.append(make('span', 'pgl-page-ellipsis', '…')); continue; }
+      const button = make('button', 'pgl-page-number', token); button.dataset.page = String(token);
+      if (token === state.page) { button.classList.add('is-active'); button.setAttribute('aria-current', 'page'); }
+      fragment.append(button);
     }
-    return libraryPromise;
+    const next = make('button', 'pgl-page-nav', '›'); next.disabled = state.page >= pages; next.setAttribute('aria-label', root.dataset.nextPage || 'Next page'); next.dataset.page = String(state.page + 1); fragment.append(next);
+    pagination.replaceChildren(fragment);
   }
 
+  function buildWishlistLedger() {
+    if (!wishlistLedger) return;
+    const counts = stats.navigation?.wishlist_by_category || {};
+    const nav = make('nav', 'pgl-category-ledger'); nav.setAttribute('aria-label', root.dataset.wishlist || 'Wishlist');
+    for (const category of CATEGORY_ORDER) {
+      const count = Number(counts[category] || 0);
+      const link = make('a', 'pgl-category-ledger-item');
+      link.href = stateUrl({ ...defaultState(), view: 'wishlist', category });
+      link.dataset.pglWishlistCategory = category;
+      const primary = make('span', 'pgl-ledger-primary'); primary.append(make('span', 'pgl-ledger-icon', '›'), make('strong', '', categoryLabel(category)));
+      link.append(primary, make('span', 'pgl-ledger-count', `${count} ${root.dataset.items || 'items'}`)); nav.append(link);
+    }
+    wishlistLedger.replaceChildren(nav);
+  }
+
+  function updateToolbar() {
+    if (sort) sort.value = state.sort;
+    if (source) source.value = state.source;
+    if (year) year.value = state.year;
+    const playtimeOption = sort?.querySelector('option[value="playtime"]');
+    if (playtimeOption) playtimeOption.disabled = Boolean(state.category && state.category !== 'game');
+    if (playtimeOption?.disabled && state.sort === 'playtime') { state.sort = 'updated'; sort.value = 'updated'; }
+    document.querySelectorAll('[data-pgl-status]').forEach((button) => { button.disabled = !state.category; });
+  }
+
+  function renderBrowserHeading() {
+    if (!browserTitle) return;
+    if (state.view === 'search') browserTitle.textContent = root.dataset.searchResults || 'Search results';
+    else if (state.view === 'wishlist') browserTitle.textContent = state.category ? `${root.dataset.wishlist || 'Wishlist'} · ${categoryLabel(state.category)}` : (root.dataset.wishlist || 'Wishlist');
+    else if (state.view === 'other') browserTitle.textContent = `${categoryLabel(state.category)} · ${statusLabel(state.status)}`;
+    else browserTitle.textContent = categoryLabel(state.category);
+  }
+
+  function render() {
+    const atRoot = state.view === 'index';
+    if (rootView) rootView.hidden = !atRoot;
+    if (browserView) browserView.hidden = atRoot;
+    if (search) search.value = state.view === 'search' ? state.q : '';
+    root.classList.toggle('is-searching', state.view === 'search');
+    if (atRoot) return;
+
+    renderBrowserHeading();
+    const wishlistIndex = state.view === 'wishlist' && !state.category;
+    if (wishlistLedger) wishlistLedger.hidden = !wishlistIndex;
+    if (cardView) cardView.hidden = wishlistIndex;
+    if (wishlistIndex) {
+      buildWishlistLedger();
+      if (resultCount) resultCount.textContent = `${stats.navigation?.wishlist_total || 0} ${root.dataset.items || 'items'}`;
+      return;
+    }
+    updateToolbar();
+    renderCards(selectedItems());
+    setLayout(currentLayout());
+  }
+
+  function populateYears() {
+    if (!year) return;
+    const selected = state.year;
+    const first = year.options[0];
+    year.replaceChildren(first);
+    [...new Set(items.map((item) => item.year).filter(Boolean).map(String))].sort((a, b) => Number(b) - Number(a)).forEach((value) => year.add(new Option(value, value)));
+    if ([...year.options].some((option) => option.value === selected)) year.value = selected;
+  }
+
+  function loadJson(url) {
+    return fetch(url, { credentials: 'same-origin' }).then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    });
+  }
+
+  // Drawer ------------------------------------------------------------------
   const dialog = $('pgl-drawer');
   const dialogContent = $('pgl-drawer-content');
+  let lastFocused = null;
 
   function appendSafeLink(container, label, rawUrl, className = '', external = true) {
-    const url = safeUrl(rawUrl);
-    if (!url) return;
-    const link = make('a', className, label);
-    link.href = url;
-    if (external) {
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-    }
+    const url = safeUrl(rawUrl); if (!url) return;
+    const link = make('a', className, label); link.href = url;
+    if (external) { link.target = '_blank'; link.rel = 'noopener noreferrer'; }
     container.append(link);
   }
 
   function openItem(item) {
     if (!drawerEnabled || !dialog || !dialogContent || !item) return;
-    lastFocused = document.activeElement;
-    dialogContent.replaceChildren();
-
+    lastFocused = document.activeElement; dialogContent.replaceChildren();
     const coverUrl = safeUrl(item.cover?.url);
-    if (coverUrl) {
-      const cover = make('img', 'pgl-detail-cover');
-      cover.src = coverUrl;
-      cover.alt = '';
-      cover.referrerPolicy = 'no-referrer';
-      dialogContent.append(cover);
-    }
+    if (coverUrl) { const cover = make('img', 'pgl-detail-cover'); cover.src = coverUrl; cover.alt = ''; cover.referrerPolicy = 'no-referrer'; dialogContent.append(cover); }
     dialogContent.append(make('h2', '', item.title || ''));
-    if (item.title_original && item.title_original !== item.title) dialogContent.append(make('p', '', item.title_original));
-
+    if (item.title_original && item.title_original !== item.title) dialogContent.append(make('p', 'pgl-detail-original', item.title_original));
     const details = [categoryLabel(item.category), statusLabel(item.status)];
     if (item.rating) details.push(`★ ${formatRating(item.rating.normalized_10)}`);
-    dialogContent.append(make('p', '', details.filter(Boolean).join(' · ')));
-
-    const steam = item.telemetry?.steam;
-    if (steam && showSteamPlaytime) {
-      let text = `Steam: ${formatHours(steam.playtime_minutes)} h`;
-      if (showAchievements && steam.achievements) text += ` · ${steam.achievements.unlocked}/${steam.achievements.total}`;
+    dialogContent.append(make('p', 'pgl-detail-meta', details.filter(Boolean).join(' · ')));
+    const steamData = steam(item);
+    if (steamData && showSteamPlaytime && steamData.playtime_minutes !== undefined) {
+      let text = `Steam: ${formatHours(steamData.playtime_minutes)} h`;
+      if (showAchievements && steamData.achievements) text += ` · ${steamData.achievements.unlocked}/${steamData.achievements.total}`;
       dialogContent.append(make('p', '', text));
     }
     if (item.summary) dialogContent.append(make('p', '', item.summary));
-
     const links = make('div', 'pgl-detail-links');
     appendSafeLink(links, root.dataset.openSource || 'Open primary source', item.links?.primary, 'pgl-primary-link', true);
-    for (const [name, rawUrl] of Object.entries(item.links || {})) {
-      if (name === 'primary' || !rawUrl) continue;
-      appendSafeLink(links, name, rawUrl, '', true);
-    }
+    for (const [name, rawUrl] of Object.entries(item.links || {})) if (name !== 'primary' && rawUrl) appendSafeLink(links, name, rawUrl, '', true);
     for (const article of item.articles || []) {
-      const articleUrl = safeUrl(article.url);
-      if (!articleUrl) continue;
+      const articleUrl = safeUrl(article.url); if (!articleUrl) continue;
       const external = new URL(articleUrl).origin !== location.origin;
       appendSafeLink(links, article.title || root.dataset.blog || 'Blog', articleUrl, 'pgl-article-link', external);
     }
     dialogContent.append(links);
-
-    if (typeof dialog.showModal === 'function') dialog.showModal();
-    else dialog.setAttribute('open', '');
+    if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
     dialog.querySelector('.pgl-close')?.focus();
   }
 
-  async function openById(id) {
-    if (!id) return;
-    if (itemById.has(id)) {
-      openItem(itemById.get(id));
-      return;
+  function openById(id) { if (id && itemById.has(id)) openItem(itemById.get(id)); }
+
+  document.addEventListener('click', (event) => {
+    const opener = event.target.closest('[data-open-pgl]');
+    if (opener) { openById(opener.dataset.openPgl); return; }
+    const card = event.target.closest('.pgl-card');
+    if (card && grid?.contains(card)) openById(card.dataset.pglId);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (!['Enter', ' '].includes(event.key)) return;
+    const card = event.target.closest('.pgl-card');
+    if (!card || !grid?.contains(card)) return;
+    event.preventDefault(); openById(card.dataset.pglId);
+  });
+  dialog?.addEventListener('close', () => { if (lastFocused?.focus) lastFocused.focus(); lastFocused = null; });
+
+  // Rating chart ------------------------------------------------------------
+  const chart = $('pgl-rating-chart');
+  const chartTooltip = $('pgl-rating-tooltip');
+  const chartA11y = $('pgl-rating-a11y');
+
+  function svgNode(tag, attrs = {}) {
+    const node = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (const [key, value] of Object.entries(attrs)) node.setAttribute(key, String(value));
+    return node;
+  }
+
+  function monotonePath(points) {
+    if (!points.length) return '';
+    if (points.length === 1) return `M${points[0].x},${points[0].y}`;
+    const n = points.length;
+    const d = new Array(n - 1);
+    const m = new Array(n);
+    for (let i = 0; i < n - 1; i += 1) d[i] = (points[i + 1].y - points[i].y) / (points[i + 1].x - points[i].x);
+    m[0] = d[0]; m[n - 1] = d[n - 2];
+    for (let i = 1; i < n - 1; i += 1) m[i] = d[i - 1] * d[i] <= 0 ? 0 : (2 * d[i - 1] * d[i]) / (d[i - 1] + d[i]);
+    for (let i = 0; i < n - 1; i += 1) {
+      if (d[i] === 0) { m[i] = 0; m[i + 1] = 0; continue; }
+      const a = m[i] / d[i], b = m[i + 1] / d[i];
+      const h = Math.hypot(a, b);
+      if (h > 3) { const t = 3 / h; m[i] = t * a * d[i]; m[i + 1] = t * b * d[i]; }
     }
-    try {
-      const library = await loadLibrary();
-      const item = (library.items || []).find((candidate) => candidate.id === id);
-      if (item) openItem(item);
-    } catch {
-      // The server-rendered card remains usable as static content.
+    let path = `M${points[0].x.toFixed(2)},${points[0].y.toFixed(2)}`;
+    for (let i = 0; i < n - 1; i += 1) {
+      const p0 = points[i], p1 = points[i + 1], dx = p1.x - p0.x;
+      const c1x = p0.x + dx / 3, c1y = p0.y + m[i] * dx / 3;
+      const c2x = p1.x - dx / 3, c2y = p1.y - m[i + 1] * dx / 3;
+      path += ` C${c1x.toFixed(2)},${c1y.toFixed(2)} ${c2x.toFixed(2)},${c2y.toFixed(2)} ${p1.x.toFixed(2)},${p1.y.toFixed(2)}`;
     }
+    return path;
   }
 
-  if (drawerEnabled) {
-    grid.addEventListener('click', (event) => {
-      const card = event.target.closest('.pgl-card');
-      if (card && grid.contains(card)) openById(card.dataset.pglId);
+  function renderRatingChart(scope = 'all') {
+    if (!chart) return;
+    const distribution = stats.rating_curve_distribution;
+    const bins = distribution?.bins || [];
+    const counts = distribution?.scopes?.[scope] || [];
+    if (!bins.length || bins.length !== counts.length) return;
+    chart.replaceChildren();
+    const W = 760, H = 260, M = { l: 42, r: 18, t: 18, b: 42 };
+    const maxCount = Math.max(1, ...counts.map(Number));
+    const xAt = (index) => M.l + (index / Math.max(1, bins.length - 1)) * (W - M.l - M.r);
+    const yAt = (count) => H - M.b - (Number(count) / maxCount) * (H - M.t - M.b);
+
+    for (let i = 0; i <= 4; i += 1) {
+      const y = M.t + ((H - M.t - M.b) * i / 4);
+      chart.append(svgNode('line', { x1: M.l, y1: y, x2: W - M.r, y2: y, class: 'pgl-chart-gridline' }));
+    }
+    chart.append(svgNode('line', { x1: M.l, y1: H - M.b, x2: W - M.r, y2: H - M.b, class: 'pgl-chart-axis' }));
+
+    bins.forEach((bin, index) => {
+      if (Number(bin) % 1 !== 0) return;
+      const text = svgNode('text', { x: xAt(index), y: H - 14, 'text-anchor': 'middle', class: 'pgl-chart-label' }); text.textContent = String(bin); chart.append(text);
     });
-    grid.addEventListener('keydown', (event) => {
-      if (!['Enter', ' '].includes(event.key)) return;
-      const card = event.target.closest('.pgl-card');
-      if (!card || !grid.contains(card)) return;
-      event.preventDefault();
-      openById(card.dataset.pglId);
-    });
-    document.querySelectorAll('[data-open-pgl]').forEach((button) => {
-      button.addEventListener('click', () => openById(button.dataset.openPgl));
-    });
-    dialog?.addEventListener('close', () => {
-      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
-      lastFocused = null;
-    });
+
+    const points = counts.map((count, index) => ({ x: xAt(index), y: yAt(count), count: Number(count), bin: bins[index] }));
+    chart.append(svgNode('path', { d: monotonePath(points), class: 'pgl-chart-curve', fill: 'none' }));
+    for (const point of points) {
+      const hit = svgNode('circle', { cx: point.x, cy: point.y, r: 10, class: 'pgl-chart-hit', tabindex: 0, role: 'img', 'aria-label': `${root.dataset.ratingAxis || 'Rating'} ${point.bin}: ${point.count}` });
+      const show = () => {
+        if (!chartTooltip) return;
+        chartTooltip.hidden = false; chartTooltip.textContent = `${point.bin} · ${point.count} ${root.dataset.items || 'items'}`;
+        chartTooltip.style.left = `${point.x / W * 100}%`; chartTooltip.style.top = `${point.y / H * 100}%`;
+      };
+      const hide = () => { if (chartTooltip) chartTooltip.hidden = true; };
+      hit.addEventListener('mouseenter', show); hit.addEventListener('focus', show); hit.addEventListener('mouseleave', hide); hit.addEventListener('blur', hide); chart.append(hit);
+    }
+    if (chartA11y) chartA11y.textContent = counts.map((count, index) => `${bins[index]}: ${count}`).join('; ');
+    document.querySelectorAll('[data-rating-scope]').forEach((button) => button.classList.toggle('is-active', button.dataset.ratingScope === scope));
   }
 
-  function eventLabel(name) {
-    return root.dataset[`event${toPascal(name)}`] || name || '';
-  }
+  document.getElementById('pgl-rating-scopes')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-rating-scope]'); if (button) renderRatingChart(button.dataset.ratingScope);
+  });
 
+  // Timeline ----------------------------------------------------------------
+  function eventLabel(name) { return root.dataset[`event${toPascal(name)}`] || name || ''; }
   async function loadTimeline() {
-    const box = $('pgl-timeline');
-    if (!box) return;
+    const box = $('pgl-timeline'); if (!box) return;
     try {
-      const response = await fetch(root.dataset.historyManifest, { credentials: 'same-origin' });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const manifest = await response.json();
-      const years = (manifest.history_years || []).slice(0, 3);
-      const events = [];
-      for (const year of years) {
-        const url = new URL(root.dataset.historyManifest, location.href);
-        url.pathname = url.pathname.replace(/manifest\.json$/, `history/${encodeURIComponent(year)}.json`);
-        const historyResponse = await fetch(url, { credentials: 'same-origin' });
-        if (!historyResponse.ok) throw new Error(`HTTP ${historyResponse.status}`);
-        const data = await historyResponse.json();
-        events.push(...(data.events || []));
+      const manifest = await loadJson(root.dataset.historyManifest);
+      const years = (manifest.history_years || []).slice(0, 3); const events = [];
+      for (const historyYear of years) {
+        const url = new URL(root.dataset.historyManifest, location.href); url.pathname = url.pathname.replace(/manifest\.json$/, `history/${encodeURIComponent(historyYear)}.json`);
+        const data = await loadJson(url.href); events.push(...(data.events || []));
       }
       events.sort((a, b) => String(b.observed_at || '').localeCompare(String(a.observed_at || '')));
       const list = make('ul', 'pgl-timeline-list');
       for (const event of events.slice(0, 100)) {
-        const row = make('li');
-        row.append(make('time', '', event.local_date || ''));
-        row.append(document.createTextNode(` · ${eventLabel(event.event)} · ${event.data?.title || event.entity_id || ''}`));
-        list.append(row);
+        const row = make('li'); row.append(make('time', '', event.local_date || '')); row.append(document.createTextNode(` · ${eventLabel(event.event)} · ${event.data?.title || event.entity_id || ''}`)); list.append(row);
       }
       box.replaceChildren(list);
-    } catch (error) {
-      box.textContent = `${root.dataset.timelineUnavailable || 'Timeline unavailable'}: ${error.message}`;
-    }
+    } catch (error) { box.textContent = `${root.dataset.timelineUnavailable || 'Timeline unavailable'}: ${error.message}`; }
   }
-
   $('pgl-load-timeline')?.addEventListener('click', loadTimeline);
 
-  let searchTimer = null;
-  controls.search?.addEventListener('input', () => {
+  // Navigation/events -------------------------------------------------------
+  document.addEventListener('click', (event) => {
+    const category = event.target.closest('[data-pgl-category]');
+    if (category) { event.preventDefault(); navigate({ ...defaultState(), view: 'category', category: category.dataset.pglCategory }); return; }
+    const wishlist = event.target.closest('[data-pgl-wishlist]');
+    if (wishlist) { event.preventDefault(); navigate({ ...defaultState(), view: 'wishlist' }); return; }
+    const wishlistCategory = event.target.closest('[data-pgl-wishlist-category]');
+    if (wishlistCategory) { event.preventDefault(); navigate({ ...defaultState(), view: 'wishlist', category: wishlistCategory.dataset.pglWishlistCategory }); return; }
+    const statusButton = event.target.closest('[data-pgl-status]');
+    if (statusButton && state.category) { navigate({ ...state, view: 'other', status: statusButton.dataset.pglStatus, page: 1 }); }
+  });
+
+  back?.addEventListener('click', () => {
+    if (state.view === 'wishlist' && state.category) navigate({ ...defaultState(), view: 'wishlist' });
+    else if (state.view === 'search' && previousNonSearchState) navigate(previousNonSearchState);
+    else navigate(defaultState());
+  });
+
+  pagination?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-page]');
+    if (!button || button.disabled) return;
+    const page = Number(button.dataset.page); if (!Number.isFinite(page) || page < 1) return;
+    navigate({ ...state, page });
+    browserView?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  });
+
+  search?.addEventListener('input', () => {
     clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => apply(true), 140);
+    searchTimer = setTimeout(() => {
+      const q = search.value.trim();
+      if (q) navigate({ ...defaultState(), view: 'search', q }, { replace: true });
+      else if (state.view === 'search') navigate(previousNonSearchState || defaultState(), { replace: true });
+    }, 140);
   });
-  [controls.category, controls.status, controls.source, controls.year].forEach((control) => {
-    control?.addEventListener('change', () => apply(true));
+  search?.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') { root.classList.remove('is-search-open'); searchToggle?.setAttribute('aria-expanded', 'false'); search.blur(); }
   });
-  controls.sort?.addEventListener('change', () => apply(false));
-  controls.loadMore?.addEventListener('click', () => {
-    renderLimit += initialLimit;
-    apply(false);
-  });
-  controls.layout?.addEventListener('click', () => {
-    grid.classList.toggle('is-list');
-    controls.layout.setAttribute('aria-pressed', String(grid.classList.contains('is-list')));
-    syncUrlState();
+  searchToggle?.addEventListener('click', () => {
+    const open = !root.classList.contains('is-search-open'); root.classList.toggle('is-search-open', open); searchToggle.setAttribute('aria-expanded', String(open)); if (open) search?.focus();
   });
 
-  populateYears(initialCards.map((card) => card.dataset.year));
-  apply(true);
+  sort?.addEventListener('change', () => navigate({ ...state, sort: sort.value, page: 1 }));
+  source?.addEventListener('change', () => navigate({ ...state, source: source.value, page: 1 }));
+  year?.addEventListener('change', () => navigate({ ...state, year: year.value, page: 1 }));
+  clearFilters?.addEventListener('click', () => navigate({ ...state, source: '', year: '', sort: 'updated', page: 1 }));
+  layoutGrid?.addEventListener('click', () => setLayout('grid'));
+  layoutList?.addEventListener('click', () => setLayout('list'));
+  window.addEventListener('popstate', () => { state = parseState(); render(); });
 
-  loadLibrary()
-    .then((library) => {
+  // Load static public artifacts and initialize. --------------------------------
+  Promise.all([loadJson(root.dataset.libraryUrl), loadJson(root.dataset.statsUrl)])
+    .then(([library, loadedStats]) => {
       items = Array.isArray(library.items) ? library.items : [];
+      stats = loadedStats || {};
       itemById = new Map(items.map((item) => [item.id, item]));
-      populateYears(items.map((item) => item.year));
-      apply(true);
+      populateYears();
+      setLayout(currentLayout());
+      renderRatingChart('all');
+      render();
+      // Normalize legacy ?type= and view=grid/list URLs without adding history.
+      if (location.search.includes('type=') || /(?:^|[?&])view=(?:grid|list)(?:&|$)/.test(location.search)) writeHistory(state, { replace: true });
     })
-    .catch(() => {
-      // Keep and operate on the server-rendered initial subset when the static
-      // JSON artifact cannot be fetched. The page therefore never blanks out.
+    .catch((error) => {
+      // Root SSR remains useful. Direct browser views fail visibly instead of
+      // presenting an empty grid that looks like a valid empty library.
+      if (state.view !== 'index' && resultCount) resultCount.textContent = `PGL data unavailable: ${error.message}`;
+      render();
     });
 })();

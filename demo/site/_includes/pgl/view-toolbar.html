@@ -1,0 +1,20 @@
+{% assign l = site.data.pgl_locales[site.lang] | default: site.data.pgl_locales.en %}
+{% assign pgl_ui = site.prospero_great_library.ui %}
+<div class="pgl-view-toolbar">
+  <div class="pgl-toolbar-left">
+    <label class="pgl-compact-select"><span>{{ l.sort }}</span><select id="pgl-sort"><option value="updated">{{ l.sort_updated }}</option><option value="rating">{{ l.sort_rating }}</option><option value="year">{{ l.sort_year }}</option><option value="playtime">{{ l.sort_playtime }}</option><option value="title">{{ l.sort_title }}</option></select></label>
+    <details class="pgl-advanced">
+      <summary>{{ l.advanced_filters }}</summary>
+      <div class="pgl-advanced-panel">
+        <label>{{ l.source }}<select id="pgl-source"><option value="">{{ l.all_sources }}</option><option value="bangumi">Bangumi</option><option value="neodb">NeoDB</option><option value="steam">Steam</option></select></label>
+        <label>{{ l.year }}<select id="pgl-year"><option value="">{{ l.all_years }}</option></select></label>
+        {% if pgl_ui.other_statuses.enabled != false %}<div class="pgl-other-status-actions"><button type="button" data-pgl-status="on_hold">{{ l.show_on_hold }}</button><button type="button" data-pgl-status="dropped">{{ l.show_dropped }}</button></div>{% endif %}
+        <button id="pgl-clear-filters" type="button">{{ l.clear_filters }}</button>
+      </div>
+    </details>
+  </div>
+  <div class="pgl-layout-toggle" role="group" aria-label="{{ l.toggle_grid }} / {{ l.toggle_list }}">
+    <button id="pgl-layout-grid" type="button" data-layout="grid" aria-label="{{ l.toggle_grid }}" title="{{ l.toggle_grid }}">▦</button>
+    <button id="pgl-layout-list" type="button" data-layout="list" aria-label="{{ l.toggle_list }}" title="{{ l.toggle_list }}">☷</button>
+  </div>
+</div>

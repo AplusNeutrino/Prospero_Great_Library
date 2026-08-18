@@ -1,0 +1,19 @@
+{% assign l = site.data.pgl_locales[site.lang] | default: site.data.pgl_locales.en %}
+{% assign stats = site.data.prospero_great_library.stats %}
+{% if stats.rating_curve_distribution %}
+<section class="pgl-rating-section" aria-labelledby="pgl-rating-title">
+  <div class="pgl-section-heading"><h2 id="pgl-rating-title">{{ l.observable_rating_distribution }}</h2></div>
+  <div class="pgl-rating-chart-shell">
+    <svg id="pgl-rating-chart" class="pgl-rating-chart" viewBox="0 0 760 260" role="img" aria-labelledby="pgl-rating-title pgl-rating-desc" preserveAspectRatio="none">
+      <desc id="pgl-rating-desc">{{ l.observable_rating_distribution }}</desc>
+    </svg>
+    <div id="pgl-rating-tooltip" class="pgl-chart-tooltip" hidden></div>
+    <div id="pgl-rating-scopes" class="pgl-rating-scopes" aria-label="{{ l.category }}">
+      <button type="button" data-rating-scope="all" class="is-active">{{ l.all_domains }}</button>
+      {% assign pgl_categories = 'book,comic,movie,drama,anime,game,music' | split: ',' %}
+      {% for c in pgl_categories %}<button type="button" data-rating-scope="{{ c }}">{{ l.categories[c] | default: c }}</button>{% endfor %}
+    </div>
+  </div>
+  <div id="pgl-rating-a11y" class="visually-hidden" aria-live="polite"></div>
+</section>
+{% endif %}
