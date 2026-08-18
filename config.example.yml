@@ -10,7 +10,7 @@ prospero_great_library:
       username: "YOUR_BANGUMI_USERNAME"
       base_url: "https://api.bgm.tv"
       # Exclude private collection entries before writing public snapshots.
-      hide_private_collections: false
+      hide_private_collections: true
 
     neodb:
       enabled: true
@@ -58,6 +58,7 @@ prospero_great_library:
 
   privacy:
     enabled: true
+    publish_diagnostics: false
     hide_items: []
     hide_sources: []
     stats_only_items: []

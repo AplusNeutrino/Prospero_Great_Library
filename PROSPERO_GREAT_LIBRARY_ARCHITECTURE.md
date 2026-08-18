@@ -3755,3 +3755,58 @@ Is this merely easier to code?
 ```
 
 This document should evolve deliberately, not accidentally.
+
+# 71. Upstream-native privacy boundary (added after first live deployment)
+
+## 71.1 Bangumi private collection handling
+
+**LOCKED security behavior**
+
+When an authenticated Bangumi response identifies a user collection entry as private and `sources.bangumi.hide_private_collections` is enabled, that source record MUST be excluded before:
+
+```text
+source snapshot persistence
+entity resolution
+canonical merge
+statistics
+article association
+new history generation
+public static output
+```
+
+The public repository/site must not rely on CSS or front-end filtering for this boundary.
+
+PGL defaults this publication boundary to `true`. Advanced users may explicitly disable it, but authenticated public deployments SHOULD keep it enabled and tooling SHOULD warn when an authenticated Bangumi token is used with it disabled.
+
+## 71.2 Retroactive privacy
+
+Changing privacy later must not protect only the current snapshot while leaving old timeline data public. During a sync, PGL SHOULD use currently fetched private-source records only ephemerally to identify previously persisted canonical entities and sanitize old history.
+
+Do NOT persist a separate list of private Bangumi subject IDs merely to support later scrubbing; such an index would itself disclose private collection membership.
+
+If an entity disappears completely after its only private source is removed, all historical events for that entity must be removed from public history. If the canonical entity remains public through another source, remove private-source-specific events while retaining source-neutral history that is still valid for the public entity.
+
+The same history boundary applies to PGL-level `hidden` and `stats_only` entities, and source-specific history events must respect `hide_sources`.
+
+## 71.3 Privacy fail-closed invariant
+
+Known-private records reaching a public source snapshot, canonical library, or public history are a publication invariant failure. This is separate from ordinary source-fetch strictness: a third-party outage may degrade gracefully, but a known privacy violation must not be silently published.
+
+## 71.4 Git repository history is outside automatic artifact sanitization
+
+**LOCKED security limitation**
+
+PGL privacy filtering and history sanitization govern the current generated publication state. They cannot, by adding a later commit, erase sensitive data that was already committed into an earlier revision of a public Git repository.
+
+Therefore:
+
+```text
+current/future generated artifacts -> PGL MUST sanitize automatically
+old public Git commits              -> requires explicit repository-history maintenance
+```
+
+PGL MUST NOT automatically rewrite Git history, force-push branches, or destroy repository history. Tooling and documentation SHOULD warn users about this boundary when retroactive privacy cleanup is relevant.
+## 71.5 Privacy diagnostic metadata
+
+PGL SHOULD minimize persisted privacy metadata. The default `privacy.publish_diagnostics` value is `false`. Exact counts of upstream-private records and detailed scrub-reason counters may be available to the running audit/sync process, but SHOULD NOT be written into a public repository/site unless the owner explicitly opts in. Public status may state that the privacy filter is enabled and that sanitization occurred without publishing private-item counts.
+

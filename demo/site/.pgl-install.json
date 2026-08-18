@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "pgl_version": "0.1.0-alpha.2",
+  "pgl_version": "0.1.0-alpha.3",
   "adapter": "chirpy",
-  "installed_at": "2026-08-18T02:59:27.338346Z",
+  "installed_at": "2026-08-18T08:00:21.869061Z",
   "managed": {
     "_data/pgl_locales/en.yml": {
       "sha256": "432bca0395773d685e0d0052e5fd61f95dd990abb269418bdec7d7fcfae8d853"
