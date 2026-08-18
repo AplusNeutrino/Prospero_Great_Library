@@ -21,10 +21,15 @@ class BangumiAdapter(SourceAdapter):
         out=[]; offset=0; limit=50
         while True:
             data=self._get_json(f'{base}/v0/users/{username}/collections', headers=self._headers(), params={'limit':limit,'offset':offset})
-            if not isinstance(data,list): raise AdapterError('Unexpected Bangumi collections response')
-            out.extend(self.normalize_collection(x) for x in data)
-            if len(data)<limit: break
-            offset += limit
+            if isinstance(data,list):
+                rows=data; total=None
+            elif isinstance(data,dict) and isinstance(data.get('data'),list):
+                rows=data['data']; total=data.get('total')
+            else:
+                raise AdapterError('Unexpected Bangumi collections response')
+            out.extend(self.normalize_collection(x) for x in rows)
+            offset += len(rows)
+            if not rows or len(rows)<limit or (isinstance(total,int) and offset>=total): break
         return out
 
     @staticmethod
