@@ -34,6 +34,13 @@ def _fixture_records(fixture_dir,name):
     doc=json.loads(p.read_text(encoding='utf-8'))
     return [SourceRecord.from_dict(x) for x in doc.get('records',doc if isinstance(doc,list) else [])]
 
+def _filter_source_records(name: str, records: list[SourceRecord], source_config: dict[str,Any]):
+    """Remove source-private records before they reach snapshots or public outputs."""
+    if name != 'bangumi' or not source_config.get('hide_private_collections',False):
+        return records,0
+    public=[r for r in records if r.extra.get('private') is not True]
+    return public,len(records)-len(public)
+
 def run_sync(site_root: str|Path, config: dict[str,Any], fixture_dir: str|Path|None=None, dry_run=False):
     root=Path(site_root); observed=now_utc(); mappings=load_mappings(root/'_data'/'prospero_great_library'/'mappings.yml')
     previous=load_json(root/'_data'/'prospero_great_library'/'library.json',{'schema_version':1,'items':[]})
@@ -48,16 +55,19 @@ def run_sync(site_root: str|Path, config: dict[str,Any], fixture_dir: str|Path|N
             else:
                 adapter=cls(scfg, secret(SECRETS[name]))
                 records=adapter.fetch_collections()
+            records,private_hidden=_filter_source_records(name,records,scfg)
             all_records.extend(records)
             source_docs[name]={'schema_version':1,'source':name,'fetched_at':observed,'last_success_at':observed,'adapter_version':'0.1.0-alpha.2','record_count':len(records),'records':[r.to_dict() for r in records]}
-            source_status[name]={'status':'ok','last_success':observed,'record_count':len(records)}
+            source_status[name]={'status':'ok','last_success':observed,'record_count':len(records),'private_hidden_count':private_hidden}
         except Exception as exc:
             stale=_load_snapshot(root,name) if config.get('sync',{}).get('preserve_last_good',True) else []
+            stale,private_hidden=_filter_source_records(name,stale,scfg)
             all_records.extend(stale)
             previous_doc=load_json(_snapshot_path(root,name),{'records':[]})
-            if previous_doc.get('records'): source_docs[name]=previous_doc
+            if previous_doc.get('records'):
+                source_docs[name]={**previous_doc,'record_count':len(stale),'records':[r.to_dict() for r in stale]}
             status='capability_unavailable' if isinstance(exc,CapabilityUnavailable) else 'stale'
-            source_status[name]={'status':status,'last_success':previous_doc.get('last_success_at'),'record_count':len(stale),'error':str(exc)}
+            source_status[name]={'status':status,'last_success':previous_doc.get('last_success_at'),'record_count':len(stale),'private_hidden_count':private_hidden,'error':str(exc)}
     rr=resolve(all_records,mappings,float(config.get('association',{}).get('auto_threshold',.95)),float(config.get('association',{}).get('suggest_threshold',.80)))
     merged=merge_all(rr.groups,config,mappings,previous,observed)
     public_items,stat_items=apply_privacy(merged,config,mappings)

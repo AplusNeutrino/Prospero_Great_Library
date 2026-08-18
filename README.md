@@ -90,6 +90,19 @@ STEAM_API_KEY
 
 Never place tokens in `_config.yml`.
 
+To remove Bangumi collections marked private before PGL writes source snapshots,
+merged data, statistics, or history, enable:
+
+```yaml
+prospero_great_library:
+  sources:
+    bangumi:
+      hide_private_collections: true
+```
+
+The option defaults to `false` for backward compatibility. Public repositories
+should enable it.
+
 ### 5. Diagnose
 
 ```bash
