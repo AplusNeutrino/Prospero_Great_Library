@@ -1,0 +1,2 @@
+/* Chirpy adapter: intentionally thin. Site owners may override these variables. */
+#prospero-great-library { --pgl-surface: var(--card-bg, var(--main-bg)); --pgl-text: var(--text-color); --pgl-muted: var(--text-muted-color, #777); --pgl-link: var(--link-color, currentColor); }

@@ -1,0 +1,33 @@
+search: Search library
+category: Category
+status: Status
+source: Source
+year: Year
+sort: Sort
+all_categories: All categories
+all_statuses: All statuses
+all_sources: All sources
+all_years: All years
+sort_updated: Recently updated
+sort_rating: Rating
+sort_playtime: Steam playtime
+sort_title: Title
+toggle_layout: Grid / List
+load_more: Load more
+current: In progress
+statistics: Library statistics
+items: Items
+steam_lifetime: Steam lifetime
+steam_observed_year: Steam observed this year
+rating_distribution: Rating distribution
+steam_top_games: Steam lifetime ranking
+timeline: Timeline
+load_timeline: Load timeline
+timeline_unavailable: Timeline unavailable
+performance: Performance
+blog: Blog
+open_source: Open primary source
+close: Close
+categories: {book: Book, comic: Comic, movie: Movie, drama: Drama, anime: Anime, game: Game, music: Music}
+statuses: {wishlist: Wishlist, in_progress: In progress, completed: Completed, on_hold: On hold, dropped: Dropped}
+events: {entity_first_seen: First seen, status_changed: Status changed, rating_changed: Rating changed, progress_changed: Progress changed, steam_playtime_delta: Steam playtime gained, steam_achievement_unlocked: Steam achievements changed, steam_achievement_progress: Steam achievements changed, steam_playtime_correction: Steam playtime correction, category_changed: Category changed, source_attached: Source attached, source_detached: Source detached, metadata_major_change: Major metadata change}

@@ -1,0 +1,61 @@
+{% assign lib = site.data.prospero_great_library.library %}
+{% assign l = site.data.pgl_locales[site.lang] | default: site.data.pgl_locales.en %}
+{% assign pgl_ui = site.prospero_great_library.ui %}
+<link rel="stylesheet" href="{{ '/assets/pgl/pgl.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/pgl/pgl-chirpy.css' | relative_url }}">
+<section id="prospero-great-library" class="pgl"
+  data-history-manifest="{{ '/assets/data/prospero_great_library/manifest.json' | relative_url }}"
+  data-library-url="{{ '/assets/data/prospero_great_library/library.json' | relative_url }}"
+  data-initial-limit="60"
+  data-lazy-render="{% if pgl_ui.lazy_render == false %}false{% else %}true{% endif %}"
+  data-drawer-enabled="{% if pgl_ui.drawer == false %}false{% else %}true{% endif %}"
+  data-show-sources="{% if pgl_ui.show_sources == false %}false{% else %}true{% endif %}"
+  data-show-steam-playtime="{% if pgl_ui.show_steam_playtime == false %}false{% else %}true{% endif %}"
+  data-show-achievements="{% if pgl_ui.show_achievements == false %}false{% else %}true{% endif %}"
+  data-load-more="{{ l.load_more | escape }}"
+  data-timeline-unavailable="{{ l.timeline_unavailable | escape }}"
+  data-open-source="{{ l.open_source | escape }}"
+  data-blog="{{ l.blog | escape }}"
+  data-performance="{{ l.performance | escape }}"
+  data-category-book="{{ l.categories.book | escape }}"
+  data-category-comic="{{ l.categories.comic | escape }}"
+  data-category-movie="{{ l.categories.movie | escape }}"
+  data-category-drama="{{ l.categories.drama | escape }}"
+  data-category-anime="{{ l.categories.anime | escape }}"
+  data-category-game="{{ l.categories.game | escape }}"
+  data-category-music="{{ l.categories.music | escape }}"
+  data-status-wishlist="{{ l.statuses.wishlist | escape }}"
+  data-status-in-progress="{{ l.statuses.in_progress | escape }}"
+  data-status-completed="{{ l.statuses.completed | escape }}"
+  data-status-on-hold="{{ l.statuses.on_hold | escape }}"
+  data-status-dropped="{{ l.statuses.dropped | escape }}"
+  {% for pair in l.events %}data-event-{{ pair[0] | replace: '_', '-' }}="{{ pair[1] | escape }}" {% endfor %}>
+  {% if pgl_ui.show_stats != false %}{% include pgl/stats.html %}{% endif %}
+  {% assign pgl_current = lib.items | where: 'status', 'in_progress' %}
+  {% if pgl_current.size > 0 %}
+  <section class="pgl-current" aria-labelledby="pgl-current-title">
+    <h2 id="pgl-current-title">{{ l.current }}</h2>
+    <div class="pgl-current-list">
+      {% for item in pgl_current limit: 8 %}<button type="button" class="pgl-current-item" data-open-pgl="{{ item.id | escape }}">{{ item.title | escape }}</button>{% endfor %}
+    </div>
+  </section>
+  {% endif %}
+  {% include pgl/filters.html %}
+  <p id="pgl-result-count" class="pgl-result-count" aria-live="polite"></p>
+  <div id="pgl-grid" class="pgl-grid{% if pgl_ui.layout == 'list' %} is-list{% endif %}">
+    {% if pgl_ui.lazy_render == false %}
+      {% for item in lib.items %}{% include pgl/card.html item=item %}{% endfor %}
+    {% else %}
+      {% for item in lib.items limit: 60 %}{% include pgl/card.html item=item %}{% endfor %}
+    {% endif %}
+  </div>
+  <div class="pgl-load-more-wrap"><button id="pgl-load-more" type="button" hidden>{{ l.load_more }}</button></div>
+  {% if pgl_ui.show_timeline != false %}
+  <section class="pgl-timeline-section">
+    <h2>{{ l.timeline }}</h2><div id="pgl-timeline"><button id="pgl-load-timeline" type="button">{{ l.load_timeline }}</button></div>
+  </section>
+  {% endif %}
+  {% if pgl_ui.drawer != false %}{% include pgl/drawer.html %}{% endif %}
+  <noscript><p class="pgl-noscript">JavaScript is disabled; the initial library cards remain available.</p></noscript>
+</section>
+<script src="{{ '/assets/pgl/pgl.js' | relative_url }}" defer></script>

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "history_years": [
+    "2026"
+  ],
+  "library": "library.json",
+  "stats": "stats.json"
+}

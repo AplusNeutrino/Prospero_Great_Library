@@ -1,0 +1,71 @@
+{
+  "records": [
+    {
+      "source": "steam",
+      "source_id": "39140",
+      "category_hint": "game",
+      "title": "FINAL FANTASY",
+      "alternate_titles": [],
+      "year": null,
+      "status": null,
+      "rating": null,
+      "tags": [],
+      "identifiers": {
+        "steam_appid": 39140
+      },
+      "links": {
+        "steam": "https://store.steampowered.com/app/39140/"
+      },
+      "telemetry": {
+        "steam": {
+          "owned": true,
+          "playtime_minutes": 2556,
+          "recent_playtime_minutes": 120,
+          "last_played_at": 1786950000,
+          "achievements": {
+            "unlocked": 18,
+            "total": 24,
+            "percent": 75.0
+          }
+        }
+      },
+      "raw_type": "game",
+      "extra": {}
+    },
+    {
+      "source": "steam",
+      "source_id": "1145360",
+      "category_hint": "game",
+      "title": "Hades",
+      "alternate_titles": [],
+      "year": 2020,
+      "cover_url": "https://example.invalid/hades.jpg",
+      "summary": null,
+      "status": null,
+      "rating": null,
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "steam_appid": 1145360
+      },
+      "links": {
+        "steam": "https://store.steampowered.com/app/1145360/"
+      },
+      "telemetry": {
+        "steam": {
+          "appid": 1145360,
+          "playtime_minutes": 3120,
+          "playtime_2weeks_minutes": 180,
+          "last_played_at": "2026-08-16T18:00:00Z",
+          "achievements": {
+            "unlocked": 20,
+            "total": 49
+          }
+        }
+      },
+      "updated_at": "2026-08-16T18:00:00Z",
+      "raw_type": "game",
+      "extra": {}
+    }
+  ]
+}

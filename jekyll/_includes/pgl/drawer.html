@@ -1,0 +1,5 @@
+{% assign l = site.data.pgl_locales[site.lang] | default: site.data.pgl_locales.en %}
+<dialog id="pgl-drawer" class="pgl-drawer">
+  <form method="dialog"><button class="pgl-close" aria-label="{{ l.close }}">×</button></form>
+  <div id="pgl-drawer-content"></div>
+</dialog>

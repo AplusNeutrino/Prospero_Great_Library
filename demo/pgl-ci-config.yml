@@ -1,0 +1,20 @@
+
+# Appended to a clean Chirpy starter by the PGL compatibility CI job.
+prospero_great_library:
+  locale: en
+  sources:
+    bangumi: {enabled: true, username: demo}
+    neodb: {enabled: true, username: demo, instance: "https://neodb.social", mode: public, collection_endpoint: ""}
+    steam: {enabled: true, steam_id: "76561190000000000"}
+  sync: {timezone: "UTC", preserve_last_good: true}
+  history: {enabled: true}
+  association: {enabled: true, exact: true, fuzzy: true, auto_threshold: 0.95, suggest_threshold: 0.80}
+  ui:
+    layout: grid
+    lazy_render: true
+    drawer: true
+    show_stats: true
+    show_timeline: true
+    show_sources: true
+    show_steam_playtime: true
+    show_achievements: true

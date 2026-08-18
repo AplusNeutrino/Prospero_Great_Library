@@ -1,0 +1,9 @@
+{% assign assoc = site.data.prospero_great_library.associations.by_post[page.url] %}
+{% if assoc and assoc.size > 0 %}
+  <aside class="pgl-post-links">
+  {% for ref in assoc %}
+    {% assign entity = site.data.prospero_great_library.library.items | where: 'id', ref.entity_id | first %}
+    {% if entity %}<a href="{{ '/library/' | relative_url }}?q={{ entity.title | url_encode }}">{{ entity.title | escape }} · {{ entity.category | escape }}</a>{% endif %}
+  {% endfor %}
+  </aside>
+{% endif %}

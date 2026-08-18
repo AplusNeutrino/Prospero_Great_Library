@@ -1,0 +1,256 @@
+{
+  "records": [
+    {
+      "source": "bangumi",
+      "source_id": "1",
+      "category_hint": "anime",
+      "title": "千と千尋の神隠し",
+      "title_original": "千と千尋の神隠し",
+      "alternate_titles": [
+        "Spirited Away",
+        "千与千寻"
+      ],
+      "year": 2001,
+      "release_date": "2001-07-20",
+      "cover_url": "https://example.invalid/spirited.jpg",
+      "summary": "Anime film fixture",
+      "status": "completed",
+      "rating": {
+        "value": 9.0,
+        "scale": 10.0,
+        "normalized_10": 9.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [
+        "anime"
+      ],
+      "identifiers": {
+        "bangumi_subject_id": 1
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/1"
+      },
+      "telemetry": {},
+      "updated_at": "2026-08-17T00:00:00Z",
+      "raw_type": 2,
+      "extra": {}
+    },
+    {
+      "source": "bangumi",
+      "source_id": "2",
+      "category_hint": "book",
+      "title": "葬送のフリーレン",
+      "title_original": "葬送のフリーレン",
+      "alternate_titles": [
+        "Frieren",
+        "葬送的芙莉莲"
+      ],
+      "year": 2020,
+      "cover_url": "https://example.invalid/frieren-comic.jpg",
+      "status": "in_progress",
+      "rating": {
+        "value": 9.0,
+        "scale": 10.0,
+        "normalized_10": 9.0,
+        "source": "bangumi"
+      },
+      "progress": {
+        "current": 12,
+        "total": null,
+        "unit": "volume",
+        "percent": null,
+        "source": "bangumi"
+      },
+      "tags": [
+        "manga",
+        "漫画"
+      ],
+      "identifiers": {
+        "bangumi_subject_id": 2
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/2"
+      },
+      "telemetry": {},
+      "updated_at": "2026-08-17T00:00:00Z",
+      "raw_type": 1,
+      "extra": {}
+    },
+    {
+      "source": "bangumi",
+      "source_id": "3",
+      "category_hint": "game",
+      "title": "FINAL FANTASY",
+      "alternate_titles": [
+        "Final Fantasy I"
+      ],
+      "year": 1987,
+      "status": "completed",
+      "rating": {
+        "value": 8.0,
+        "scale": 10.0,
+        "normalized_10": 8.0,
+        "source": "bangumi"
+      },
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 3
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/3"
+      },
+      "telemetry": {},
+      "updated_at": "2026-08-17T00:00:00Z",
+      "raw_type": 4,
+      "extra": {}
+    },
+    {
+      "source": "bangumi",
+      "source_id": "4",
+      "category_hint": "book",
+      "title": "围城",
+      "alternate_titles": [
+        "Fortress Besieged"
+      ],
+      "year": 1947,
+      "status": "completed",
+      "rating": {
+        "value": 9.0,
+        "scale": 10.0,
+        "normalized_10": 9.0,
+        "source": "bangumi"
+      },
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 4,
+        "isbn13": "9787020090006"
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/4"
+      },
+      "telemetry": {},
+      "updated_at": "2026-08-17T00:00:00Z",
+      "raw_type": 1,
+      "extra": {}
+    },
+    {
+      "source": "bangumi",
+      "source_id": "5",
+      "category_hint": "drama",
+      "title": "Sherlock",
+      "alternate_titles": [
+        "神探夏洛克"
+      ],
+      "year": 2010,
+      "status": "completed",
+      "rating": {
+        "value": 8.0,
+        "scale": 10.0,
+        "normalized_10": 8.0,
+        "source": "bangumi"
+      },
+      "tags": [
+        "TV",
+        "live action"
+      ],
+      "identifiers": {
+        "bangumi_subject_id": 5
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/5"
+      },
+      "telemetry": {},
+      "updated_at": "2026-08-17T00:00:00Z",
+      "raw_type": 6,
+      "extra": {}
+    },
+    {
+      "source": "bangumi",
+      "source_id": "6",
+      "category_hint": "music",
+      "title": "Kind of Blue",
+      "year": 1959,
+      "status": "completed",
+      "rating": {
+        "value": 10.0,
+        "scale": 10.0,
+        "normalized_10": 10.0,
+        "source": "bangumi"
+      },
+      "tags": [
+        "album"
+      ],
+      "identifiers": {
+        "bangumi_subject_id": 6
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/6"
+      },
+      "telemetry": {},
+      "updated_at": "2026-08-17T00:00:00Z",
+      "raw_type": 3,
+      "extra": {}
+    },
+    {
+      "source": "bangumi",
+      "source_id": "7",
+      "category_hint": "book",
+      "title": "The Left Hand of Darkness",
+      "alternate_titles": [
+        "黑暗的左手"
+      ],
+      "year": 1969,
+      "cover_url": "https://example.invalid/left-hand.jpg",
+      "status": "wishlist",
+      "rating": null,
+      "progress": null,
+      "tags": [
+        "science fiction"
+      ],
+      "identifiers": {
+        "bangumi_subject_id": 7
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/7"
+      },
+      "telemetry": {},
+      "updated_at": "2026-08-17T00:00:00Z",
+      "raw_type": 1,
+      "extra": {}
+    },
+    {
+      "source": "bangumi",
+      "source_id": "8",
+      "category_hint": "anime",
+      "title": "Demo Dropped Anime",
+      "alternate_titles": [
+        "示例弃番"
+      ],
+      "year": 2024,
+      "cover_url": "https://example.invalid/dropped-anime.jpg",
+      "status": "dropped",
+      "rating": null,
+      "progress": {
+        "current": 3,
+        "total": 12,
+        "unit": "episode",
+        "percent": 25.0,
+        "source": "bangumi"
+      },
+      "tags": [
+        "anime"
+      ],
+      "identifiers": {
+        "bangumi_subject_id": 8
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/8"
+      },
+      "telemetry": {},
+      "updated_at": "2026-08-17T00:00:00Z",
+      "raw_type": 2,
+      "extra": {}
+    }
+  ]
+}

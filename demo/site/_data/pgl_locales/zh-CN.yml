@@ -1,0 +1,33 @@
+search: 搜索藏品
+category: 分类
+status: 状态
+source: 来源
+year: 年份
+sort: 排序
+all_categories: 全部分类
+all_statuses: 全部状态
+all_sources: 全部来源
+all_years: 全部年份
+sort_updated: 最近更新
+sort_rating: 评分
+sort_playtime: Steam 游玩时间
+sort_title: 标题
+toggle_layout: 网格 / 列表
+load_more: 加载更多
+current: 当前进行中
+statistics: Library 统计
+items: 条目
+steam_lifetime: Steam 累计游玩
+steam_observed_year: 本年观测新增 Steam 游玩
+rating_distribution: 评分分布
+steam_top_games: Steam 累计游玩排行
+timeline: 时间线
+load_timeline: 加载时间线
+timeline_unavailable: 时间线暂不可用
+performance: 舞台演出
+blog: 博客
+open_source: 打开主来源
+close: 关闭
+categories: {book: 书籍, comic: 漫画, movie: 电影, drama: 剧集, anime: 动画, game: 游戏, music: 音乐}
+statuses: {wishlist: 想看/想读/想玩, in_progress: 进行中, completed: 已完成, on_hold: 搁置, dropped: 抛弃}
+events: {entity_first_seen: 首次收录, status_changed: 状态变化, rating_changed: 评分变化, progress_changed: 进度变化, steam_playtime_delta: Steam 游玩增长, steam_achievement_unlocked: Steam 成就变化, steam_achievement_progress: Steam 成就变化, steam_playtime_correction: Steam 游玩时间校正, category_changed: 分类变化, source_attached: 新增数据源, source_detached: 数据源移除, metadata_major_change: 主要资料变化}

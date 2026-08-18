@@ -1,0 +1,41 @@
+{
+  "ambiguous": [],
+  "auto_merged": [
+    {
+      "source": "neodb",
+      "source_id": "n1",
+      "confidence": 1.0,
+      "method": "id:bangumi_subject_id"
+    },
+    {
+      "source": "neodb",
+      "source_id": "n2",
+      "confidence": 0.97,
+      "method": "exact_title"
+    },
+    {
+      "source": "neodb",
+      "source_id": "n3",
+      "confidence": 1.0,
+      "method": "id:isbn13"
+    },
+    {
+      "source": "neodb",
+      "source_id": "n5",
+      "confidence": 0.97,
+      "method": "exact_title"
+    },
+    {
+      "source": "neodb",
+      "source_id": "n6",
+      "confidence": 0.97,
+      "method": "exact_title"
+    },
+    {
+      "source": "steam",
+      "source_id": "39140",
+      "confidence": 0.955,
+      "method": "exact_title"
+    }
+  ]
+}

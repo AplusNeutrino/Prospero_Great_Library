@@ -1,0 +1,39 @@
+{
+  "by_entity": {
+    "game:656708c36b": [
+      {
+        "url": "/posts/final-fantasy/",
+        "title": "游戏记录：Final Fantasy 1",
+        "path": "_posts/2026-08-01-final-fantasy.md",
+        "confidence": 1.0,
+        "method": "bangumi_url"
+      }
+    ],
+    "comic:d1fa9ea524": [
+      {
+        "url": "/posts/frieren/",
+        "title": "阅读记录：葬送的芙莉莲",
+        "path": "_posts/2026-08-02-frieren.md",
+        "confidence": 0.99,
+        "method": "title_alias"
+      }
+    ]
+  },
+  "by_post": {
+    "/posts/final-fantasy/": [
+      {
+        "entity_id": "game:656708c36b",
+        "confidence": 1.0,
+        "method": "bangumi_url"
+      }
+    ],
+    "/posts/frieren/": [
+      {
+        "entity_id": "comic:d1fa9ea524",
+        "confidence": 0.99,
+        "method": "title_alias"
+      }
+    ]
+  },
+  "suggestions": []
+}

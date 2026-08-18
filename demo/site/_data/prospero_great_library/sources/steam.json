@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "source": "steam",
+  "fetched_at": "2026-08-18T02:59:27Z",
+  "last_success_at": "2026-08-18T02:59:27Z",
+  "adapter_version": "0.1.0-alpha.2",
+  "record_count": 2,
+  "records": [
+    {
+      "source": "steam",
+      "source_id": "39140",
+      "category_hint": "game",
+      "title": "FINAL FANTASY",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": null,
+      "release_date": null,
+      "cover_url": null,
+      "summary": null,
+      "status": null,
+      "rating": null,
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "steam_appid": 39140
+      },
+      "links": {
+        "steam": "https://store.steampowered.com/app/39140/"
+      },
+      "telemetry": {
+        "steam": {
+          "owned": true,
+          "playtime_minutes": 2556,
+          "recent_playtime_minutes": 120,
+          "last_played_at": 1786950000,
+          "achievements": {
+            "unlocked": 18,
+            "total": 24,
+            "percent": 75.0
+          }
+        }
+      },
+      "updated_at": null,
+      "raw_type": "game",
+      "extra": {}
+    },
+    {
+      "source": "steam",
+      "source_id": "1145360",
+      "category_hint": "game",
+      "title": "Hades",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2020,
+      "release_date": null,
+      "cover_url": "https://example.invalid/hades.jpg",
+      "summary": null,
+      "status": null,
+      "rating": null,
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "steam_appid": 1145360
+      },
+      "links": {
+        "steam": "https://store.steampowered.com/app/1145360/"
+      },
+      "telemetry": {
+        "steam": {
+          "appid": 1145360,
+          "playtime_minutes": 3120,
+          "playtime_2weeks_minutes": 180,
+          "last_played_at": "2026-08-16T18:00:00Z",
+          "achievements": {
+            "unlocked": 20,
+            "total": 49
+          }
+        }
+      },
+      "updated_at": "2026-08-16T18:00:00Z",
+      "raw_type": "game",
+      "extra": {}
+    }
+  ]
+}

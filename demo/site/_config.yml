@@ -1,0 +1,10 @@
+title: PGL Demo
+lang: zh-CN
+prospero_great_library:
+  sources:
+    bangumi: {enabled: true, username: demo}
+    neodb: {enabled: true, username: demo, instance: "https://neodb.social", mode: public, collection_endpoint: ""}
+    steam: {enabled: true, steam_id: "76561190000000000"}
+  sync: {timezone: "Asia/Shanghai", preserve_last_good: true}
+  history: {enabled: true}
+  association: {enabled: true, exact: true, fuzzy: true, auto_threshold: 0.95, suggest_threshold: 0.80}

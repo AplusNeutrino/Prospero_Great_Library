@@ -1,0 +1,42 @@
+{
+  "total_items": 11,
+  "by_category": {
+    "anime": 2,
+    "comic": 1,
+    "game": 2,
+    "book": 2,
+    "drama": 1,
+    "music": 1,
+    "movie": 2
+  },
+  "by_status": {
+    "completed": 6,
+    "in_progress": 1,
+    "wishlist": 1,
+    "dropped": 1,
+    "on_hold": 1
+  },
+  "rating_distribution": {
+    "8": 2,
+    "9": 4,
+    "10": 1
+  },
+  "steam": {
+    "lifetime_playtime_minutes": 5676,
+    "ranking": [
+      {
+        "id": "game:bcf7ad2945",
+        "title": "Hades",
+        "minutes": 3120
+      },
+      {
+        "id": "game:656708c36b",
+        "title": "FINAL FANTASY",
+        "minutes": 2556
+      }
+    ],
+    "observed_playtime_by_year_minutes": {
+      "2026": 240
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "pgl_version": "0.1.0-alpha.2",
+  "adapter": "chirpy",
+  "installed_at": "2026-08-18T02:59:27.338346Z",
+  "managed": {
+    "_data/pgl_locales/en.yml": {
+      "sha256": "432bca0395773d685e0d0052e5fd61f95dd990abb269418bdec7d7fcfae8d853"
+    },
+    "_data/pgl_locales/zh-CN.yml": {
+      "sha256": "c3efcd455158a17a91f940796bf7d80c31d3a89b70c5f1c61fbac9ed4dc63846"
+    },
+    "_includes/pgl/card.html": {
+      "sha256": "b861339f87fa9703c091c8339f02e4e317f6f89e0bf4d6f76b3ba543ab59482e"
+    },
+    "_includes/pgl/drawer.html": {
+      "sha256": "9c430ffe8492f03f934930e0961677a4a8639cbec0706431789d13c3ffc8f450"
+    },
+    "_includes/pgl/filters.html": {
+      "sha256": "0ac9484c11a88ef5757e4cb3dd8814ad45b19732f5ee1742c26a29252596b704"
+    },
+    "_includes/pgl/library.html": {
+      "sha256": "e9dc3f287554b8598340db006d25a8076ee6a932e93852bc739dbbc537477098"
+    },
+    "_includes/pgl/post-card.html": {
+      "sha256": "79ffa9f454f52ae566c8fe52962e5c5040534bcef87f4298ff9ef97ffc4d6b7d"
+    },
+    "_includes/pgl/stats.html": {
+      "sha256": "528f10b718f6faca8fa901af9d665e291673863e8e2a22632d9f320fdf5ceedf"
+    },
+    "_plugins/prospero_great_library.rb": {
+      "sha256": "f564c224384868c3f1cc5e2eb3ff1db80f03a229c269a31036837b40085921c2"
+    },
+    "_tabs/library.md": {
+      "sha256": "1ef1d4aea0c30a52f40b63086af9bf3f08bd73490a11abca1fb5f279650bd193"
+    },
+    "assets/pgl/pgl-chirpy.css": {
+      "sha256": "a91b20f8c0d4da4ab46dccb6fe02f103ab769e0703b9e750b7983332ba588093"
+    },
+    "assets/pgl/pgl.css": {
+      "sha256": "cf281486f2f9bf0ba755bdde310093d7d291fd794b9e7ab56936181c85ac8cb5"
+    },
+    "assets/pgl/pgl.js": {
+      "sha256": "7e2d80274444b6743d63942c7cc8c7240d2896ee4da3a346a5e08189aa4ec18c"
+    }
+  }
+}

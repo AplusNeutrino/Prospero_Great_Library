@@ -1,0 +1,867 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-18T02:59:27Z",
+  "items": [
+    {
+      "id": "anime:384f3620e3",
+      "schema_version": 1,
+      "category": "anime",
+      "tags": [
+        "anime",
+        "animation"
+      ],
+      "title": "千と千尋の神隠し",
+      "title_original": "千と千尋の神隠し",
+      "alternate_titles": [
+        "Spirited Away",
+        "千与千寻"
+      ],
+      "year": 2001,
+      "release_date": "2001-07-20",
+      "cover": {
+        "url": "https://example.invalid/spirited.jpg",
+        "source": "bangumi",
+        "cached": false,
+        "local_path": null
+      },
+      "summary": "Anime film fixture",
+      "status": "completed",
+      "rating": {
+        "value": 9.0,
+        "scale": 10.0,
+        "normalized_10": 9.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "telemetry": {},
+      "links": {
+        "primary": "https://bgm.tv/subject/1",
+        "bangumi": "https://bgm.tv/subject/1",
+        "neodb": "https://neodb.social/movie/n1"
+      },
+      "identifiers": {
+        "bangumi_subject_id": 1,
+        "neodb_item_id": "n1"
+      },
+      "sources": {
+        "bangumi": {
+          "present": true,
+          "id": "1",
+          "url": "https://bgm.tv/subject/1",
+          "status": "completed",
+          "rating": {
+            "value": 9.0,
+            "scale": 10.0,
+            "normalized_10": 9.0,
+            "source": "bangumi"
+          },
+          "updated_at": "2026-08-17T00:00:00Z",
+          "extra": {}
+        },
+        "neodb": {
+          "present": true,
+          "id": "n1",
+          "url": "https://neodb.social/movie/n1",
+          "status": "completed",
+          "rating": {
+            "value": 4.5,
+            "scale": 5.0,
+            "normalized_10": 9.0,
+            "source": "neodb"
+          },
+          "updated_at": null,
+          "extra": {}
+        }
+      },
+      "articles": [],
+      "privacy": {
+        "hidden": false,
+        "hide_sources": [],
+        "stats_only": false
+      },
+      "timestamps": {
+        "first_seen_at": "2026-08-18T02:59:27Z",
+        "last_seen_at": "2026-08-18T02:59:27Z",
+        "canonical_updated_at": "2026-08-18T02:59:27Z"
+      },
+      "_provenance": {
+        "title": "bangumi",
+        "cover.url": "bangumi",
+        "status": "bangumi",
+        "rating": "bangumi",
+        "progress": null
+      }
+    },
+    {
+      "id": "comic:d1fa9ea524",
+      "schema_version": 1,
+      "category": "comic",
+      "tags": [
+        "manga",
+        "漫画"
+      ],
+      "title": "葬送のフリーレン",
+      "title_original": "葬送のフリーレン",
+      "alternate_titles": [
+        "Frieren",
+        "葬送的芙莉莲"
+      ],
+      "year": 2020,
+      "release_date": null,
+      "cover": {
+        "url": "https://example.invalid/frieren-comic.jpg",
+        "source": "bangumi",
+        "cached": false,
+        "local_path": null
+      },
+      "summary": null,
+      "status": "in_progress",
+      "rating": {
+        "value": 9.0,
+        "scale": 10.0,
+        "normalized_10": 9.0,
+        "source": "bangumi"
+      },
+      "progress": {
+        "current": 12,
+        "unit": "volume",
+        "source": "bangumi"
+      },
+      "telemetry": {},
+      "links": {
+        "primary": "https://neodb.social/book/n2",
+        "bangumi": "https://bgm.tv/subject/2",
+        "neodb": "https://neodb.social/book/n2"
+      },
+      "identifiers": {
+        "bangumi_subject_id": 2,
+        "neodb_item_id": "n2"
+      },
+      "sources": {
+        "bangumi": {
+          "present": true,
+          "id": "2",
+          "url": "https://bgm.tv/subject/2",
+          "status": "in_progress",
+          "rating": {
+            "value": 9.0,
+            "scale": 10.0,
+            "normalized_10": 9.0,
+            "source": "bangumi"
+          },
+          "updated_at": "2026-08-17T00:00:00Z",
+          "extra": {}
+        },
+        "neodb": {
+          "present": true,
+          "id": "n2",
+          "url": "https://neodb.social/book/n2",
+          "status": "completed",
+          "rating": {
+            "value": 4.0,
+            "scale": 5.0,
+            "normalized_10": 8.0,
+            "source": "neodb"
+          },
+          "updated_at": null,
+          "extra": {}
+        }
+      },
+      "articles": [
+        {
+          "url": "/posts/frieren/",
+          "title": "阅读记录：葬送的芙莉莲",
+          "path": "_posts/2026-08-02-frieren.md",
+          "confidence": 0.99,
+          "method": "title_alias"
+        }
+      ],
+      "privacy": {
+        "hidden": false,
+        "hide_sources": [],
+        "stats_only": false
+      },
+      "timestamps": {
+        "first_seen_at": "2026-08-18T02:59:27Z",
+        "last_seen_at": "2026-08-18T02:59:27Z",
+        "canonical_updated_at": "2026-08-18T02:59:27Z"
+      },
+      "_provenance": {
+        "title": "bangumi",
+        "cover.url": "bangumi",
+        "status": "bangumi",
+        "rating": "bangumi",
+        "progress": "bangumi"
+      }
+    },
+    {
+      "id": "game:656708c36b",
+      "schema_version": 1,
+      "category": "game",
+      "tags": [],
+      "title": "FINAL FANTASY",
+      "title_original": null,
+      "alternate_titles": [
+        "Final Fantasy I"
+      ],
+      "year": 1987,
+      "release_date": null,
+      "cover": null,
+      "summary": null,
+      "status": "completed",
+      "rating": {
+        "value": 8.0,
+        "scale": 10.0,
+        "normalized_10": 8.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "telemetry": {
+        "steam": {
+          "owned": true,
+          "playtime_minutes": 2556,
+          "recent_playtime_minutes": 120,
+          "last_played_at": 1786950000,
+          "achievements": {
+            "unlocked": 18,
+            "total": 24,
+            "percent": 75.0
+          }
+        }
+      },
+      "links": {
+        "primary": "https://bgm.tv/subject/3",
+        "bangumi": "https://bgm.tv/subject/3",
+        "steam": "https://store.steampowered.com/app/39140/"
+      },
+      "identifiers": {
+        "bangumi_subject_id": 3,
+        "steam_appid": 39140
+      },
+      "sources": {
+        "bangumi": {
+          "present": true,
+          "id": "3",
+          "url": "https://bgm.tv/subject/3",
+          "status": "completed",
+          "rating": {
+            "value": 8.0,
+            "scale": 10.0,
+            "normalized_10": 8.0,
+            "source": "bangumi"
+          },
+          "updated_at": "2026-08-17T00:00:00Z",
+          "extra": {}
+        },
+        "steam": {
+          "present": true,
+          "id": "39140",
+          "url": "https://store.steampowered.com/app/39140/",
+          "status": null,
+          "rating": null,
+          "updated_at": null,
+          "extra": {}
+        }
+      },
+      "articles": [
+        {
+          "url": "/posts/final-fantasy/",
+          "title": "游戏记录：Final Fantasy 1",
+          "path": "_posts/2026-08-01-final-fantasy.md",
+          "confidence": 1.0,
+          "method": "bangumi_url"
+        }
+      ],
+      "privacy": {
+        "hidden": false,
+        "hide_sources": [],
+        "stats_only": false
+      },
+      "timestamps": {
+        "first_seen_at": "2026-08-18T02:59:27Z",
+        "last_seen_at": "2026-08-18T02:59:27Z",
+        "canonical_updated_at": "2026-08-18T02:59:27Z"
+      },
+      "_provenance": {
+        "title": "bangumi",
+        "cover.url": null,
+        "status": "bangumi",
+        "rating": "bangumi",
+        "progress": null
+      }
+    },
+    {
+      "id": "book:6ded81eb6c",
+      "schema_version": 1,
+      "category": "book",
+      "tags": [],
+      "title": "围城",
+      "title_original": null,
+      "alternate_titles": [
+        "Fortress Besieged"
+      ],
+      "year": 1947,
+      "release_date": null,
+      "cover": null,
+      "summary": null,
+      "status": "completed",
+      "rating": {
+        "value": 9.0,
+        "scale": 10.0,
+        "normalized_10": 9.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "telemetry": {},
+      "links": {
+        "primary": "https://neodb.social/book/n3",
+        "bangumi": "https://bgm.tv/subject/4",
+        "neodb": "https://neodb.social/book/n3"
+      },
+      "identifiers": {
+        "bangumi_subject_id": 4,
+        "isbn13": "9787020090006",
+        "neodb_item_id": "n3"
+      },
+      "sources": {
+        "bangumi": {
+          "present": true,
+          "id": "4",
+          "url": "https://bgm.tv/subject/4",
+          "status": "completed",
+          "rating": {
+            "value": 9.0,
+            "scale": 10.0,
+            "normalized_10": 9.0,
+            "source": "bangumi"
+          },
+          "updated_at": "2026-08-17T00:00:00Z",
+          "extra": {}
+        },
+        "neodb": {
+          "present": true,
+          "id": "n3",
+          "url": "https://neodb.social/book/n3",
+          "status": "completed",
+          "rating": {
+            "value": 4.0,
+            "scale": 5.0,
+            "normalized_10": 8.0,
+            "source": "neodb"
+          },
+          "updated_at": null,
+          "extra": {}
+        }
+      },
+      "articles": [],
+      "privacy": {
+        "hidden": false,
+        "hide_sources": [],
+        "stats_only": false
+      },
+      "timestamps": {
+        "first_seen_at": "2026-08-18T02:59:27Z",
+        "last_seen_at": "2026-08-18T02:59:27Z",
+        "canonical_updated_at": "2026-08-18T02:59:27Z"
+      },
+      "_provenance": {
+        "title": "bangumi",
+        "cover.url": null,
+        "status": "bangumi",
+        "rating": "bangumi",
+        "progress": null
+      }
+    },
+    {
+      "id": "drama:9b38c6d76d",
+      "schema_version": 1,
+      "category": "drama",
+      "tags": [
+        "TV",
+        "live action"
+      ],
+      "title": "Sherlock",
+      "title_original": null,
+      "alternate_titles": [
+        "神探夏洛克"
+      ],
+      "year": 2010,
+      "release_date": null,
+      "cover": null,
+      "summary": null,
+      "status": "completed",
+      "rating": {
+        "value": 8.0,
+        "scale": 10.0,
+        "normalized_10": 8.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "telemetry": {},
+      "links": {
+        "primary": "https://neodb.social/tv/n5",
+        "bangumi": "https://bgm.tv/subject/5",
+        "neodb": "https://neodb.social/tv/n5"
+      },
+      "identifiers": {
+        "bangumi_subject_id": 5,
+        "neodb_item_id": "n5"
+      },
+      "sources": {
+        "bangumi": {
+          "present": true,
+          "id": "5",
+          "url": "https://bgm.tv/subject/5",
+          "status": "completed",
+          "rating": {
+            "value": 8.0,
+            "scale": 10.0,
+            "normalized_10": 8.0,
+            "source": "bangumi"
+          },
+          "updated_at": "2026-08-17T00:00:00Z",
+          "extra": {}
+        },
+        "neodb": {
+          "present": true,
+          "id": "n5",
+          "url": "https://neodb.social/tv/n5",
+          "status": "completed",
+          "rating": {
+            "value": 4.5,
+            "scale": 5.0,
+            "normalized_10": 9.0,
+            "source": "neodb"
+          },
+          "updated_at": null,
+          "extra": {}
+        }
+      },
+      "articles": [],
+      "privacy": {
+        "hidden": false,
+        "hide_sources": [],
+        "stats_only": false
+      },
+      "timestamps": {
+        "first_seen_at": "2026-08-18T02:59:27Z",
+        "last_seen_at": "2026-08-18T02:59:27Z",
+        "canonical_updated_at": "2026-08-18T02:59:27Z"
+      },
+      "_provenance": {
+        "title": "bangumi",
+        "cover.url": null,
+        "status": "bangumi",
+        "rating": "bangumi",
+        "progress": null
+      }
+    },
+    {
+      "id": "music:929ade66af",
+      "schema_version": 1,
+      "category": "music",
+      "tags": [
+        "album"
+      ],
+      "title": "Kind of Blue",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 1959,
+      "release_date": null,
+      "cover": null,
+      "summary": null,
+      "status": "completed",
+      "rating": {
+        "value": 10.0,
+        "scale": 10.0,
+        "normalized_10": 10.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "telemetry": {},
+      "links": {
+        "primary": "https://neodb.social/music/n6",
+        "bangumi": "https://bgm.tv/subject/6",
+        "neodb": "https://neodb.social/music/n6"
+      },
+      "identifiers": {
+        "bangumi_subject_id": 6,
+        "neodb_item_id": "n6"
+      },
+      "sources": {
+        "bangumi": {
+          "present": true,
+          "id": "6",
+          "url": "https://bgm.tv/subject/6",
+          "status": "completed",
+          "rating": {
+            "value": 10.0,
+            "scale": 10.0,
+            "normalized_10": 10.0,
+            "source": "bangumi"
+          },
+          "updated_at": "2026-08-17T00:00:00Z",
+          "extra": {}
+        },
+        "neodb": {
+          "present": true,
+          "id": "n6",
+          "url": "https://neodb.social/music/n6",
+          "status": "completed",
+          "rating": {
+            "value": 4.5,
+            "scale": 5.0,
+            "normalized_10": 9.0,
+            "source": "neodb"
+          },
+          "updated_at": null,
+          "extra": {}
+        }
+      },
+      "articles": [],
+      "privacy": {
+        "hidden": false,
+        "hide_sources": [],
+        "stats_only": false
+      },
+      "timestamps": {
+        "first_seen_at": "2026-08-18T02:59:27Z",
+        "last_seen_at": "2026-08-18T02:59:27Z",
+        "canonical_updated_at": "2026-08-18T02:59:27Z"
+      },
+      "_provenance": {
+        "title": "bangumi",
+        "cover.url": null,
+        "status": "bangumi",
+        "rating": "bangumi",
+        "progress": null
+      }
+    },
+    {
+      "id": "book:64adad026f",
+      "schema_version": 1,
+      "category": "book",
+      "tags": [
+        "science fiction"
+      ],
+      "title": "The Left Hand of Darkness",
+      "title_original": null,
+      "alternate_titles": [
+        "黑暗的左手"
+      ],
+      "year": 1969,
+      "release_date": null,
+      "cover": {
+        "url": "https://example.invalid/left-hand.jpg",
+        "source": "bangumi",
+        "cached": false,
+        "local_path": null
+      },
+      "summary": null,
+      "status": "wishlist",
+      "rating": null,
+      "progress": null,
+      "telemetry": {},
+      "links": {
+        "primary": "https://bgm.tv/subject/7",
+        "bangumi": "https://bgm.tv/subject/7"
+      },
+      "identifiers": {
+        "bangumi_subject_id": 7
+      },
+      "sources": {
+        "bangumi": {
+          "present": true,
+          "id": "7",
+          "url": "https://bgm.tv/subject/7",
+          "status": "wishlist",
+          "rating": null,
+          "updated_at": "2026-08-17T00:00:00Z",
+          "extra": {}
+        }
+      },
+      "articles": [],
+      "privacy": {
+        "hidden": false,
+        "hide_sources": [],
+        "stats_only": false
+      },
+      "timestamps": {
+        "first_seen_at": "2026-08-18T02:59:27Z",
+        "last_seen_at": "2026-08-18T02:59:27Z",
+        "canonical_updated_at": "2026-08-18T02:59:27Z"
+      },
+      "_provenance": {
+        "title": "bangumi",
+        "cover.url": "bangumi",
+        "status": "bangumi",
+        "rating": null,
+        "progress": null
+      }
+    },
+    {
+      "id": "anime:a304a15ec6",
+      "schema_version": 1,
+      "category": "anime",
+      "tags": [
+        "anime"
+      ],
+      "title": "Demo Dropped Anime",
+      "title_original": null,
+      "alternate_titles": [
+        "示例弃番"
+      ],
+      "year": 2024,
+      "release_date": null,
+      "cover": {
+        "url": "https://example.invalid/dropped-anime.jpg",
+        "source": "bangumi",
+        "cached": false,
+        "local_path": null
+      },
+      "summary": null,
+      "status": "dropped",
+      "rating": null,
+      "progress": {
+        "current": 3,
+        "total": 12,
+        "unit": "episode",
+        "percent": 25.0,
+        "source": "bangumi"
+      },
+      "telemetry": {},
+      "links": {
+        "primary": "https://bgm.tv/subject/8",
+        "bangumi": "https://bgm.tv/subject/8"
+      },
+      "identifiers": {
+        "bangumi_subject_id": 8
+      },
+      "sources": {
+        "bangumi": {
+          "present": true,
+          "id": "8",
+          "url": "https://bgm.tv/subject/8",
+          "status": "dropped",
+          "rating": null,
+          "updated_at": "2026-08-17T00:00:00Z",
+          "extra": {}
+        }
+      },
+      "articles": [],
+      "privacy": {
+        "hidden": false,
+        "hide_sources": [],
+        "stats_only": false
+      },
+      "timestamps": {
+        "first_seen_at": "2026-08-18T02:59:27Z",
+        "last_seen_at": "2026-08-18T02:59:27Z",
+        "canonical_updated_at": "2026-08-18T02:59:27Z"
+      },
+      "_provenance": {
+        "title": "bangumi",
+        "cover.url": "bangumi",
+        "status": "bangumi",
+        "rating": null,
+        "progress": "bangumi"
+      }
+    },
+    {
+      "id": "movie:102fa9993f",
+      "schema_version": 1,
+      "category": "movie",
+      "tags": [
+        "performance"
+      ],
+      "title": "Hamlet — National Theatre",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2015,
+      "release_date": null,
+      "cover": null,
+      "summary": null,
+      "status": "completed",
+      "rating": {
+        "value": 4.5,
+        "scale": 5.0,
+        "normalized_10": 9.0,
+        "source": "neodb"
+      },
+      "progress": null,
+      "telemetry": {},
+      "links": {
+        "primary": "https://neodb.social/performance/n4",
+        "neodb": "https://neodb.social/performance/n4"
+      },
+      "identifiers": {
+        "neodb_item_id": "n4"
+      },
+      "sources": {
+        "neodb": {
+          "present": true,
+          "id": "n4",
+          "url": "https://neodb.social/performance/n4",
+          "status": "completed",
+          "rating": {
+            "value": 4.5,
+            "scale": 5.0,
+            "normalized_10": 9.0,
+            "source": "neodb"
+          },
+          "updated_at": null,
+          "extra": {}
+        }
+      },
+      "articles": [],
+      "privacy": {
+        "hidden": false,
+        "hide_sources": [],
+        "stats_only": false
+      },
+      "timestamps": {
+        "first_seen_at": "2026-08-18T02:59:27Z",
+        "last_seen_at": "2026-08-18T02:59:27Z",
+        "canonical_updated_at": "2026-08-18T02:59:27Z"
+      },
+      "_provenance": {
+        "title": "neodb",
+        "cover.url": null,
+        "status": "neodb",
+        "rating": "neodb",
+        "progress": null
+      }
+    },
+    {
+      "id": "movie:19ae7b5be7",
+      "schema_version": 1,
+      "category": "movie",
+      "tags": [
+        "film"
+      ],
+      "title": "Solaris",
+      "title_original": null,
+      "alternate_titles": [
+        "Солярис"
+      ],
+      "year": 1972,
+      "release_date": null,
+      "cover": {
+        "url": "https://example.invalid/solaris.jpg",
+        "source": "neodb",
+        "cached": false,
+        "local_path": null
+      },
+      "summary": "NeoDB-only on-hold movie fixture",
+      "status": "on_hold",
+      "rating": null,
+      "progress": null,
+      "telemetry": {},
+      "links": {
+        "primary": "https://neodb.social/movie/n7",
+        "neodb": "https://neodb.social/movie/n7"
+      },
+      "identifiers": {
+        "neodb_item_id": "n7"
+      },
+      "sources": {
+        "neodb": {
+          "present": true,
+          "id": "n7",
+          "url": "https://neodb.social/movie/n7",
+          "status": "on_hold",
+          "rating": null,
+          "updated_at": "2026-08-16T00:00:00Z",
+          "extra": {}
+        }
+      },
+      "articles": [],
+      "privacy": {
+        "hidden": false,
+        "hide_sources": [],
+        "stats_only": false
+      },
+      "timestamps": {
+        "first_seen_at": "2026-08-18T02:59:27Z",
+        "last_seen_at": "2026-08-18T02:59:27Z",
+        "canonical_updated_at": "2026-08-18T02:59:27Z"
+      },
+      "_provenance": {
+        "title": "neodb",
+        "cover.url": "neodb",
+        "status": "neodb",
+        "rating": null,
+        "progress": null
+      }
+    },
+    {
+      "id": "game:bcf7ad2945",
+      "schema_version": 1,
+      "category": "game",
+      "tags": [],
+      "title": "Hades",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2020,
+      "release_date": null,
+      "cover": {
+        "url": "https://example.invalid/hades.jpg",
+        "source": "steam",
+        "cached": false,
+        "local_path": null
+      },
+      "summary": null,
+      "status": null,
+      "rating": null,
+      "progress": null,
+      "telemetry": {
+        "steam": {
+          "appid": 1145360,
+          "playtime_minutes": 3120,
+          "playtime_2weeks_minutes": 180,
+          "last_played_at": "2026-08-16T18:00:00Z",
+          "achievements": {
+            "unlocked": 20,
+            "total": 49
+          }
+        }
+      },
+      "links": {
+        "primary": "https://store.steampowered.com/app/1145360/",
+        "steam": "https://store.steampowered.com/app/1145360/"
+      },
+      "identifiers": {
+        "steam_appid": 1145360
+      },
+      "sources": {
+        "steam": {
+          "present": true,
+          "id": "1145360",
+          "url": "https://store.steampowered.com/app/1145360/",
+          "status": null,
+          "rating": null,
+          "updated_at": "2026-08-16T18:00:00Z",
+          "extra": {}
+        }
+      },
+      "articles": [],
+      "privacy": {
+        "hidden": false,
+        "hide_sources": [],
+        "stats_only": false
+      },
+      "timestamps": {
+        "first_seen_at": "2026-08-18T02:59:27Z",
+        "last_seen_at": "2026-08-18T02:59:27Z",
+        "canonical_updated_at": "2026-08-18T02:59:27Z"
+      },
+      "_provenance": {
+        "title": "steam",
+        "cover.url": "steam",
+        "status": null,
+        "rating": null,
+        "progress": null
+      }
+    }
+  ]
+}

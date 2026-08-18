@@ -1,0 +1,198 @@
+{
+  "records": [
+    {
+      "source": "neodb",
+      "source_id": "n1",
+      "category_hint": "movie",
+      "title": "Spirited Away",
+      "alternate_titles": [
+        "千と千尋の神隠し",
+        "千与千寻"
+      ],
+      "year": 2001,
+      "cover_url": "https://example.invalid/neo-spirited.jpg",
+      "summary": "NeoDB movie-labelled animation fixture",
+      "status": "completed",
+      "rating": {
+        "value": 4.5,
+        "scale": 5.0,
+        "normalized_10": 9.0,
+        "source": "neodb"
+      },
+      "tags": [
+        "animation"
+      ],
+      "identifiers": {
+        "neodb_item_id": "n1",
+        "bangumi_subject_id": 1
+      },
+      "links": {
+        "neodb": "https://neodb.social/movie/n1",
+        "bangumi": "https://bgm.tv/subject/1"
+      },
+      "telemetry": {},
+      "raw_type": "movie",
+      "extra": {}
+    },
+    {
+      "source": "neodb",
+      "source_id": "n2",
+      "category_hint": "book",
+      "title": "葬送的芙莉莲",
+      "alternate_titles": [
+        "葬送のフリーレン"
+      ],
+      "year": 2020,
+      "status": "completed",
+      "rating": {
+        "value": 4.0,
+        "scale": 5.0,
+        "normalized_10": 8.0,
+        "source": "neodb"
+      },
+      "tags": [],
+      "identifiers": {
+        "neodb_item_id": "n2"
+      },
+      "links": {
+        "neodb": "https://neodb.social/book/n2"
+      },
+      "telemetry": {},
+      "raw_type": "book",
+      "extra": {}
+    },
+    {
+      "source": "neodb",
+      "source_id": "n3",
+      "category_hint": "book",
+      "title": "围城",
+      "alternate_titles": [
+        "Fortress Besieged"
+      ],
+      "year": 1947,
+      "status": "completed",
+      "rating": {
+        "value": 4.0,
+        "scale": 5.0,
+        "normalized_10": 8.0,
+        "source": "neodb"
+      },
+      "tags": [],
+      "identifiers": {
+        "neodb_item_id": "n3",
+        "isbn13": "9787020090006"
+      },
+      "links": {
+        "neodb": "https://neodb.social/book/n3"
+      },
+      "telemetry": {},
+      "raw_type": "book",
+      "extra": {}
+    },
+    {
+      "source": "neodb",
+      "source_id": "n4",
+      "category_hint": "performance",
+      "title": "Hamlet — National Theatre",
+      "year": 2015,
+      "status": "completed",
+      "rating": {
+        "value": 4.5,
+        "scale": 5.0,
+        "normalized_10": 9.0,
+        "source": "neodb"
+      },
+      "tags": [
+        "performance"
+      ],
+      "identifiers": {
+        "neodb_item_id": "n4"
+      },
+      "links": {
+        "neodb": "https://neodb.social/performance/n4"
+      },
+      "telemetry": {},
+      "raw_type": "performance",
+      "extra": {}
+    },
+    {
+      "source": "neodb",
+      "source_id": "n5",
+      "category_hint": "drama",
+      "title": "Sherlock",
+      "alternate_titles": [
+        "神探夏洛克"
+      ],
+      "year": 2010,
+      "status": "completed",
+      "rating": {
+        "value": 4.5,
+        "scale": 5.0,
+        "normalized_10": 9.0,
+        "source": "neodb"
+      },
+      "tags": [],
+      "identifiers": {
+        "neodb_item_id": "n5"
+      },
+      "links": {
+        "neodb": "https://neodb.social/tv/n5"
+      },
+      "telemetry": {},
+      "raw_type": "tv",
+      "extra": {}
+    },
+    {
+      "source": "neodb",
+      "source_id": "n6",
+      "category_hint": "music",
+      "title": "Kind of Blue",
+      "year": 1959,
+      "status": "completed",
+      "rating": {
+        "value": 4.5,
+        "scale": 5.0,
+        "normalized_10": 9.0,
+        "source": "neodb"
+      },
+      "tags": [],
+      "identifiers": {
+        "neodb_item_id": "n6"
+      },
+      "links": {
+        "neodb": "https://neodb.social/music/n6"
+      },
+      "telemetry": {},
+      "raw_type": "music",
+      "extra": {}
+    },
+    {
+      "source": "neodb",
+      "source_id": "n7",
+      "category_hint": "movie",
+      "title": "Solaris",
+      "alternate_titles": [
+        "Солярис"
+      ],
+      "year": 1972,
+      "cover_url": "https://example.invalid/solaris.jpg",
+      "summary": "NeoDB-only on-hold movie fixture",
+      "status": "on_hold",
+      "rating": null,
+      "progress": null,
+      "tags": [
+        "film"
+      ],
+      "identifiers": {
+        "neodb_item_id": "n7"
+      },
+      "links": {
+        "neodb": "https://neodb.social/movie/n7"
+      },
+      "telemetry": {},
+      "updated_at": "2026-08-16T00:00:00Z",
+      "raw_type": "Movie",
+      "extra": {}
+    }
+  ]
+}

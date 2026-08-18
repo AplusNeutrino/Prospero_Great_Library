@@ -1,0 +1,72 @@
+prospero_great_library:
+  enabled: true
+  locale: zh-CN
+  page:
+    permalink: /library/
+
+  sources:
+    bangumi:
+      enabled: true
+      username: "YOUR_BANGUMI_USERNAME"
+      base_url: "https://api.bgm.tv"
+
+    neodb:
+      enabled: true
+      instance: "https://neodb.social"
+      mode: public
+      username: "YOUR_NEODB_USERNAME"
+      # Public mode: set a documented public collection endpoint for your instance.
+      # `{username}` is substituted. PGL will not fall back to HTML scraping.
+      collection_endpoint: ""
+      # Authenticated mode can use the standard shelf path below with NEODB_ACCESS_TOKEN.
+      authenticated_shelf_endpoint: "/api/me/shelf/{shelf}"
+      shelf_types: [wishlist, progress, complete, dropped]
+
+    steam:
+      enabled: true
+      steam_id: "YOUR_STEAM64_ID"
+      fetch_achievements: false
+
+  precedence:
+    book: [bangumi, neodb]
+    comic: [bangumi, neodb]
+    movie: [bangumi, neodb]
+    drama: [bangumi, neodb]
+    anime: [bangumi, neodb]
+    music: [bangumi, neodb]
+
+  sync:
+    timezone: "Asia/Shanghai"
+    on_deploy: true
+    daily: true
+    preserve_last_good: true
+
+  history:
+    enabled: true
+    partition: year
+    steam_playtime_deltas: true
+
+  association:
+    enabled: true
+    exact: true
+    fuzzy: true
+    auto_threshold: 0.95
+    suggest_threshold: 0.80
+    auto_edit_posts: false
+
+  privacy:
+    enabled: true
+    hide_items: []
+    hide_sources: []
+    stats_only_items: []
+
+  ui:
+    layout: grid
+    allow_grid_list_toggle: true
+    drawer: true
+    lazy_render: true
+    show_stats: true
+    show_timeline: true
+    show_sources: true
+    show_steam_playtime: true
+    show_achievements: true

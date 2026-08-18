@@ -1,0 +1,16 @@
+/*
+ * Thin Chirpy adapter. Keep this file selector-light so upstream theme upgrades
+ * do not require PGL layout forks. Chirpy 7.5/7.6 expose the variables below
+ * in both light and dark theme mixins.
+ */
+#prospero-great-library {
+  --pgl-surface: var(--card-bg, var(--main-bg, #fff));
+  --pgl-surface-alt: var(--button-bg, rgba(127, 127, 127, 0.08));
+  --pgl-border: var(--main-border-color, rgba(127, 127, 127, 0.25));
+  --pgl-text: var(--text-color, inherit);
+  --pgl-muted: var(--text-muted-color, #777);
+  --pgl-heading: var(--heading-color, inherit);
+  --pgl-accent: var(--link-color, #6c63ff);
+  --pgl-link: var(--link-color, currentColor);
+  --pgl-shadow: var(--card-shadow, 0 8px 24px rgb(0 0 0 / 8%));
+}

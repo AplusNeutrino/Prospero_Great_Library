@@ -1,0 +1,99 @@
+name: PGL CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.13']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: python -m pip install -e '.[test]'
+      - name: Python tests
+        run: pytest
+      - name: Compile Python
+        run: python -m compileall -q pgl
+      - name: Rebuild demo
+        run: python demo/build_demo.py
+      - name: JavaScript syntax
+        run: node --check jekyll/assets/pgl/pgl.js
+      - name: Ruby syntax
+        run: ruby -c jekyll/_plugins/prospero_great_library.rb
+      - name: Installer dry-run
+        run: pgl install --adapter chirpy --site-root demo/site --dry-run
+
+  action-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Prepare isolated demo site
+        run: cp -R demo/site /tmp/pgl-action-site
+      - name: Run local composite Action with fixtures
+        uses: ./
+        with:
+          site-root: /tmp/pgl-action-site
+          config: _config.yml
+          fixtures: ${{ github.workspace }}/demo/fixtures
+      - name: Assert Action output
+        run: test -s /tmp/pgl-action-site/_data/prospero_great_library/library.json
+
+  chirpy-compatibility:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        chirpy: ['v7.6.0', 'v7.5.0']
+        theme-mode: ['light', 'dark']
+    steps:
+      - name: Checkout PGL
+        uses: actions/checkout@v7
+        with:
+          path: pgl
+      - name: Checkout Chirpy Starter
+        uses: actions/checkout@v7
+        with:
+          repository: cotes2020/chirpy-starter
+          ref: ${{ matrix.chirpy }}
+          path: site
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Install PGL
+        run: python -m pip install ./pgl
+      - name: Install PGL adapter into clean Chirpy starter
+        run: pgl install --adapter chirpy --site-root site
+      - name: Add fixture-only PGL config
+        run: cat pgl/demo/pgl-ci-config.yml >> site/_config.yml
+      - name: Generate fixture data
+        run: pgl build-data --site-root site --config _config.yml --fixtures "$GITHUB_WORKSPACE/pgl/demo/fixtures"
+      - name: Setup Ruby and theme gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+          working-directory: site
+      - name: Verify Chirpy theme-variable contract
+        shell: bash
+        run: |
+          theme_dir="$(cd site && bundle show jekyll-theme-chirpy)"
+          python pgl/scripts/check_chirpy_theme_contract.py "$theme_dir" --adapter-css pgl/jekyll/assets/pgl/pgl-chirpy.css
+      - name: Build Chirpy (${{ matrix.theme-mode }})
+        shell: bash
+        run: |
+          printf 'theme_mode: %s\n' '${{ matrix.theme-mode }}' > site/_config-pgl-mode.yml
+          cd site
+          JEKYLL_ENV=production bundle exec jekyll build --config _config.yml,_config-pgl-mode.yml -d "_site-${{ matrix.theme-mode }}"
+      - name: Verify built Library page
+        run: python pgl/scripts/check_built_library.py "site/_site-${{ matrix.theme-mode }}"

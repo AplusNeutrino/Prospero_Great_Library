@@ -1,0 +1,32 @@
+name: PGL Sync
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 18 * * *" # example only; UTC. Change to your desired schedule.
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      # Pin a release tag after PGL is published, e.g. @v0.1.0-alpha.2.
+      - uses: AplusNeutrino/Prospero_Great_Library@main
+        env:
+          BANGUMI_ACCESS_TOKEN: ${{ secrets.BANGUMI_ACCESS_TOKEN }}
+          NEODB_ACCESS_TOKEN: ${{ secrets.NEODB_ACCESS_TOKEN }}
+          STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
+      - name: Persist generated library state
+        shell: bash
+        run: |
+          if git diff --quiet -- _data/prospero_great_library assets/data/prospero_great_library; then
+            echo "No PGL data changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add _data/prospero_great_library assets/data/prospero_great_library
+          git commit -m "chore(pgl): sync personal library [$(date -u +%F)]"
+          git push

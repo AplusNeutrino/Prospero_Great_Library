@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prospero-great-library"
+version = "0.1.0a2"
+description = "Universal personal media library sync and Jekyll/Chirpy integration"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "Prospero Great Library contributors"}]
+dependencies = ["httpx>=0.27,<1", "PyYAML>=6,<7"]
+keywords = ["jekyll", "chirpy", "bangumi", "neodb", "steam", "personal-library"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10", "jsonschema>=4.20,<5"]
+
+[project.scripts]
+pgl = "pgl.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["pgl*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.setuptools.package-data]
+"pgl" = [
+  "resources/chirpy/*.md",
+  "resources/chirpy/*.rb",
+  "resources/chirpy/includes/*.html",
+  "resources/chirpy/assets/*",
+  "resources/chirpy/locales/*.yml",
+]

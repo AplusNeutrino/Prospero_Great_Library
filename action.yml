@@ -1,0 +1,55 @@
+name: Prospero Great Library Sync
+description: Sync Bangumi, NeoDB and Steam into a static Jekyll personal library
+inputs:
+  site-root:
+    description: Jekyll site root
+    required: false
+    default: .
+  config:
+    description: Jekyll config path relative to site root
+    required: false
+    default: _config.yml
+  python-version:
+    description: Python version used to run PGL
+    required: false
+    default: "3.12"
+  fixtures:
+    description: Optional fixture directory for CI/demo testing; leave empty for live sync
+    required: false
+    default: ""
+  dry-run:
+    description: If true, build and validate without writing generated artifacts
+    required: false
+    default: "false"
+runs:
+  using: composite
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v7
+      with:
+        python-version: ${{ inputs.python-version }}
+    - name: Install Prospero Great Library
+      shell: bash
+      run: python -m pip install "${{ github.action_path }}"
+    - name: Diagnose PGL configuration
+      shell: bash
+      env:
+        PGL_SITE_ROOT: ${{ inputs.site-root }}
+        PGL_CONFIG: ${{ inputs.config }}
+      run: pgl doctor --site-root "$PGL_SITE_ROOT" --config "$PGL_CONFIG" || true
+    - name: Sync personal library
+      shell: bash
+      env:
+        PGL_SITE_ROOT: ${{ inputs.site-root }}
+        PGL_CONFIG: ${{ inputs.config }}
+        PGL_FIXTURES: ${{ inputs.fixtures }}
+        PGL_DRY_RUN: ${{ inputs.dry-run }}
+      run: |
+        args=(pgl sync --site-root "$PGL_SITE_ROOT" --config "$PGL_CONFIG")
+        if [[ -n "$PGL_FIXTURES" ]]; then
+          args+=(--fixtures "$PGL_FIXTURES")
+        fi
+        if [[ "$PGL_DRY_RUN" == "true" ]]; then
+          args+=(--dry-run)
+        fi
+        "${args[@]}"

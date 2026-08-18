@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "year": "2026",
+  "events": [
+    {
+      "id": "evt_003acb1bced8c77c",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "game:656708c36b",
+      "category": "game",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "FINAL FANTASY"
+      }
+    },
+    {
+      "id": "evt_006f465bca5ec941",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "game:656708c36b",
+      "category": "game",
+      "event": "steam_playtime_delta",
+      "source": "steam",
+      "data": {
+        "title": "FINAL FANTASY",
+        "from_minutes": 2436,
+        "to_minutes": 2556,
+        "delta_minutes": 120
+      }
+    },
+    {
+      "id": "evt_2e874635a481ca5e",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "anime:384f3620e3",
+      "category": "anime",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "千と千尋の神隠し"
+      }
+    },
+    {
+      "id": "evt_2f9828151691150a",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "comic:d1fa9ea524",
+      "category": "comic",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "葬送のフリーレン"
+      }
+    },
+    {
+      "id": "evt_4f9e32fc5fed6d21",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "game:bcf7ad2945",
+      "category": "game",
+      "event": "steam_achievement_progress",
+      "source": "steam",
+      "data": {
+        "title": "Hades",
+        "from_unlocked": 19,
+        "to_unlocked": 20,
+        "total": 49
+      }
+    },
+    {
+      "id": "evt_651e05af7d89a07d",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "movie:19ae7b5be7",
+      "category": "movie",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "Solaris"
+      }
+    },
+    {
+      "id": "evt_7c9af414fb012949",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:6ded81eb6c",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "围城"
+      }
+    },
+    {
+      "id": "evt_883b8d0232ad5fc9",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:64adad026f",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "The Left Hand of Darkness"
+      }
+    },
+    {
+      "id": "evt_960d19f6f3ab2091",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "anime:a304a15ec6",
+      "category": "anime",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "Demo Dropped Anime"
+      }
+    },
+    {
+      "id": "evt_b16270a1a764ddfd",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "music:929ade66af",
+      "category": "music",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "Kind of Blue"
+      }
+    },
+    {
+      "id": "evt_b8f9b953a6dbb4e6",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "drama:9b38c6d76d",
+      "category": "drama",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "Sherlock"
+      }
+    },
+    {
+      "id": "evt_db3935dbb5f4096e",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "game:656708c36b",
+      "category": "game",
+      "event": "steam_achievement_progress",
+      "source": "steam",
+      "data": {
+        "title": "FINAL FANTASY",
+        "from_unlocked": 17,
+        "to_unlocked": 18,
+        "total": 24
+      }
+    },
+    {
+      "id": "evt_e156d63596ac4e66",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "game:bcf7ad2945",
+      "category": "game",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "Hades"
+      }
+    },
+    {
+      "id": "evt_e5cc85534e39197f",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "game:bcf7ad2945",
+      "category": "game",
+      "event": "steam_playtime_delta",
+      "source": "steam",
+      "data": {
+        "title": "Hades",
+        "from_minutes": 3000,
+        "to_minutes": 3120,
+        "delta_minutes": 120
+      }
+    },
+    {
+      "id": "evt_fc57a1edab834307",
+      "observed_at": "2026-08-18T02:59:27Z",
+      "local_date": "2026-08-18",
+      "entity_id": "movie:102fa9993f",
+      "category": "movie",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "Hamlet — National Theatre"
+      }
+    }
+  ]
+}
