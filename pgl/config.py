@@ -9,7 +9,7 @@ DEFAULTS: dict[str, Any] = {
     "locale": "zh-CN",
     "page": {"permalink": "/library/"},
     "sources": {
-        "bangumi": {"enabled": False, "username": "", "base_url": "https://api.bgm.tv"},
+        "bangumi": {"enabled": False, "username": "", "base_url": "https://api.bgm.tv", "hide_private_collections": False},
         "neodb": {"enabled": False, "instance": "https://neodb.social", "mode": "public", "username": "", "collection_endpoint": "", "authenticated_shelf_endpoint": "/api/me/shelf/{shelf}", "shelf_types": ["wishlist","progress","complete","dropped"]},
         "steam": {"enabled": False, "steam_id": "", "fetch_achievements": False},
     },
