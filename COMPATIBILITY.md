@@ -1,4 +1,4 @@
-# Compatibility — Prospero Great Library 0.1.0-alpha.2
+# Compatibility — Prospero Great Library 0.1.0-alpha.3
 
 The architecture policy is to support the **two most recent tested Chirpy release lines**, without promising all historical versions.
 
@@ -6,8 +6,8 @@ The architecture policy is to support the **two most recent tested Chirpy releas
 
 | PGL | Chirpy target | Jekyll requirement from Chirpy | Light | Dark | Current evidence |
 |---|---|---|---|---|---|
-| 0.1.0-alpha.2 | v7.6.0 | `~> 4.3` | CI defined | CI defined | RUN_PENDING |
-| 0.1.0-alpha.2 | v7.5.0 | `~> 4.3` | CI defined | CI defined | RUN_PENDING |
+| 0.1.0-alpha.3 | v7.6.0 | `~> 4.3` | CI defined | CI defined | RUN_PENDING |
+| 0.1.0-alpha.3 | v7.5.0 | `~> 4.3` | CI defined | CI defined | RUN_PENDING |
 
 `RUN_PENDING` means the exact matrix exists in `.github/workflows/ci.yml`, but the packaging environment could not execute Bundler/Jekyll. Do not translate this status into “tested/passed” until GitHub Actions has actually completed those jobs.
 

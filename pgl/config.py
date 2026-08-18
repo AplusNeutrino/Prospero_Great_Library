@@ -9,7 +9,7 @@ DEFAULTS: dict[str, Any] = {
     "locale": "zh-CN",
     "page": {"permalink": "/library/"},
     "sources": {
-        "bangumi": {"enabled": False, "username": "", "base_url": "https://api.bgm.tv", "hide_private_collections": False},
+        "bangumi": {"enabled": False, "username": "", "base_url": "https://api.bgm.tv", "hide_private_collections": True},
         "neodb": {"enabled": False, "instance": "https://neodb.social", "mode": "public", "username": "", "collection_endpoint": "", "authenticated_shelf_endpoint": "/api/me/shelf/{shelf}", "shelf_types": ["wishlist","progress","complete","dropped"]},
         "steam": {"enabled": False, "steam_id": "", "fetch_achievements": False},
     },
@@ -18,7 +18,7 @@ DEFAULTS: dict[str, Any] = {
     "sync": {"timezone": "Asia/Shanghai", "on_deploy": True, "daily": True, "preserve_last_good": True},
     "history": {"enabled": True, "partition": "year", "steam_playtime_deltas": True},
     "association": {"enabled": True, "exact": True, "fuzzy": True, "auto_threshold": 0.95, "suggest_threshold": 0.80, "auto_edit_posts": False},
-    "privacy": {"enabled": True, "hide_items": [], "hide_sources": [], "stats_only_items": []},
+    "privacy": {"enabled": True, "hide_items": [], "hide_sources": [], "stats_only_items": [], "publish_diagnostics": False},
     "ui": {"layout": "grid", "allow_grid_list_toggle": True, "drawer": True, "lazy_render": True, "show_stats": True, "show_timeline": True, "show_sources": True, "show_steam_playtime": True, "show_achievements": True},
 }
 

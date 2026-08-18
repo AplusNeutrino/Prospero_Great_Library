@@ -60,6 +60,13 @@ def run_doctor(site_root, config):
                 if not c.get("collection_endpoint"):
                     missing.append("collection_endpoint (documented public endpoint for the selected instance)")
         checks.append({"check": name, "ok": not missing, "detail": "ok" if not missing else "missing: " + ", ".join(missing)})
+        if name == "bangumi" and secret("BANGUMI_ACCESS_TOKEN"):
+            privacy_enabled = bool(c.get("hide_private_collections", True))
+            checks.append({
+                "check": "bangumi_privacy_filter",
+                "ok": privacy_enabled,
+                "detail": "enabled" if privacy_enabled else "authenticated sync may expose private collections; set hide_private_collections: true",
+            })
 
     data = root / "_data" / "prospero_great_library"
     checks.append({"check": "mappings", "ok": True, "detail": str(data / "mappings.yml")})

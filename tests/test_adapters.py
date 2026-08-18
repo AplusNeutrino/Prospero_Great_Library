@@ -8,18 +8,6 @@ def test_bangumi_collection_normalization():
     assert r.category_hint=='anime' and r.status=='in_progress'
     assert r.rating.normalized_10==9 and r.progress.current==4 and r.progress.total==12
 
-def test_bangumi_accepts_paged_collection_response(monkeypatch):
-    adapter=BangumiAdapter({'username':'neutrino_x','base_url':'https://api.bgm.tv'},token='x')
-    calls=[]
-    def fake(url,headers=None,params=None,retries=3):
-        offset=params['offset']; calls.append(offset)
-        rows=[] if offset else [{'subject_id':42,'subject_type':2,'type':2,'subject':{'id':42,'type':2,'name':'Example'}}]
-        return {'total':1,'limit':50,'offset':offset,'data':rows}
-    monkeypatch.setattr(adapter,'_get_json',fake)
-    rows=adapter.fetch_collections()
-    assert calls==[0]
-    assert [row.source_id for row in rows]==['42']
-
 def test_steam_game_normalization():
     r=SteamAdapter.normalize_game({'appid':39140,'name':'FINAL FANTASY','playtime_forever':600,'rtime_last_played':123},{'appid':39140,'playtime_2weeks':30})
     assert r.category_hint=='game'
@@ -59,3 +47,15 @@ def test_neodb_real_shelf_shape_uses_category_and_user_rating_not_community():
     assert r.extra['community_rating']==9.7
     assert r.links['neodb']=='https://neodb.social/tv/season/tv1'
     assert r.title_original=='Original' and 'Alias' in r.alternate_titles
+
+def test_bangumi_accepts_paged_collection_response(monkeypatch):
+    adapter=BangumiAdapter({'username':'demo_user','base_url':'https://api.bgm.tv'},token='x')
+    calls=[]
+    def fake(url,headers=None,params=None,retries=3):
+        offset=params['offset']; calls.append(offset)
+        rows=[] if offset else [{'subject_id':42,'subject_type':2,'type':2,'subject':{'id':42,'type':2,'name':'Example'}}]
+        return {'total':1,'limit':50,'offset':offset,'data':rows}
+    monkeypatch.setattr(adapter,'_get_json',fake)
+    rows=adapter.fetch_collections()
+    assert calls==[0]
+    assert [row.source_id for row in rows]==['42']

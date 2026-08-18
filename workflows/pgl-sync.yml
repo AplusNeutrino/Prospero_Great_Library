@@ -4,7 +4,11 @@ on:
   schedule:
     - cron: "17 18 * * *" # example only; UTC. Change to your desired schedule.
 permissions:
+  actions: write
   contents: write
+concurrency:
+  group: pgl-sync
+  cancel-in-progress: false
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -12,21 +16,37 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      # Pin a release tag after PGL is published, e.g. @v0.1.0-alpha.2.
+
+      # Pin a release tag/commit in production rather than following @main.
       - uses: AplusNeutrino/Prospero_Great_Library@main
         env:
           BANGUMI_ACCESS_TOKEN: ${{ secrets.BANGUMI_ACCESS_TOKEN }}
           NEODB_ACCESS_TOKEN: ${{ secrets.NEODB_ACCESS_TOKEN }}
           STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
+
       - name: Persist generated library state
+        id: persist
         shell: bash
         run: |
-          if git diff --quiet -- _data/prospero_great_library assets/data/prospero_great_library; then
+          if [ -z "$(git status --porcelain -- _data/prospero_great_library assets/data/prospero_great_library)" ]; then
             echo "No PGL data changes."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add _data/prospero_great_library assets/data/prospero_great_library
           git commit -m "chore(pgl): sync personal library [$(date -u +%F)]"
+          git pull --rebase
           git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # Optional: define the repository variable PGL_PAGES_WORKFLOW to your Pages
+      # workflow filename (for example: pages-deploy.yml) when the generated-data
+      # commit itself does not trigger deployment.
+      - name: Deploy updated library
+        if: steps.persist.outputs.changed == 'true' && vars.PGL_PAGES_WORKFLOW != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PGL_PAGES_WORKFLOW: ${{ vars.PGL_PAGES_WORKFLOW }}
+        run: gh workflow run "$PGL_PAGES_WORKFLOW" --ref "${{ github.ref_name }}"

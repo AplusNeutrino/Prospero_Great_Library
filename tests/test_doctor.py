@@ -20,3 +20,17 @@ def test_doctor_warns_for_older_chirpy_line(tmp_path: Path):
     check = _version_check(tmp_path, '7.4')
     assert check['ok'] is False
     assert 'supported lines' in check['detail']
+
+
+def test_doctor_requires_private_filter_for_authenticated_bangumi(tmp_path: Path, monkeypatch):
+    from copy import deepcopy
+    cfg=deepcopy(DEFAULTS)
+    cfg['sources']['bangumi'].update({'enabled':True,'username':'demo','hide_private_collections':False})
+    monkeypatch.setenv('BANGUMI_ACCESS_TOKEN','secret')
+    checks=run_doctor(tmp_path,cfg)
+    row=next(x for x in checks if x['check']=='bangumi_privacy_filter')
+    assert row['ok'] is False
+    cfg['sources']['bangumi']['hide_private_collections']=True
+    checks=run_doctor(tmp_path,cfg)
+    row=next(x for x in checks if x['check']=='bangumi_privacy_filter')
+    assert row['ok'] is True

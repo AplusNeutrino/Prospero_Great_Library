@@ -2,7 +2,7 @@
 
 > Universal personal media library extension/starter kit for Jekyll, with first-class Chirpy integration.
 
-**Release:** `0.1.0-alpha.2`  
+**Release:** `0.1.0-alpha.3`  
 **Architecture source of truth:** [`PROSPERO_GREAT_LIBRARY_ARCHITECTURE.md`](./PROSPERO_GREAT_LIBRARY_ARCHITECTURE.md)
 
 PGL aggregates media records from **Bangumi**, **NeoDB**, and **Steam**, normalizes them into one canonical library, tracks compact history events, and renders a fully static `/library/` page.
@@ -43,9 +43,9 @@ No runtime backend is required after the Jekyll build.
 | Area | Status |
 |---|---|
 | Canonical schema / classifier | Implemented + fixture tested |
-| Bangumi v0 collection adapter | Implemented against official v0 schema; live call not executed in packaging environment |
-| NeoDB adapter | Implemented as capability/config-driven adapter; no HTML scraping; live collection endpoint must be selected from the configured instance's Developer/OpenAPI docs |
-| Steam owned/recent telemetry | Implemented against official Web API methods; live call not executed in packaging environment |
+| Bangumi v0 collection adapter | Implemented; paged-response handling + private-collection filter; live deployed sync verified |
+| NeoDB adapter | Implemented as capability/config-driven adapter; authenticated shelf mode verified in a deployed blog; public mode remains instance-capability-driven |
+| Steam owned/recent telemetry | Owned-library sync verified in a deployed blog; recent-play enrichment remains best-effort by design |
 | Steam achievements | Implemented; opt-in and conservatively refreshed for recently played games with visible stats |
 | Entity resolution | Implemented + fixture tested |
 | Bangumi-first merge | Implemented + fixture tested |
@@ -54,7 +54,7 @@ No runtime backend is required after the Jekyll build.
 | Jekyll UI / Chirpy adapter | Implemented; installer/resource/UI contract fixture-tested |
 | Chirpy v7.6/v7.5 build matrix | CI matrix implemented for Light/Dark; **runtime pending until uploaded CI executes** |
 
-Do not treat `alpha.2` as a claim of live production verification for every external service or Chirpy runtime combination.
+Do not treat `alpha.3` as a claim that every optional endpoint is live-verified. Steam achievements remain opt-in/unverified, and public NeoDB behavior still depends on the selected instance.
 
 ## Quick start
 
@@ -90,18 +90,30 @@ STEAM_API_KEY
 
 Never place tokens in `_config.yml`.
 
-To remove Bangumi collections marked private before PGL writes source snapshots,
-merged data, statistics, or history, enable:
+### 4.1 Bangumi private collections
+
+Authenticated Bangumi collection reads can include entries the owner marked private. For public repositories/sites, enable the source-level publication boundary:
 
 ```yaml
 prospero_great_library:
   sources:
     bangumi:
-      hide_private_collections: true
+      hide_private_collections: true  # alpha.3 default; keep explicit for clarity
 ```
 
-The option defaults to `false` for backward compatibility. Public repositories
-should enable it.
+When enabled, private Bangumi records are removed **before source snapshots, entity resolution, merge, statistics, associations, and new history events**. Alpha.3 also retroactively sanitizes already-persisted PGL history when a currently-private Bangumi record can be linked to a previously public canonical entity. Private source IDs used for that migration are kept only in memory during the sync and are not persisted as a private-item index.
+
+Run a read-only audit with:
+
+```bash
+pgl privacy-audit --site-root .
+```
+
+Use `--apply` only when you explicitly want that command to perform the sanitized sync/write. Ordinary `pgl sync` already applies the privacy boundary automatically. The audit needs the same source credentials as a normal live sync if it is expected to discover upstream-private records. `pgl doctor` warns when an authenticated Bangumi token is present but `hide_private_collections` is disabled.
+
+> **Git-history boundary:** PGL can sanitize the current working tree and future generated artifacts, but a normal new commit cannot erase private data that was already committed to an earlier revision of a public Git repository. If an older commit ever contained data that should never have been public, repository-history rewriting/removal is a separate one-time maintenance operation. PGL deliberately does not attempt that destructive Git operation automatically.
+
+Detailed privacy counts and scrub reasons are not persisted by default. `privacy.publish_diagnostics: false` is the default; set it to `true` only if you intentionally want those counts/reasons in generated repository data. `pgl privacy-audit` still reports full details to the invoking process so an operator can inspect them without making them part of the published state.
 
 ### 5. Diagnose
 
@@ -172,7 +184,8 @@ _data/prospero_great_library/
 │   └── steam.json
 └── diagnostics/
     ├── entity_resolution.json
-    └── associations.json
+    ├── associations.json
+    └── privacy.json
 
 assets/data/prospero_great_library/
 ├── library.json
@@ -184,6 +197,8 @@ assets/data/prospero_great_library/
 ```
 
 Source snapshots under `_data/.../sources/` are state for diff/failure recovery. If your repository itself is public, remember that repository visibility is distinct from PGL's **site-output privacy filters**.
+
+Privacy applies to history as well as current cards. If an item is changed to `hidden`, `stats_only`, or becomes a currently-detected private Bangumi collection, PGL sanitizes affected persisted timeline events before rebuilding public history partitions. This closes the migration gap where deleting an item from the current library alone would leave its old timeline visible.
 
 ## History semantics
 
@@ -312,11 +327,11 @@ Personal day/night branding belongs in site-specific CSS, not the reusable PGL c
 - `workflows/pgl-pages-example.yml`: Chirpy Pages reference build that syncs PGL into the checkout used for that deployment.
 - `.github/workflows/ci.yml`: Python tests, local Action smoke test, plus a Chirpy `v7.6.0` / `v7.5.0` × Light / Dark build matrix.
 
-The Pages reference does **not** persist generated history by itself because it uses `contents: read`; use the separate sync workflow when repository persistence is required. Do not blindly replace a working site workflow—merge the PGL step into it.
+The Pages reference does **not** persist generated history by itself because it uses `contents: read`; use the separate sync workflow when repository persistence is required. The sync reference uses `git status --porcelain` so first-run/untracked generated files are detected, rebases before pushing, and can explicitly dispatch a separate Pages workflow when repository variable `PGL_PAGES_WORKFLOW` is set (for example `pages-deploy.yml`). Do not blindly replace a working site workflow—merge the PGL step into it.
 
 ## Compatibility
 
-`0.1.0-alpha.2` targets Chirpy `v7.6.0` and `v7.5.0`, whose theme gems both declare Jekyll `~> 4.3`. The repository contains a four-cell Light/Dark compatibility build matrix, but this packaging environment has no Bundler/Jekyll runtime; therefore the matrix is **RUN_PENDING**, not claimed as passed. See [`COMPATIBILITY.md`](./COMPATIBILITY.md).
+`0.1.0-alpha.3` targets Chirpy `v7.6.0` and `v7.5.0`, whose theme gems both declare Jekyll `~> 4.3`. The repository contains a four-cell Light/Dark compatibility build matrix, but this packaging environment has no Bundler/Jekyll runtime; therefore the matrix is **RUN_PENDING**, not claimed as passed. See [`COMPATIBILITY.md`](./COMPATIBILITY.md).
 
 ## Development
 
