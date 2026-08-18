@@ -19,7 +19,26 @@ DEFAULTS: dict[str, Any] = {
     "history": {"enabled": True, "partition": "year", "steam_playtime_deltas": True},
     "association": {"enabled": True, "exact": True, "fuzzy": True, "auto_threshold": 0.95, "suggest_threshold": 0.80, "auto_edit_posts": False},
     "privacy": {"enabled": True, "hide_items": [], "hide_sources": [], "stats_only_items": [], "publish_diagnostics": False},
-    "ui": {"layout": "grid", "allow_grid_list_toggle": True, "drawer": True, "lazy_render": True, "show_stats": True, "show_timeline": True, "show_sources": True, "show_steam_playtime": True, "show_achievements": True},
+    "ui": {
+        "title": None,
+        "subtitle": None,
+        "page_size": 24,
+        "layout": "grid",
+        "allow_grid_list_toggle": True,
+        "drawer": True,
+        "lazy_render": True,  # deprecated: alpha.4 uses pagination
+        "show_stats": True,
+        "show_timeline": True,
+        "show_sources": True,
+        "show_steam_playtime": True,
+        "show_achievements": True,
+        "default_statuses": ["in_progress", "completed"],
+        "wishlist": {"enabled": True},
+        "other_statuses": {"enabled": True, "expose_in_primary_navigation": False},
+        "current": {"enabled": True, "include_all_in_progress": True, "include_steam_recent": True},
+        "rating_chart": {"enabled": True, "bin_size": 0.5},
+        "search": {"enabled": True, "global_scope": True},
+    },
 }
 
 def deep_merge(base: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]:

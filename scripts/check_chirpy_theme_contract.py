@@ -24,8 +24,9 @@ def main() -> int:
     adapter = Path(args.adapter_css)
     light = theme / '_sass' / 'themes' / '_light.scss'
     dark = theme / '_sass' / 'themes' / '_dark.scss'
-    if not light.exists() or not dark.exists():
-        raise SystemExit(f'Chirpy theme files not found under {theme}')
+    page_layout = theme / '_layouts' / 'page.html'
+    if not light.exists() or not dark.exists() or not page_layout.exists():
+        raise SystemExit(f'Chirpy theme contract files not found under {theme}')
     adapter_text = adapter.read_text(encoding='utf-8', errors='replace')
     failures = []
     for path in (light, dark):
@@ -36,6 +37,12 @@ def main() -> int:
     for var in REQUIRED_VARS:
         if var not in adapter_text:
             failures.append(f'PGL adapter does not reference {var}')
+    page_text = page_layout.read_text(encoding='utf-8', errors='replace')
+    for marker in ('class="dynamic-title"', 'class="content"'):
+        if marker not in page_text:
+            failures.append(f'Chirpy page layout missing {marker}')
+    if 'article:has(#prospero-great-library) > .dynamic-title' not in adapter_text:
+        failures.append('PGL adapter missing scoped Chirpy dynamic-title suppression')
     if failures:
         raise SystemExit('theme contract failure:\n- ' + '\n- '.join(failures))
     print(f'Chirpy theme-variable contract PASS: {theme}')

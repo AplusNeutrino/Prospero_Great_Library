@@ -1,23 +1,4 @@
-{% assign l = site.data.pgl_locales[site.lang] | default: site.data.pgl_locales.en %}
-{% assign pgl_ui = site.prospero_great_library.ui %}
-<div class="pgl-controls" role="search">
-  <label class="pgl-search"><span class="visually-hidden">{{ l.search }}</span><input id="pgl-search" type="search" placeholder="{{ l.search }}" autocomplete="off"></label>
-  <select id="pgl-category" aria-label="{{ l.category }}">
-    <option value="">{{ l.all_categories }}</option>
-    {% assign pgl_categories = 'book,comic,movie,drama,anime,game,music' | split: ',' %}{% for c in pgl_categories %}<option value="{{ c }}">{{ l.categories[c] | default: c }}</option>{% endfor %}
-  </select>
-  <select id="pgl-status" aria-label="{{ l.status }}">
-    <option value="">{{ l.all_statuses }}</option>
-    {% assign pgl_statuses = 'wishlist,in_progress,completed,on_hold,dropped' | split: ',' %}{% for s in pgl_statuses %}<option value="{{ s }}">{{ l.statuses[s] | default: s }}</option>{% endfor %}
-  </select>
-  <select id="pgl-source" aria-label="{{ l.source }}">
-    <option value="">{{ l.all_sources }}</option><option value="bangumi">Bangumi</option><option value="neodb">NeoDB</option><option value="steam">Steam</option>
-  </select>
-  <select id="pgl-year" aria-label="{{ l.year }}">
-    <option value="">{{ l.all_years }}</option>
-  </select>
-  <select id="pgl-sort" aria-label="{{ l.sort }}">
-    <option value="updated">{{ l.sort_updated }}</option><option value="rating">{{ l.sort_rating }}</option><option value="playtime">{{ l.sort_playtime }}</option><option value="title">{{ l.sort_title }}</option>
-  </select>
-  {% if pgl_ui.allow_grid_list_toggle != false %}<button id="pgl-layout" type="button" aria-pressed="{% if pgl_ui.layout == 'list' %}true{% else %}false{% endif %}">{{ l.toggle_layout }}</button>{% endif %}
-</div>
+{% comment %}
+Deprecated in alpha.4. Primary navigation moved to the category ledger, header search,
+and view toolbar. Kept as an empty compatibility include for themes that referenced it.
+{% endcomment %}

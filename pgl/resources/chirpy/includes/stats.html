@@ -9,13 +9,5 @@
     {% assign observed = stats.steam.observed_playtime_by_year_minutes[y] | default: 0 %}
     <div><strong>{{ observed | pgl_hours }}h</strong><span>{{ l.steam_observed_year }}</span></div>
   </div>
-  <div class="pgl-stat-details">
-    {% if stats.rating_distribution and stats.rating_distribution.size > 0 %}
-    <details><summary>{{ l.rating_distribution }}</summary><div class="pgl-stat-chips">{% for pair in stats.rating_distribution %}<span>★{{ pair[0] }} <strong>{{ pair[1] }}</strong></span>{% endfor %}</div></details>
-    {% endif %}
-    {% if stats.steam.ranking and stats.steam.ranking.size > 0 %}
-    <details><summary>{{ l.steam_top_games }}</summary><ol class="pgl-ranking">{% for row in stats.steam.ranking limit: 10 %}<li><span>{{ row.title | escape }}</span><strong>{{ row.minutes | pgl_hours }}h</strong></li>{% endfor %}</ol></details>
-    {% endif %}
-  </div>
 </section>
 {% endif %}

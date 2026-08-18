@@ -1,0 +1,20 @@
+{% assign l = site.data.pgl_locales[site.lang] | default: site.data.pgl_locales.en %}
+{% assign stats = site.data.prospero_great_library.stats %}
+{% assign pgl_ui = site.prospero_great_library.ui %}
+<section class="pgl-category-section" aria-labelledby="pgl-category-index-title">
+  <div class="pgl-section-heading"><h2 id="pgl-category-index-title">{{ l.collection_categories }}</h2></div>
+  <nav class="pgl-category-ledger" aria-label="{{ l.collection_categories }}">
+    {% assign pgl_categories = 'book,comic,movie,drama,anime,game,music' | split: ',' %}
+    {% for c in pgl_categories %}
+      {% assign count = stats.navigation.default_by_category[c] | default: 0 %}
+      <a class="pgl-category-ledger-item" href="?category={{ c }}" data-pgl-category="{{ c }}">
+        <span class="pgl-ledger-primary"><span class="pgl-ledger-icon" aria-hidden="true">›</span><strong>{{ l.categories[c] | default: c }}</strong></span>
+        <span class="pgl-ledger-count">{{ count }} {{ l.items }}</span>
+      </a>
+    {% endfor %}
+  </nav>
+  {% if pgl_ui.wishlist.enabled != false %}<a class="pgl-wishlist-entry" href="?view=wishlist" data-pgl-wishlist>
+    <span><strong>{{ l.wishlist }}</strong><small>{{ l.wishlist_summary }}</small></span>
+    <span class="pgl-ledger-count">{{ stats.navigation.wishlist_total | default: 0 }} {{ l.items }}</span>
+  </a>{% endif %}
+</section>

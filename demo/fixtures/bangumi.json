@@ -251,6 +251,986 @@
       "updated_at": "2026-08-17T00:00:00Z",
       "raw_type": 2,
       "extra": {}
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990001",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 01",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2001,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 7.0,
+        "scale": 10.0,
+        "normalized_10": 7.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990001
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990001"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-02T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990002",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 02",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2002,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 8.0,
+        "scale": 10.0,
+        "normalized_10": 8.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990002
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990002"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-03T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990003",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 03",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2003,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 9.0,
+        "scale": 10.0,
+        "normalized_10": 9.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990003
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990003"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-04T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990004",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 04",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2004,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 10.0,
+        "scale": 10.0,
+        "normalized_10": 10.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990004
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990004"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-05T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990005",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 05",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2005,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 6.0,
+        "scale": 10.0,
+        "normalized_10": 6.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990005
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990005"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-06T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990006",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 06",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2006,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 7.0,
+        "scale": 10.0,
+        "normalized_10": 7.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990006
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990006"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-07T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990007",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 07",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2007,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 8.0,
+        "scale": 10.0,
+        "normalized_10": 8.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990007
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990007"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-08T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990008",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 08",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2008,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 9.0,
+        "scale": 10.0,
+        "normalized_10": 9.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990008
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990008"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-09T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990009",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 09",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2009,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 10.0,
+        "scale": 10.0,
+        "normalized_10": 10.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990009
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990009"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-10T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990010",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 10",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2010,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 6.0,
+        "scale": 10.0,
+        "normalized_10": 6.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990010
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990010"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-11T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990011",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 11",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2011,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 7.0,
+        "scale": 10.0,
+        "normalized_10": 7.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990011
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990011"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-12T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990012",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 12",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2012,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 8.0,
+        "scale": 10.0,
+        "normalized_10": 8.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990012
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990012"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-13T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990013",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 13",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2013,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 9.0,
+        "scale": 10.0,
+        "normalized_10": 9.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990013
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990013"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-14T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990014",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 14",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2014,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 10.0,
+        "scale": 10.0,
+        "normalized_10": 10.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990014
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990014"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-15T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990015",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 15",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2015,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 6.0,
+        "scale": 10.0,
+        "normalized_10": 6.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990015
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990015"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-16T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990016",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 16",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2016,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 7.0,
+        "scale": 10.0,
+        "normalized_10": 7.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990016
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990016"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-17T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990017",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 17",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2017,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 8.0,
+        "scale": 10.0,
+        "normalized_10": 8.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990017
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990017"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-18T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990018",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 18",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2018,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 9.0,
+        "scale": 10.0,
+        "normalized_10": 9.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990018
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990018"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-19T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990019",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 19",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2019,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 10.0,
+        "scale": 10.0,
+        "normalized_10": 10.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990019
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990019"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-20T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990020",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 20",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2020,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 6.0,
+        "scale": 10.0,
+        "normalized_10": 6.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990020
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990020"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-21T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990021",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 21",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2021,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 7.0,
+        "scale": 10.0,
+        "normalized_10": 7.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990021
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990021"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-22T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990022",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 22",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2022,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 8.0,
+        "scale": 10.0,
+        "normalized_10": 8.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990022
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990022"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-23T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990023",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 23",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2023,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 9.0,
+        "scale": 10.0,
+        "normalized_10": 9.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990023
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990023"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-24T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990024",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 24",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2000,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 10.0,
+        "scale": 10.0,
+        "normalized_10": 10.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990024
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990024"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-25T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990025",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 25",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2001,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 6.0,
+        "scale": 10.0,
+        "normalized_10": 6.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990025
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990025"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-26T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990026",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 26",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2002,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 7.0,
+        "scale": 10.0,
+        "normalized_10": 7.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990026
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990026"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-27T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990027",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 27",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2003,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 8.0,
+        "scale": 10.0,
+        "normalized_10": 8.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990027
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990027"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-28T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
+    },
+    {
+      "source": "bangumi",
+      "source_id": "990028",
+      "category_hint": "book",
+      "title": "PGL Demo Catalogue Book 28",
+      "title_original": null,
+      "alternate_titles": [],
+      "year": 2004,
+      "release_date": null,
+      "cover_url": null,
+      "summary": "Synthetic demo record used to exercise classified pagination.",
+      "status": "completed",
+      "rating": {
+        "value": 9.0,
+        "scale": 10.0,
+        "normalized_10": 9.0,
+        "source": "bangumi"
+      },
+      "progress": null,
+      "tags": [],
+      "identifiers": {
+        "bangumi_subject_id": 990028
+      },
+      "links": {
+        "bangumi": "https://bgm.tv/subject/990028"
+      },
+      "telemetry": {},
+      "updated_at": "2026-07-01T12:00:00+08:00",
+      "raw_type": 1,
+      "extra": {
+        "comment": null,
+        "private": false,
+        "platform": null
+      }
     }
   ]
 }
