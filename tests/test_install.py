@@ -57,3 +57,13 @@ def test_chirpy_installer_refuses_non_jekyll_directory(tmp_path: Path):
     import pytest
     with pytest.raises(InstallError, match="_config.yml"):
         install_chirpy(tmp_path)
+
+def test_demo_site_is_current_with_packaged_chirpy_resources():
+    from pathlib import Path
+    from pgl.install import install_chirpy
+
+    root = Path(__file__).resolve().parents[1]
+    actions = install_chirpy(root / "demo" / "site", dry_run=True)
+    conflicts = [item for item in actions if item.action == "conflict"]
+    assert conflicts == []
+

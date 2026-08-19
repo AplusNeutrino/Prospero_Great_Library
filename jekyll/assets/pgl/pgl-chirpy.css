@@ -1,7 +1,7 @@
 /*
  * Thin Chirpy adapter. Keep this file selector-light so upstream theme upgrades
- * do not require PGL layout forks. Chirpy 7.5/7.6 expose the variables below
- * in both light and dark theme mixins.
+ * do not require PGL layout forks. Chirpy 7.5/7.6 use .dynamic-title directly
+ * above .content in the page layout; PGL renders its own title/search header.
  */
 #prospero-great-library {
   --pgl-surface: var(--card-bg, var(--main-bg, #fff));
@@ -14,3 +14,12 @@
   --pgl-link: var(--link-color, currentColor);
   --pgl-shadow: var(--card-shadow, 0 8px 24px rgb(0 0 0 / 8%));
 }
+
+/* Both supported Chirpy release lines (7.5/7.6) render this heading before
+ * .content. :has() keeps the rule scoped to a page actually containing PGL.
+ */
+article:has(#prospero-great-library) > .dynamic-title { display:none; }
+
+#prospero-great-library .pgl-category-ledger-item,
+#prospero-great-library .pgl-wishlist-entry,
+#prospero-great-library .pgl-back { text-decoration:none; }

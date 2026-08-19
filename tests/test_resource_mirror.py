@@ -13,6 +13,7 @@ def test_packaged_chirpy_resources_match_release_tree():
             pairs.append((source, RES / 'assets' / source.name))
     for source in (ROOT / 'jekyll/locales').glob('*.yml'):
         pairs.append((source, RES / 'locales' / source.name))
+        pairs.append((source, ROOT / 'demo/site/_data/pgl_locales' / source.name))
     pairs.extend([
         (ROOT / 'jekyll/_plugins/prospero_great_library.rb', RES / 'prospero_great_library.rb'),
         (ROOT / 'adapters/chirpy/library-page.md', RES / 'library-page.md'),

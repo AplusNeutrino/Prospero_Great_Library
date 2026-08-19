@@ -166,7 +166,7 @@ def run_sync(site_root: str|Path, config: dict[str,Any], fixture_dir: str|Path|N
     # Privacy is a publication invariant, not an optional strict-mode behavior.
     assert_public_payload_safe(library,source_docs,all_history,config,privacy_context)
 
-    stats=build_stats(stat_items,all_history)
+    stats=build_stats(public_items,all_history,aggregate_items=stat_items,config=config)
     overall='ok' if all(v.get('status') in ('ok','disabled') for v in source_status.values()) else 'degraded'
     public_privacy_report=_public_privacy_report(privacy_report,config)
     sync_status={'last_run':observed,'overall':overall,'sources':source_status,'privacy':public_privacy_report}

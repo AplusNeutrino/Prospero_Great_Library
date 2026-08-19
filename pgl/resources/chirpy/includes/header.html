@@ -1,0 +1,27 @@
+{% assign l = site.data.pgl_locales[site.lang] | default: site.data.pgl_locales.en %}
+{% assign pgl_ui = site.prospero_great_library.ui %}
+{% assign pgl_title = pgl_ui.title | default: page.title %}
+{% if pgl_title == nil or pgl_title == '' or pgl_title == 'Library' %}
+  {% if site.lang contains 'zh' %}
+    {% capture pgl_title %}{{ site.title }}大图书馆{% endcapture %}
+  {% else %}
+    {% capture pgl_title %}{{ site.title }} Great Library{% endcapture %}
+  {% endif %}
+{% endif %}
+{% assign pgl_subtitle = pgl_ui.subtitle | default: l.subtitle %}
+<header class="pgl-header">
+  <div class="pgl-heading-block">
+    <h1 class="pgl-title">{{ pgl_title | escape }}</h1>
+    <p class="pgl-subtitle">{{ pgl_subtitle | escape }}</p>
+  </div>
+  <div class="pgl-header-search-wrap">
+    <button id="pgl-search-toggle" class="pgl-search-toggle" type="button" aria-expanded="false" aria-controls="pgl-search-box" aria-label="{{ l.search }}">
+      <span aria-hidden="true">⌕</span>
+    </button>
+    <label id="pgl-search-box" class="pgl-search-box">
+      <span class="visually-hidden">{{ l.search }}</span>
+      <span class="pgl-search-icon" aria-hidden="true">⌕</span>
+      <input id="pgl-search" type="search" placeholder="{{ l.search }}" autocomplete="off" spellcheck="false">
+    </label>
+  </div>
+</header>

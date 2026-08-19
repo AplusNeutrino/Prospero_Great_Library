@@ -2,7 +2,7 @@
 
 > Universal personal media library extension/starter kit for Jekyll, with first-class Chirpy integration.
 
-**Release:** `0.1.0-alpha.3`  
+**Release:** `0.1.0-alpha.4`  
 **Architecture source of truth:** [`PROSPERO_GREAT_LIBRARY_ARCHITECTURE.md`](./PROSPERO_GREAT_LIBRARY_ARCHITECTURE.md)
 
 PGL aggregates media records from **Bangumi**, **NeoDB**, and **Steam**, normalizes them into one canonical library, tracks compact history events, and renders a fully static `/library/` page.
@@ -51,10 +51,10 @@ No runtime backend is required after the Jekyll build.
 | Bangumi-first merge | Implemented + fixture tested |
 | History / Steam observed deltas | Implemented + fixture tested |
 | Blog-post association | Implemented + fixture tested |
-| Jekyll UI / Chirpy adapter | Implemented; installer/resource/UI contract fixture-tested |
-| Chirpy v7.6/v7.5 build matrix | CI matrix implemented for Light/Dark; **runtime pending until uploaded CI executes** |
+| Jekyll UI / Chirpy adapter | Alpha.4 classified Great Library UI implemented; local contract/fixture tested |
+| Chirpy v7.6/v7.5 build matrix | Alpha.3 four-cell matrix passed in GitHub Actions; exact alpha.4 matrix rerun pending upload |
 
-Do not treat `alpha.3` as a claim that every optional endpoint is live-verified. Steam achievements remain opt-in/unverified, and public NeoDB behavior still depends on the selected instance.
+Do not treat `alpha.4` as a claim that every optional endpoint is live-verified. Steam achievements remain opt-in/unverified, and public NeoDB behavior still depends on the selected instance.
 
 ## Quick start
 
@@ -288,20 +288,23 @@ through a small Chirpy hook/include rather than forking the whole post layout.
 
 ## UI
 
-`/library/` supports progressively enhanced static output:
+Alpha.4 turns `/library/` into a classified **Great Library index/dashboard** rather than a mixed flat feed. The default public browser now provides:
 
-- search;
-- category/status/source/year filters;
-- title/rating/update/Steam-playtime sorting;
-- Grid/List toggle;
-- 60-card progressive rendering with Load More;
-- current in-progress shortcuts;
-- modal/dialog details;
-- source links with required fallback behavior;
-- rating distribution and Steam ranking statistics;
-- lazy-loaded yearly timeline.
+- a site-aware title (`[site.title]大图书馆` by default) and localized subtitle;
+- a compact Library-local search box in the header;
+- a vertical **Current** activity ledger containing every explicit `in_progress` item plus Steam recent-only games;
+- an SVG **Observable Rating Distribution** curve with all-domain and seven-category switching;
+- a seven-category ledger for Book / Comic / Movie / Drama / Anime / Game / Music;
+- a separate Wishlist area whose Chinese public label is `计划品鉴`;
+- category browsing limited by default to `in_progress + completed`, with `in_progress` always ordered first;
+- `on_hold` / `dropped` hidden from default browsing but still discoverable through global search / advanced status access;
+- no permanent "All Collection" mixed browsing view; global search is the cross-category discovery surface;
+- true numbered pagination at **24 items per page**, with URL/history state and Back/Forward restoration;
+- compact Grid/List modes with the user's layout preference stored locally;
+- advanced Source/Year filtering and category-appropriate sorting;
+- the existing safe detail Drawer and lazy-loaded yearly timeline.
 
-If JavaScript fails, server-rendered cards remain visible.
+Root `/library/` remains meaningful without JavaScript (header/current/statistical/category index content is server rendered), while classified pagination/search requires the static JavaScript controller.
 
 ## Theme contract
 
@@ -331,7 +334,7 @@ The Pages reference does **not** persist generated history by itself because it 
 
 ## Compatibility
 
-`0.1.0-alpha.3` targets Chirpy `v7.6.0` and `v7.5.0`, whose theme gems both declare Jekyll `~> 4.3`. The repository contains a four-cell Light/Dark compatibility build matrix, but this packaging environment has no Bundler/Jekyll runtime; therefore the matrix is **RUN_PENDING**, not claimed as passed. See [`COMPATIBILITY.md`](./COMPATIBILITY.md).
+`0.1.0-alpha.4` continues to target Chirpy `v7.6.0` and `v7.5.0`. The preceding alpha.3 code passed all four clean-starter GitHub Actions cells (7.6/7.5 × Light/Dark). Alpha.4 adds a scoped dynamic-title integration contract and corresponding CI checks; the exact alpha.4 matrix remains **RUN_PENDING until this package is uploaded and CI executes**. See [`COMPATIBILITY.md`](./COMPATIBILITY.md).
 
 ## Development
 
