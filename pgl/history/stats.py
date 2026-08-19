@@ -6,8 +6,8 @@ from typing import Any, Iterable
 
 CATEGORIES = ("book", "comic", "movie", "drama", "anime", "game", "music")
 DEFAULT_BROWSE_STATUSES = ("in_progress", "completed")
-RATING_BIN_SIZE = 0.5
-RATING_BINS = tuple(round(i * RATING_BIN_SIZE, 1) for i in range(1, 21))
+RATING_BIN_SIZE = 1
+RATING_BINS = tuple(range(1, 11))
 
 
 def _steam(item: dict[str, Any]) -> dict[str, Any]:
@@ -23,17 +23,19 @@ def _recent_playtime_minutes(item: dict[str, Any]) -> int:
     )
 
 
-def _rating_bin(value: Any) -> float | None:
+def _rating_bin(value: Any) -> int | None:
     try:
         rating = float(value)
     except (TypeError, ValueError):
         return None
     if rating <= 0:
         return None
-    # Round half-up to the nearest 0.5. Python's round() uses bankers' rounding,
-    # which is undesirable for deterministic catalogue bins.
-    binned = floor(rating * 2.0 + 0.5) / 2.0
-    return min(10.0, max(0.5, binned))
+    # Public PGL sources currently use integer personal ratings in production.
+    # Keep the observable curve faithful to those observations: any decimal
+    # input is deterministically folded to the nearest integer (half-up), and
+    # no artificial zero-valued half-step points are inserted into the curve.
+    binned = floor(rating + 0.5)
+    return min(10, max(1, binned))
 
 
 def _rating_curve(items: Iterable[dict[str, Any]]) -> dict[str, Any]:
@@ -46,7 +48,7 @@ def _rating_curve(items: Iterable[dict[str, Any]]) -> dict[str, Any]:
         bucket = _rating_bin(value)
         if bucket is None:
             continue
-        index = int(round(bucket / RATING_BIN_SIZE)) - 1
+        index = int(bucket) - 1
         if not 0 <= index < len(RATING_BINS):
             continue
         scopes["all"][index] += 1
@@ -93,6 +95,7 @@ def _current_activity(items: Iterable[dict[str, Any]], config: dict[str, Any]) -
         return []
     include_in_progress = current_cfg.get("include_all_in_progress", True) is not False
     include_steam_recent = current_cfg.get("include_steam_recent", True) is not False
+    category_rank = {category: index for index, category in enumerate(CATEGORIES)}
     rows: list[dict[str, Any]] = []
     for item in items:
         reason = None
@@ -110,22 +113,19 @@ def _current_activity(items: Iterable[dict[str, Any]], config: dict[str, Any]) -
         ) or (item.get("timestamps") or {}).get("canonical_updated_at") or ""
         rows.append({
             "entity_id": item.get("id"),
+            "category": item.get("category"),
             "reason": reason,
             "last_activity": last_activity,
             "recent_playtime_minutes": _recent_playtime_minutes(item) if item.get("category") == "game" else 0,
         })
-    rows.sort(
-        key=lambda row: (
-            0 if row["reason"] == "in_progress" else 1,
-            # ISO timestamps sort lexically; invert by using a secondary stable
-            # sort pass to keep implementation explicit below.
-            str(row.get("entity_id") or ""),
-        )
-    )
-    # Sort each reason partition by activity descending while preserving the
-    # explicit-in-progress-before-Steam-recent contract.
+
+    # Library taxonomy is the primary reading order. Within each category,
+    # explicit in-progress state precedes observational Steam-recent activity;
+    # recency then provides the local order.
+    rows.sort(key=lambda row: str(row.get("entity_id") or ""))
     rows.sort(key=lambda row: str(row.get("last_activity") or ""), reverse=True)
-    rows.sort(key=lambda row: 0 if row["reason"] == "in_progress" else 1)
+    rows.sort(key=lambda row: 0 if row.get("reason") == "in_progress" else 1)
+    rows.sort(key=lambda row: category_rank.get(str(row.get("category") or ""), len(CATEGORIES)))
     return rows
 
 

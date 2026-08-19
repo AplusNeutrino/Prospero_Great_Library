@@ -11,7 +11,7 @@ DEFAULTS: dict[str, Any] = {
     "sources": {
         "bangumi": {"enabled": False, "username": "", "base_url": "https://api.bgm.tv", "hide_private_collections": True},
         "neodb": {"enabled": False, "instance": "https://neodb.social", "mode": "public", "username": "", "collection_endpoint": "", "authenticated_shelf_endpoint": "/api/me/shelf/{shelf}", "shelf_types": ["wishlist","progress","complete","dropped"]},
-        "steam": {"enabled": False, "steam_id": "", "fetch_achievements": False},
+        "steam": {"enabled": False, "steam_id": "", "fetch_achievements": False, "filter_private_games": True, "privacy_fail_closed": True},
     },
     "precedence": {k: ["bangumi", "neodb"] for k in ("book","comic","movie","drama","anime","music")},
     "categories": {"order": ["book","comic","movie","drama","anime","game","music"]},
@@ -36,7 +36,7 @@ DEFAULTS: dict[str, Any] = {
         "wishlist": {"enabled": True},
         "other_statuses": {"enabled": True, "expose_in_primary_navigation": False},
         "current": {"enabled": True, "include_all_in_progress": True, "include_steam_recent": True},
-        "rating_chart": {"enabled": True, "bin_size": 0.5},
+        "rating_chart": {"enabled": True, "bin_size": 1},
         "search": {"enabled": True, "global_scope": True},
     },
 }

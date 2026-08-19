@@ -484,7 +484,6 @@
   // Rating chart ------------------------------------------------------------
   const chart = $('pgl-rating-chart');
   const chartTooltip = $('pgl-rating-tooltip');
-  const chartA11y = $('pgl-rating-a11y');
 
   function svgNode(tag, attrs = {}) {
     const node = document.createElementNS('http://www.w3.org/2000/svg', tag);
@@ -536,7 +535,6 @@
     chart.append(svgNode('line', { x1: M.l, y1: H - M.b, x2: W - M.r, y2: H - M.b, class: 'pgl-chart-axis' }));
 
     bins.forEach((bin, index) => {
-      if (Number(bin) % 1 !== 0) return;
       const text = svgNode('text', { x: xAt(index), y: H - 14, 'text-anchor': 'middle', class: 'pgl-chart-label' }); text.textContent = String(bin); chart.append(text);
     });
 
@@ -552,7 +550,6 @@
       const hide = () => { if (chartTooltip) chartTooltip.hidden = true; };
       hit.addEventListener('mouseenter', show); hit.addEventListener('focus', show); hit.addEventListener('mouseleave', hide); hit.addEventListener('blur', hide); chart.append(hit);
     }
-    if (chartA11y) chartA11y.textContent = counts.map((count, index) => `${bins[index]}: ${count}`).join('; ');
     document.querySelectorAll('[data-rating-scope]').forEach((button) => button.classList.toggle('is-active', button.dataset.ratingScope === scope));
   }
 

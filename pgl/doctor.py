@@ -67,6 +67,14 @@ def run_doctor(site_root, config):
                 "ok": privacy_enabled,
                 "detail": "enabled" if privacy_enabled else "authenticated sync may expose private collections; set hide_private_collections: true",
             })
+        if name == "steam":
+            privacy_enabled = bool(c.get("filter_private_games", True))
+            fail_closed = bool(c.get("privacy_fail_closed", True))
+            checks.append({
+                "check": "steam_privacy_filter",
+                "ok": privacy_enabled and fail_closed,
+                "detail": "enabled + fail-closed" if privacy_enabled and fail_closed else "public library may include private-game telemetry; enable filter_private_games and privacy_fail_closed",
+            })
 
     data = root / "_data" / "prospero_great_library"
     checks.append({"check": "mappings", "ok": True, "detail": str(data / "mappings.yml")})

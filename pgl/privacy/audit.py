@@ -34,12 +34,17 @@ def filter_source_records(
 ) -> tuple[list[SourceRecord], list[SourceRecord]]:
     """Remove upstream-private source records before snapshots or merging.
 
-    V1 currently has native source-privacy semantics for Bangumi collections.
-    The return value includes the hidden records only for this in-memory sync so
-    prior public history can be scrubbed without persisting a private-ID index.
+    Bangumi and Steam can both expose upstream privacy state. The return value
+    includes hidden records only for this in-memory sync so prior public history
+    can be scrubbed without persisting a private-ID index.
     """
 
-    if name != "bangumi" or not source_config.get("hide_private_collections", True):
+    enabled = (
+        name == "bangumi" and source_config.get("hide_private_collections", True)
+    ) or (
+        name == "steam" and source_config.get("filter_private_games", True)
+    )
+    if not enabled:
         return records, []
     public: list[SourceRecord] = []
     hidden: list[SourceRecord] = []
@@ -171,21 +176,23 @@ def audit_public_payload(
     """Return known privacy-boundary violations in artifacts intended for publication."""
 
     violations: list[dict[str, Any]] = []
-    hide_bangumi_private = bool(
-        config.get("sources", {}).get("bangumi", {}).get("hide_private_collections", True)
-    )
-
-    if hide_bangumi_private:
-        for record in (source_docs.get("bangumi") or {}).get("records", []):
+    privacy_sources = {
+        "bangumi": bool(config.get("sources", {}).get("bangumi", {}).get("hide_private_collections", True)),
+        "steam": bool(config.get("sources", {}).get("steam", {}).get("filter_private_games", True)),
+    }
+    for source_name, enabled in privacy_sources.items():
+        if not enabled:
+            continue
+        for record in (source_docs.get(source_name) or {}).get("records", []):
             if (record.get("extra") or {}).get("private") is True:
-                violations.append({"artifact": "sources/bangumi", "reason": "private_record_present"})
+                violations.append({"artifact": f"sources/{source_name}", "reason": "private_record_present"})
         for item in library.get("items", []):
-            bgm = (item.get("sources") or {}).get("bangumi") or {}
-            if (bgm.get("extra") or {}).get("private") is True:
+            source_doc = (item.get("sources") or {}).get(source_name) or {}
+            if (source_doc.get("extra") or {}).get("private") is True:
                 violations.append({
                     "artifact": "library",
                     "entity_id": item.get("id"),
-                    "reason": "private_bangumi_source_present",
+                    "reason": f"private_{source_name}_source_present",
                 })
 
     private_by_entity: dict[str, set[str]] = {}
