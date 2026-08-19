@@ -56,4 +56,3 @@ class SourceAdapter(ABC):
                 if attempt+1 < retries:
                     time.sleep((2**attempt)*0.5 + random.random()*0.2)
         raise AdapterError(f"{self.name} request failed: {last}")
-

@@ -2,7 +2,15 @@
 {% assign stats = site.data.prospero_great_library.stats %}
 {% if stats.rating_curve_distribution %}
 <section class="pgl-rating-section" aria-labelledby="pgl-rating-title">
-  <div class="pgl-section-heading"><h2 id="pgl-rating-title">{{ l.observable_rating_distribution }}</h2></div>
+  <div class="pgl-section-heading pgl-rating-heading">
+    <div>
+      <h2 id="pgl-rating-title">{{ l.observable_rating_distribution }}</h2>
+      <p id="pgl-rating-summary" class="pgl-rating-summary"
+        data-count-label="{{ l.rated_works | escape }}"
+        data-mean-label="{{ l.rating_mean | escape }}"
+        data-mode-label="{{ l.rating_mode | escape }}"></p>
+    </div>
+  </div>
   <div class="pgl-rating-chart-shell">
     <svg id="pgl-rating-chart" class="pgl-rating-chart" viewBox="0 0 760 260" role="img" aria-labelledby="pgl-rating-title pgl-rating-desc" preserveAspectRatio="none">
       <desc id="pgl-rating-desc">{{ l.observable_rating_distribution }}</desc>

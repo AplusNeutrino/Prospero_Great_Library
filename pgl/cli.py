@@ -11,7 +11,7 @@ from .associations import associate
 from .output.jekyll import output_paths
 from .install import InstallError, install_chirpy, format_actions
 
-VERSION='0.1.0-alpha.5'
+VERSION='0.1.0-alpha.6'
 
 def _history_from_disk(root: Path):
     _,assets=output_paths(root); events=[]

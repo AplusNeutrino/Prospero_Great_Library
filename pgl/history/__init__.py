@@ -1,1 +1,1 @@
-"""Prospero Great Library package module."""
+"""Prospero Great Library history helpers."""
