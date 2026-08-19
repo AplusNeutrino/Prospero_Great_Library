@@ -28,6 +28,12 @@ prospero_great_library:
       enabled: true
       steam_id: "YOUR_STEAM64_ID"
       fetch_achievements: false
+      # Safe default: only request telemetry for games visible on the anonymous
+      # public Steam Community games surface.
+      filter_private_games: true
+      # If public visibility cannot be verified, publish no Steam data instead
+      # of falling back to a potentially privacy-stale snapshot.
+      privacy_fail_closed: true
 
   precedence:
     book: [bangumi, neodb]
@@ -90,7 +96,7 @@ prospero_great_library:
       include_steam_recent: true
     rating_chart:
       enabled: true
-      bin_size: 0.5
+      bin_size: 1
     search:
       enabled: true
       global_scope: true

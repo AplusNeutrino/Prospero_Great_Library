@@ -42,19 +42,12 @@ def test_rating_curve_excludes_unrated_wishlist_and_hidden_browse_states():
     stats = build_stats(public)
     curve = stats['rating_curve_distribution']
     idx8 = curve['bins'].index(8.0)
-    idx85 = curve['bins'].index(8.5)
-    idx9 = curve['bins'].index(9.0)
+    idx9 = curve['bins'].index(9)
     assert curve['scopes']['all'][idx8] == 1
-    assert curve['scopes']['game'][idx85] == 1
-    assert curve['scopes']['all'][idx9] == 0
+    assert curve['scopes']['game'][idx9] == 1  # 8.5 folds to integer 9
+    # Wishlist 9.0 remains excluded; only the in-progress 8.5 contributes here.
+    assert curve['scopes']['all'][idx9] == 1
     assert sum(curve['scopes']['all']) == 2
-
-
-def test_rating_half_bin_uses_real_frequency_not_density():
-    public = [item('x', 'movie', 'completed', 8.24), item('y', 'movie', 'completed', 8.26)]
-    curve = build_stats(public)['rating_curve_distribution']
-    assert curve['scopes']['movie'][curve['bins'].index(8.0)] == 1
-    assert curve['scopes']['movie'][curve['bins'].index(8.5)] == 1
 
 
 def test_current_activity_includes_all_in_progress_and_recent_only_game_once():
@@ -81,3 +74,26 @@ def test_stats_only_item_may_aggregate_but_never_enters_identity_navigation_or_r
     assert stats['navigation']['default_by_category']['game'] == 1
     assert all(row['id'] != 'secret-stats-only-title' for row in stats['steam']['ranking'])
     assert all(row['entity_id'] != 'secret-stats-only-title' for row in stats['current_activity'])
+
+
+def test_rating_curve_uses_integer_observation_bins_only():
+    public = [item('x', 'movie', 'completed', 8.4), item('y', 'movie', 'completed', 8.5)]
+    curve = build_stats(public)['rating_curve_distribution']
+    assert curve['bins'] == list(range(1, 11))
+    assert curve['bin_size'] == 1
+    assert curve['scopes']['movie'][7] == 1  # 8.4 -> 8
+    assert curve['scopes']['movie'][8] == 1  # 8.5 -> 9 (half-up)
+
+
+def test_current_activity_primary_order_is_library_category_order():
+    public = [
+        item('game', 'game', 'in_progress', 8, updated='2026-08-19T09:00:00Z'),
+        item('anime', 'anime', 'in_progress', 8, updated='2026-08-19T08:00:00Z'),
+        item('book', 'book', 'in_progress', 8, updated='2026-08-18T01:00:00Z'),
+        item('movie', 'movie', 'in_progress', 8, updated='2026-08-19T10:00:00Z'),
+        item('comic', 'comic', 'in_progress', 8, updated='2026-08-19T11:00:00Z'),
+        item('drama', 'drama', 'in_progress', 8, updated='2026-08-19T12:00:00Z'),
+        item('music', 'music', 'in_progress', 8, updated='2026-08-19T13:00:00Z'),
+    ]
+    rows = build_stats(public)['current_activity']
+    assert [row['category'] for row in rows] == ['book', 'comic', 'movie', 'drama', 'anime', 'game', 'music']

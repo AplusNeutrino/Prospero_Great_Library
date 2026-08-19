@@ -3,7 +3,7 @@ from typing import Iterable
 from ..models import SourceRecord
 
 ANIME_WORDS = ("anime", "animation", "animated", "动画", "動畫", "アニメ")
-COMIC_WORDS = ("comic", "manga", "漫画", "コミック", "manhua", "manhwa")
+COMIC_WORDS = ("comic", "manga", "漫画", "マンガ", "まんが", "コミック", "manhua", "manhwa")
 DRAMA_WORDS = ("tv", "电视剧", "剧集", "连续剧", "drama", "series")
 PERFORMANCE_WORDS = ("performance", "opera", "stage play", "musical", "歌剧", "舞台剧", "音乐剧", "演出")
 GAME_WORDS = ("game", "游戏")

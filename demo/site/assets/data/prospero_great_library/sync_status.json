@@ -1,26 +1,28 @@
 {
-  "last_run": "2026-08-18T09:30:31Z",
+  "last_run": "2026-08-19T02:03:06Z",
   "overall": "ok",
   "sources": {
     "bangumi": {
       "status": "ok",
-      "last_success": "2026-08-18T09:30:31Z",
+      "last_success": "2026-08-19T02:03:06Z",
       "record_count": 36,
       "private_filter_applied": true
     },
     "neodb": {
       "status": "ok",
-      "last_success": "2026-08-18T09:30:31Z",
+      "last_success": "2026-08-19T02:03:06Z",
       "record_count": 7
     },
     "steam": {
       "status": "ok",
-      "last_success": "2026-08-18T09:30:31Z",
-      "record_count": 2
+      "last_success": "2026-08-19T02:03:06Z",
+      "record_count": 2,
+      "private_filter_applied": true
     }
   },
   "privacy": {
     "bangumi_private_filter_enabled": true,
+    "steam_private_filter_enabled": true,
     "history_sanitized": false,
     "public_output_violations": 0
   }

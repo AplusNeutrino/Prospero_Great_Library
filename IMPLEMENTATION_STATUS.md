@@ -1,9 +1,9 @@
 # Prospero_Great_Library — Implementation Status
 
-**Version:** `0.1.0-alpha.4`  
+**Version:** `0.1.0-alpha.5`  
 **Architecture contract:** `PROSPERO_GREAT_LIBRARY_ARCHITECTURE.md`  
 **UI/IA contract:** `docs/Prospero_Great_Library_UI_Revision_Plan.md`  
-**Repository baseline inspected:** `main` commit `02b513756c1b247ff5a3957e74963f3de6ec453c` (UI plan only on top of imported alpha.3 code).
+**Development baseline:** merged alpha.4 r2 (`main` commit `46bba99dca66bf8e3218c3f5ffb5ef7eded01a0d`).
 
 This file records implementation evidence. It does **not** override locked architecture or UI-plan decisions.
 
@@ -14,93 +14,40 @@ This file records implementation evidence. It does **not** override locked archi
 - `PACKAGE_PASS`: built wheel/resource/install evidence exists.
 - `CI_PASS`: the exact referenced code ran successfully in GitHub Actions.
 - `LIVE_PASS`: real external service data reached a deployed PGL sync successfully.
-- `USER_DEPLOYED`: the owner reports the generated integration was deployed successfully.
-- `LIVE_UNVERIFIED`: optional live behavior has not been independently evidenced.
+- `LIVE_UNVERIFIED`: external behavior is implemented but needs a fresh real deployment.
 
 ## Core/data status
 
 | Capability | Status | Evidence |
 |---|---|---|
-| Canonical schema + locked category invariants | done | FIXTURE_PASS |
-| Bangumi v0 collections + pagination | done | LIVE_PASS + FIXTURE_PASS |
-| Bangumi private collection interception | done | LIVE_PASS + FIXTURE_PASS |
-| Retroactive privacy/history scrub + privacy-audit | done | FIXTURE_PASS |
-| NeoDB authenticated shelf adapter | done | LIVE_PASS |
-| NeoDB public configurable mode | implemented | LIVE_UNVERIFIED (instance-dependent) |
-| Steam owned-library telemetry | done | LIVE_PASS |
-| Steam recent-play telemetry | implemented | FIXTURE_PASS / best-effort live path |
+| Canonical schema + seven-category invariants | done | FIXTURE_PASS |
+| Bangumi collections + pagination | done | LIVE_PASS |
+| Bangumi private collection interception | done | LIVE_PASS |
+| Bangumi Book/Comic classification from SlimSubject metadata tags | fixed alpha.5 | FIXTURE_PASS; LIVE_UNVERIFIED |
+| NeoDB authenticated shelf | done | LIVE_PASS |
+| NeoDB public configurable mode | implemented | LIVE_UNVERIFIED |
+| Steam owned/playtime telemetry | done | prior LIVE_PASS |
+| Steam public-only AppID privacy gate | fixed alpha.5 | FIXTURE_PASS; LIVE_UNVERIFIED |
+| Steam public cover enrichment | fixed alpha.5 | FIXTURE_PASS; LIVE_UNVERIFIED |
+| Steam privacy fail-closed + retroactive history scrub | fixed alpha.5 | FIXTURE_PASS |
 | Steam achievements (opt-in) | implemented | LIVE_UNVERIFIED |
-| Entity resolution + Bangumi-first merge | done | LIVE_PASS + FIXTURE_PASS |
+| Entity resolution + Bangumi-first merge | done | LIVE_PASS |
 | History/year partitions + observed Steam deltas | done | FIXTURE_PASS |
-| Article exact/fuzzy association | done | FIXTURE_PASS |
 | Hidden/stats-only/source privacy | done | FIXTURE_PASS |
-| Source-failure last-good fallback | done | FIXTURE_PASS |
 
-## Alpha.4 UI / IA status
+## Alpha.5 UI fixes
 
 | Capability | Status | Evidence |
 |---|---|---|
-| `[site.title]大图书馆` title + subtitle | implemented | FIXTURE/static contract PASS |
-| Root Great Library dashboard (no mixed feed) | implemented | FIXTURE/static contract PASS |
-| Seven-category ledger | implemented | FIXTURE/static contract PASS |
-| Default `in_progress + completed` browser | implemented | FIXTURE_PASS |
-| `in_progress` always before completed | implemented | FIXTURE_PASS |
-| Separate Wishlist + `计划品鉴` label | implemented | FIXTURE_PASS |
-| `on_hold` / `dropped` hidden by default | implemented | FIXTURE_PASS |
-| Global Library-header search | implemented | FIXTURE/static contract PASS |
-| 24-item numbered pagination + History API router | implemented | FIXTURE/static contract PASS |
-| Vertical Current Activity + Steam recent-only | implemented | FIXTURE_PASS |
-| Observable Rating Distribution SVG curve | implemented | FIXTURE_PASS |
-| Per-domain rating switching | implemented | FIXTURE/static contract PASS |
-| Unrated/wishlist/other statuses excluded from chart | implemented | FIXTURE_PASS |
-| Steam ranking removed from default UI | implemented | static contract PASS |
-| Compact Grid/List + local preference | implemented | static contract PASS |
-| Safe detail Drawer + timeline retained | implemented | regression PASS |
-| Stats-only identity isolation in navigation/current/ranking | implemented | FIXTURE_PASS |
-| zh-CN + en alpha.4 locales | implemented | resource-mirror PASS |
+| Chirpy sidebar `[site.title]大图书馆` / Great Library | fixed | FIXTURE_PASS |
+| Explicit `ui.title` sidebar override | fixed | FIXTURE_PASS |
+| Integer-only Observable Rating Distribution bins 1–10 | fixed | FIXTURE_PASS |
+| Removed hidden semicolon rating dump | fixed | static contract PASS |
+| Current Activity canonical category ordering | fixed | FIXTURE_PASS |
+| Existing alpha.4 dashboard/search/pagination/Grid/List | retained | regression PASS |
 
 ## Compatibility evidence
 
-The imported alpha.3 code has a real successful GitHub Actions run (`32114762265`) with:
+Alpha.4 r2 has a fully successful GitHub Actions run `32202478262`, including Python tests, Action smoke, and clean Chirpy Starter builds for `v7.6.0`/`v7.5.0` in both Light and Dark modes.
 
-```text
-action-smoke                         PASS
-test (Python 3.11)                   PASS
-test (Python 3.13)                   PASS
-Chirpy v7.6.0 light                  PASS
-Chirpy v7.6.0 dark                   PASS
-Chirpy v7.5.0 light                  PASS
-Chirpy v7.5.0 dark                   PASS
-```
-
-The four Chirpy jobs installed PGL into clean Chirpy Starter checkouts and performed real production Jekyll builds.
-
-**Alpha.4 exact-runtime status:** the first alpha.4 import ran GitHub Actions `32119375789`; Action smoke and all four Chirpy 7.5/7.6 Light/Dark production builds passed. The two Python jobs also passed pytest/compile/demo/JS/Ruby and failed only at their final Demo Installer dry-run because Demo locale mirrors were stale. Delivery revision 2 fixes that isolated packaging conflict; an all-green rerun remains pending.
-
-## Local alpha.4 evidence before final packaging
-
-Current pre-release implementation evidence:
-
-```text
-pytest                                  PASS — 66 tests
-Demo pipeline                           PASS — 39 canonical items
-Book default-browse fixture             PASS — 29 items (>24 page size)
-Rating curve observations               PASS — 35 eligible rated observations
-Python compileall                       PASS
-JavaScript syntax                        PASS — core + packaged resource
-Ruby plugin syntax                       PASS — core + packaged resource
-JSON/YAML parse                          PASS — 19 JSON / 14 YAML
-Resource/UI/stats mirror subset          PASS — 14 tests
-Installer idempotency                    PASS — user mappings preserved
-History identical-rerun idempotency      PASS — 39 first events / 0 duplicate events
-Wheel build + isolated import/resources  PASS
-Public privacy / literal-secret scan     PASS
-Installer dry-run after Demo rebuild        PASS — 0 conflicts (delivery r2)
-Demo locale ownership/mirror                PASS
-```
-
-The exact alpha.4 Chirpy runtime matrix has PASS evidence from run `32119375789`; delivery revision 2 changes only Demo locale mirroring/tests and requires a fresh all-green CI rerun for the corrected archive.
-
-## Live deployment evidence retained from alpha.3
-
-A production blog sync on 2026-08-18 completed all three enabled collection paths and exercised Bangumi private filtering against real private records. Exact personal/private collection counts are intentionally omitted from public project documentation. The owner also deployed the generated PGL/Chirpy integration successfully.
+Alpha.5 exact-runtime status remains `RUN_PENDING` until this delivery is uploaded. The Steam public-visibility path also remains `LIVE_UNVERIFIED` until a real authenticated sync confirms the public-AppID probe against production Steam settings.

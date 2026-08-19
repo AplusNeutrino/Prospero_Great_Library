@@ -34,3 +34,18 @@ def test_doctor_requires_private_filter_for_authenticated_bangumi(tmp_path: Path
     checks=run_doctor(tmp_path,cfg)
     row=next(x for x in checks if x['check']=='bangumi_privacy_filter')
     assert row['ok'] is True
+
+
+def test_doctor_reports_steam_privacy_filter(tmp_path, monkeypatch):
+    from copy import deepcopy
+    from pgl.config import DEFAULTS
+    from pgl.doctor import run_doctor
+    import pgl.doctor as doctor_module
+
+    (tmp_path / '_config.yml').write_text('title: x\n', encoding='utf-8')
+    cfg = deepcopy(DEFAULTS)
+    cfg['sources']['steam'].update({'enabled': True, 'steam_id': '123'})
+    monkeypatch.setattr(doctor_module, 'secret', lambda name: 'x' if name == 'STEAM_API_KEY' else None)
+    checks = run_doctor(tmp_path, cfg)
+    row = next(x for x in checks if x['check'] == 'steam_privacy_filter')
+    assert row['ok'] is True

@@ -59,11 +59,36 @@ class BangumiAdapter(SourceAdapter):
             if progress and progress.current is not None and progress.total:
                 try: progress.percent=round(float(progress.current)/float(progress.total)*100,2)
                 except Exception: pass
-        tags=list(item.get('tags') or [])
-        # Surface platform/type metadata to classifier without inventing a second category hierarchy.
+        # User collection tags and SlimSubject metadata tags are distinct in
+        # Bangumi. The latter are essential classification evidence for Book
+        # records because subject_type=1 combines books, novels and comics.
+        user_tags=[]
+        for tag in item.get('tags') or []:
+            if isinstance(tag,dict):
+                name=tag.get('name')
+                if name: user_tags.append(str(name))
+            elif tag:
+                user_tags.append(str(tag))
+        subject_tags=[]
+        for tag in subject.get('tags') or []:
+            if isinstance(tag,dict):
+                name=tag.get('name')
+                if name: subject_tags.append(str(name))
+            elif tag:
+                subject_tags.append(str(tag))
         platform=subject.get('platform')
+        book_category=subject.get('category', subject.get('cat', item.get('subject_category')))
+        try:
+            if hint == 'book' and int(book_category) == 1001:
+                hint='comic'
+        except (TypeError,ValueError):
+            pass
+        tags=[*user_tags,*subject_tags]
         if platform: tags.append(str(platform))
-        extra={'comment':item.get('comment'),'private':item.get('private'), 'platform':platform}
+        extra={
+            'comment':item.get('comment'),'private':item.get('private'),
+            'platform':platform,'subject_tags':subject_tags,'book_category':book_category,
+        }
         return SourceRecord(
             source='bangumi', source_id=sid, category_hint=hint, title=title,
             title_original=original, alternate_titles=aliases, year=year, release_date=date,

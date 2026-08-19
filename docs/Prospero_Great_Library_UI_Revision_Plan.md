@@ -2,12 +2,14 @@
 
 > **Document type:** UI/IA Revision Plan / Implementation Prompt  
 > **Project:** `Prospero_Great_Library`  
-> **Target release:** `v0.1.0-alpha.4`（建议）  
-> **Baseline:** `v0.1.0-alpha.3` privacy-hardened design  
+> **Initial target:** `v0.1.0-alpha.4`  
+> **Current corrective target:** `v0.1.0-alpha.5`（2026-08-19 live-deployment corrections）  
+> **Baseline:** alpha.4 r2 deployed UI on top of the alpha.3 privacy-hardened design  
 > **Scope:** Library page information architecture, filtering/navigation, search, current activity, rating visualization, pagination, card density, Chirpy integration  
 > **Out of scope:** Bangumi / NeoDB / Steam source semantics redesign, canonical entity schema redesign, privacy contract redesign  
 > **Status:** Approved requirements translated into implementation plan  
-> **Date:** 2026-08-18
+> **Initial date:** 2026-08-18  
+> **Revised:** 2026-08-19
 
 ---
 
@@ -914,7 +916,7 @@ is_current =
     )
 ```
 
-Steam `GetRecentlyPlayedGames` 本身反映近期游玩，因此不需要自行发明完成状态。
+Steam recent activity 只表示近期游玩，不应被解释为完成状态。隐私安全模式下，PGL 应优先使用已经通过公开可见性边界筛选后的 `playtime_2weeks` / `rtime_last_played` 等 telemetry，不得为了 Current Activity 再调用一个无法按公开 AppID 白名单约束的全量近期游玩接口。
 
 ---
 
@@ -934,18 +936,36 @@ Steam recent_playtime>0
 
 ## 10.4 排序
 
-推荐：
+**LOCKED**
+
+Current Activity 首先按 canonical category 顺序排列：
+
+```text
+Book
+Comic
+Movie
+Drama
+Anime
+Game
+Music
+```
+
+即中文视觉顺序：
+
+```text
+书籍 → 漫画 → 电影 → 剧集 → 动画 → 游戏 → 音乐
+```
+
+同一 Category 内再按：
 
 ```text
 1. explicit in_progress
 2. Steam recent-only
+3. last activity / canonical update DESC
+4. canonical entity id（稳定排序）
 ```
 
-各层内部：
-
-```text
-last activity / canonical update DESC
-```
+不得按 source 名称或 `in_progress`/`steam_recent` 原因在全局层面分组。
 
 ---
 
@@ -1058,27 +1078,32 @@ privacy hidden/private
 
 ## 11.3 分箱
 
-推荐内部：
+**LOCKED — 2026-08-19 修正**
+
+公开图表只展示整数评分档：
 
 ```text
-0.5 分一档
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
 ```
 
-例如：
+原因：
 
-```text
-0.5
-1.0
-1.5
-...
-9.5
-10.0
-```
+- 当前实际个人评分来源在该部署中表现为整数评分；
+- 人工插入大量 `x.5 = 0` 会参与曲线拟合并制造无意义的锯齿/下陷；
+- 非整数空档不属于“可观测评分”，因此不应进入曲线输入。
 
-若实际 source 只提供整数分：
+若未来某来源真实提供非整数个人评分，应先在数据设计层明确新的可观测分箱策略，而不是通过默认的空半分档预占位置。
 
-- 半分档自然为 0；
-- 不伪造数据。
+对于输入评分需要落入整数图表时，采用确定性的 nearest-integer / half-up 归档，并保留 canonical/source-native 原始评分不变。
 
 ---
 
@@ -1194,15 +1219,10 @@ SVG
 ```json
 {
   "rating_distribution": {
-    "bin_size": 0.5,
-    "bins": [
-      0.5, 1.0, 1.5, 2.0, 2.5,
-      3.0, 3.5, 4.0, 4.5, 5.0,
-      5.5, 6.0, 6.5, 7.0, 7.5,
-      8.0, 8.5, 9.0, 9.5, 10.0
-    ],
+    "bin_size": 1,
+    "bins": [1,2,3,4,5,6,7,8,9,10],
     "scopes": {
-      "all":   [0,0,0,0,0,1,0,2,1,4,3,5,8,12,15,21,10,8,3,1],
+      "all":   [0,0,2,0,5,34,84,51,13,4],
       "game":  [...],
       "anime": [...],
       "movie": [...],
@@ -2366,7 +2386,7 @@ prospero_great_library:
 
     rating_chart:
       enabled: true
-      bin_size: 0.5
+      bin_size: 1
 
     search:
       enabled: true
@@ -2665,15 +2685,15 @@ game curve != anime curve
 
 ## Chart bins
 
-评分：
+公开图表 bins 必须严格为：
 
 ```text
-8
-8.5
-9
+1 2 3 4 5 6 7 8 9 10
 ```
 
-必须进入真实 bin。
+不得为了视觉连续性插入 `1.5 / 2.5 / ... / 9.5` 的零值点。
+
+输入中的非整数 source-native rating 必须保留原值；用于该整数图表时再做确定性的 nearest-integer / half-up 归档。
 
 平滑只影响 path，不修改 count。
 
@@ -2927,10 +2947,16 @@ privacy
 
 都没有 major break。
 
-因此推荐：
+初始 UI overhaul 以：
 
 ```text
 v0.1.0-alpha.4
+```
+
+交付。2026-08-19 的真实部署反馈对侧边栏标题、评分整数 bins、Steam 隐私/封面、Current 分类顺序和 Bangumi Comic 分类进行了纠正，因此当前修正版目标为：
+
+```text
+v0.1.0-alpha.5
 ```
 
 而不是：
@@ -3097,12 +3123,13 @@ Static
 13. Search 是唯一默认跨七类检索入口。
 14. Search 结果按 Category 分组。
 15. Category page 固定 24/page。
-16. Rating curve 只平滑路径，不伪造 rating observations。
+16. Rating curve 只平滑路径，不伪造 rating observations；公开曲线只使用整数 1–10 bins，不插入零值半分档。
 17. 无评分作品完全排除。
 18. 删除 Steam ranking UI，但不要无必要破坏统计 schema。
 19. Current 不限制 8 条。
 20. Current 允许 Steam recent-only Game。
-21. Grid/List 都必须明显压缩。
+21. Current 必须按 Book → Comic → Movie → Drama → Anime → Game → Music 排列，再在分类内部处理 explicit/recent 优先级。
+22. Grid/List 都必须明显压缩。
 22. Universal PGL 不复制 My_Blog 私有配色。
 23. 同步 jekyll / resources / demo mirrors。
 24. 添加对应 regression tests。

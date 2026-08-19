@@ -3792,6 +3792,41 @@ The same history boundary applies to PGL-level `hidden` and `stats_only` entitie
 
 Known-private records reaching a public source snapshot, canonical library, or public history are a publication invariant failure. This is separate from ordinary source-fetch strictness: a third-party outage may degrade gracefully, but a known privacy violation must not be silently published.
 
+### 71.3.1 Steam public-visibility boundary
+
+**LOCKED security behavior — added after alpha.4 live deployment**
+
+Steam telemetry is permitted to enrich only games that are independently observable through the configured account's public-facing Steam surface when `sources.steam.filter_private_games` is enabled.
+
+Default:
+
+```yaml
+prospero_great_library:
+  sources:
+    steam:
+      filter_private_games: true
+      privacy_fail_closed: true
+```
+
+Safe-mode sequence:
+
+```text
+1. Determine the AppIDs exposed by the user's public-facing Steam games surface.
+2. Treat that public AppID set as an allow-list.
+3. Request authenticated owned-game telemetry only for those public AppIDs when the API supports an AppID filter.
+4. Do not call an unfiltered recent-games endpoint merely to populate Current Activity.
+5. Derive recent activity only from telemetry already attached to allow-listed games.
+6. Exclude any unexpected AppID that is not in the public allow-list, even if an upstream endpoint ignores a requested filter.
+```
+
+The public visibility probe is a privacy boundary, not a richer metadata authority. Authenticated Steam data remains the telemetry source for playtime/last-played fields once an AppID has passed the public boundary.
+
+If the public visibility probe cannot establish a trustworthy allow-list and `privacy_fail_closed` is `true`, the Steam adapter MUST NOT republish a last-known-good Steam snapshot containing identity-bearing games. It SHOULD emit a degraded/privacy-boundary status instead.
+
+When an AppID was previously public but disappears from the current public allow-list, PGL MAY use the prior public record ephemerally to identify canonical/history records that now require sanitization. It MUST NOT persist a separate "private Steam games" membership index.
+
+The currently used public-facing Steam surface is an implementation capability and may need replacement if Steam changes or removes it. PGL MUST keep this probe isolated behind the adapter and distinguish fixture-tested behavior from live-verified behavior.
+
 ## 71.4 Git repository history is outside automatic artifact sanitization
 
 **LOCKED security limitation**

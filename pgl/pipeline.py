@@ -5,7 +5,7 @@ import json
 
 from . import __version__
 from .adapters import BangumiAdapter,NeoDBAdapter,SteamAdapter
-from .adapters.base import CapabilityUnavailable
+from .adapters.base import CapabilityUnavailable, PrivacyBoundaryUnavailable
 from .config import secret
 from .models import SourceRecord
 from .resolve.mappings import load_mappings
@@ -41,6 +41,9 @@ def _public_privacy_report(full: dict[str,Any], config: dict[str,Any]) -> dict[s
     return {
         'bangumi_private_filter_enabled': bool(
             config.get('sources',{}).get('bangumi',{}).get('hide_private_collections',True)
+        ),
+        'steam_private_filter_enabled': bool(
+            config.get('sources',{}).get('steam',{}).get('filter_private_games',True)
         ),
         'history_sanitized': bool(full.get('history_events_scrubbed',0)),
         'public_output_violations': int(full.get('public_output_violations',0)),
@@ -87,6 +90,16 @@ def run_sync(site_root: str|Path, config: dict[str,Any], fixture_dir: str|Path|N
                 adapter=cls(scfg, secret(SECRETS[name]))
                 records=adapter.fetch_collections()
             records,private_hidden=filter_source_records(name,records,scfg)
+            if name=='steam' and scfg.get('filter_private_games',True):
+                # Safe Steam mode queries authenticated telemetry only for the
+                # anonymously public AppID set, so newly private AppIDs are not
+                # fetched at all. Compare against the prior public snapshot to
+                # identify records that disappeared and scrub their history.
+                prior_steam=_load_snapshot(root,name)
+                current_ids={str(r.source_id) for r in records}
+                disappeared=[r for r in prior_steam if str(r.source_id) not in current_ids]
+                seen_hidden={str(r.source_id) for r in private_hidden}
+                private_hidden.extend(r for r in disappeared if str(r.source_id) not in seen_hidden)
             hidden_source_records[name]=private_hidden
             all_records.extend(records)
             source_docs[name]={
@@ -96,16 +109,38 @@ def run_sync(site_root: str|Path, config: dict[str,Any], fixture_dir: str|Path|N
             source_status[name]={
                 'status':'ok','last_success':observed,'record_count':len(records),
             }
+            if name=='steam':
+                source_status[name]['private_filter_applied']=bool(scfg.get('filter_private_games',True))
             if name=='bangumi':
                 source_status[name]['private_filter_applied']=bool(scfg.get('hide_private_collections',True))
                 if _publish_privacy_diagnostics(config):
                     source_status[name]['private_hidden_count']=len(private_hidden)
         except Exception as exc:
+            previous_doc=load_json(_snapshot_path(root,name),{'records':[]})
+            if isinstance(exc, PrivacyBoundaryUnavailable):
+                # Authenticated Steam data may contain games that are not public.
+                # If the anonymous visibility probe fails, never republish the
+                # last-known-good Steam snapshot because an item may have become
+                # private since that snapshot was created. Treat prior records as
+                # privacy-impacted for this run so history is scrubbed fail-closed.
+                stale=_load_snapshot(root,name)
+                hidden_source_records[name]=stale
+                source_docs[name]={
+                    'schema_version':1,'source':name,'fetched_at':observed,
+                    'last_success_at':previous_doc.get('last_success_at'),
+                    'adapter_version':__version__,'record_count':0,'records':[]
+                }
+                source_status[name]={
+                    'status':'privacy_boundary_unavailable',
+                    'last_success':previous_doc.get('last_success_at'),
+                    'record_count':0,'error':str(exc),
+                    'private_filter_applied':True,
+                }
+                continue
             stale=_load_snapshot(root,name) if config.get('sync',{}).get('preserve_last_good',True) else []
             stale,private_hidden=filter_source_records(name,stale,scfg)
             hidden_source_records[name]=private_hidden
             all_records.extend(stale)
-            previous_doc=load_json(_snapshot_path(root,name),{'records':[]})
             if previous_doc.get('records'):
                 source_docs[name]={**previous_doc,'record_count':len(stale),'records':[r.to_dict() for r in stale]}
             status='capability_unavailable' if isinstance(exc,CapabilityUnavailable) else 'stale'
@@ -113,6 +148,8 @@ def run_sync(site_root: str|Path, config: dict[str,Any], fixture_dir: str|Path|N
                 'status':status,'last_success':previous_doc.get('last_success_at'),'record_count':len(stale),
                 'error':str(exc)
             }
+            if name=='steam':
+                source_status[name]['private_filter_applied']=bool(scfg.get('filter_private_games',True))
             if name=='bangumi':
                 source_status[name]['private_filter_applied']=bool(scfg.get('hide_private_collections',True))
                 if _publish_privacy_diagnostics(config):

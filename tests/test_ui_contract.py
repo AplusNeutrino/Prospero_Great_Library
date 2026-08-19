@@ -56,6 +56,8 @@ def test_rating_curve_is_svg_monotone_and_steam_ranking_ui_removed():
     assert '<svg id="pgl-rating-chart"' in rating
     assert 'data-rating-scope="all"' in rating
     assert 'function monotonePath(points)' in js
+    assert 'pgl-rating-a11y' not in rating
+    assert 'chartA11y' not in js
     assert 'pgl-chart-curve' in js
     assert 'pgl-ranking' not in stats
     assert 'steam_top_games' not in stats
@@ -93,4 +95,5 @@ def test_site_aware_title_hook_and_chirpy_heading_suppression():
     assert "Jekyll::Hooks.register :pages, :pre_render" in plugin
     assert "format(template, site: site_title)" in plugin
     assert 'pgl_library: true' in page
+    assert 'title: __PGL_LIBRARY_TITLE__' in page
     assert 'article:has(#prospero-great-library) > .dynamic-title' in adapter_css

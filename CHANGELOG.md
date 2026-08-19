@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.1.0-alpha.5 — 2026-08-19
+
+### Fixed
+
+- render the installed Chirpy sidebar tab title from the target site's title (`[site.title]大图书馆` for zh locales, `[site.title] Great Library` otherwise), while preserving explicit `ui.title` overrides;
+- change the Observable Rating Distribution to integer-only 1–10 observation bins and remove the hidden semicolon-separated rating dump from the page;
+- populate Steam-only cover images from public Steam Community metadata, normalize legacy HTTP media links to HTTPS, and use the Steam app icon as a fallback;
+- prevent private Steam games from entering PGL by probing anonymous public visibility first, restricting `GetOwnedGames` to that public AppID set, avoiding unfiltered `GetRecentlyPlayedGames` in privacy-safe mode, and failing closed if visibility cannot be verified;
+- sort Current Activity by the canonical Library category order (Book → Comic → Movie → Drama → Anime → Game → Music), then state/recent activity within each category;
+- restore Bangumi manga classification by consuming `SlimSubject.tags` metadata and explicit book-category evidence when available instead of relying on a nonexistent SlimSubject `platform` field.
+
+### Privacy
+
+- Steam records that disappear from the previously public snapshot are treated as privacy-impacted for history sanitization without persisting a private-AppID index;
+- public sync diagnostics expose only that the Steam privacy filter is enabled, not private-game identifiers or counts.
+
+### Validation
+
+- regression coverage added for dynamic Chirpy tab titles, integer rating bins, Steam public-AppID filtering/covers/fail-closed behavior, Current category ordering, and Bangumi comic classification.
+
 ## 0.1.0-alpha.4 — 2026-08-18
 
 ### Delivery revision 2 fix

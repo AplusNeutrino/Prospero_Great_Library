@@ -67,3 +67,20 @@ def test_demo_site_is_current_with_packaged_chirpy_resources():
     conflicts = [item for item in actions if item.action == "conflict"]
     assert conflicts == []
 
+
+
+def test_chirpy_installer_renders_site_aware_sidebar_title(tmp_path: Path):
+    (tmp_path / '_config.yml').write_text('title: 中间层\nlang: zh-CN\n', encoding='utf-8')
+    install_chirpy(tmp_path)
+    tab = (tmp_path / '_tabs/library.md').read_text(encoding='utf-8')
+    assert 'title: "中间层大图书馆"' in tab
+
+
+def test_chirpy_installer_sidebar_title_honors_ui_override(tmp_path: Path):
+    (tmp_path / '_config.yml').write_text(
+        'title: Example\nlang: en\nprospero_great_library:\n  ui:\n    title: My Archive\n',
+        encoding='utf-8',
+    )
+    install_chirpy(tmp_path)
+    tab = (tmp_path / '_tabs/library.md').read_text(encoding='utf-8')
+    assert 'title: "My Archive"' in tab

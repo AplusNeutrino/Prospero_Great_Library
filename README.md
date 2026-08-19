@@ -2,7 +2,7 @@
 
 > Universal personal media library extension/starter kit for Jekyll, with first-class Chirpy integration.
 
-**Release:** `0.1.0-alpha.4`  
+**Release:** `0.1.0-alpha.5`  
 **Architecture source of truth:** [`PROSPERO_GREAT_LIBRARY_ARCHITECTURE.md`](./PROSPERO_GREAT_LIBRARY_ARCHITECTURE.md)
 
 PGL aggregates media records from **Bangumi**, **NeoDB**, and **Steam**, normalizes them into one canonical library, tracks compact history events, and renders a fully static `/library/` page.
@@ -51,10 +51,10 @@ No runtime backend is required after the Jekyll build.
 | Bangumi-first merge | Implemented + fixture tested |
 | History / Steam observed deltas | Implemented + fixture tested |
 | Blog-post association | Implemented + fixture tested |
-| Jekyll UI / Chirpy adapter | Alpha.4 classified Great Library UI implemented; local contract/fixture tested |
-| Chirpy v7.6/v7.5 build matrix | Alpha.3 four-cell matrix passed in GitHub Actions; exact alpha.4 matrix rerun pending upload |
+| Jekyll UI / Chirpy adapter | Alpha.5 fixes sidebar title, integer rating curve, Current ordering, Steam covers/privacy, and Comic classification; local regression tested |
+| Chirpy v7.6/v7.5 build matrix | Alpha.4 r2 passed all four clean-starter Light/Dark cells; exact alpha.5 matrix rerun pending upload |
 
-Do not treat `alpha.4` as a claim that every optional endpoint is live-verified. Steam achievements remain opt-in/unverified, and public NeoDB behavior still depends on the selected instance.
+Do not treat `alpha.5` as a claim that every optional endpoint is live-verified. Steam achievements remain opt-in/unverified, the new Steam public-visibility gate requires a fresh live sync, and public NeoDB behavior still depends on the selected instance.
 
 ## Quick start
 
@@ -334,7 +334,20 @@ The Pages reference does **not** persist generated history by itself because it 
 
 ## Compatibility
 
-`0.1.0-alpha.4` continues to target Chirpy `v7.6.0` and `v7.5.0`. The preceding alpha.3 code passed all four clean-starter GitHub Actions cells (7.6/7.5 × Light/Dark). Alpha.4 adds a scoped dynamic-title integration contract and corresponding CI checks; the exact alpha.4 matrix remains **RUN_PENDING until this package is uploaded and CI executes**. See [`COMPATIBILITY.md`](./COMPATIBILITY.md).
+### Alpha.5 corrections
+
+Alpha.5 hardens the first live deployment of that UI:
+
+- the installed Chirpy tab title is rendered from `prospero_great_library.ui.title` or, by default, `[site.title]大图书馆` / `[site.title] Great Library`, so the sidebar no longer remains the literal `Library`;
+- the Observable Rating Distribution uses only integer bins `1..10`; zero-valued half-point bins and the long textual bin dump are removed;
+- Current Activity is ordered `Book → Comic → Movie → Drama → Anime → Game → Music`, then by explicit `in_progress` / Steam-recent reason and recency inside each category;
+- Steam-only records receive a usable cover from the public logo when available, with the Steam icon asset as fallback;
+- Steam publication defaults to a public-visibility allow-list (`filter_private_games: true`, `privacy_fail_closed: true`), and the adapter does not publish an old Steam snapshot when that boundary cannot be established;
+- Bangumi Book records ingest `SlimSubject.tags`, allowing manga/comic evidence to reach the existing Book→Comic classifier; an explicit Bangumi book category `1001` is also treated as Comic when present.
+
+To update an already-installed Chirpy site, run the PGL installer again after upgrading the package. Updating only an Action commit reference does not rewrite an existing `_tabs/library.md`.
+
+`0.1.0-alpha.5` continues to target Chirpy `v7.6.0` and `v7.5.0`. Alpha.4 r2 passed all four clean-starter GitHub Actions cells (7.6/7.5 × Light/Dark). Alpha.5 changes installer rendering and data adapters, so its exact four-cell matrix remains **RUN_PENDING until this package is uploaded and CI executes**. See [`COMPATIBILITY.md`](./COMPATIBILITY.md).
 
 ## Development
 

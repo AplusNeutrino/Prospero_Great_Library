@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "pgl_version": "0.1.0-alpha.4",
+  "pgl_version": "0.1.0-alpha.5",
   "adapter": "chirpy",
-  "installed_at": "2026-08-18T09:30:31.688700Z",
+  "installed_at": "2026-08-19T02:03:06.933189Z",
   "managed": {
     "_data/pgl_locales/en.yml": {
       "sha256": "be0a25e255311ab4c0adf7757d32b5013ea2b4d9dcabe78ceac1ed7a158b64ab"
@@ -38,7 +38,7 @@
       "sha256": "79ffa9f454f52ae566c8fe52962e5c5040534bcef87f4298ff9ef97ffc4d6b7d"
     },
     "_includes/pgl/rating-chart.html": {
-      "sha256": "d2afe31094c70940f0c482b103acd6f2ab5d1cb9dec28e2d2300d6daafe07686"
+      "sha256": "b972023e8ae63571cdfc8acbe091646152ee0303b7bf5f9cc286852140d455d7"
     },
     "_includes/pgl/stats.html": {
       "sha256": "058706b1f26080152c9a96b2f26b7ec13c7114d053e9a7c8379caf55de86f559"
@@ -50,7 +50,7 @@
       "sha256": "32f205f0c5e0efaf471244812e05973d4afe3136139a3ab1adafc55e33bddb16"
     },
     "_tabs/library.md": {
-      "sha256": "1df518b55df944124bb405fd4b53b6453f3905ac44af9b2c6261bf9e3fbb3d4c"
+      "sha256": "908abdfb911c07014a87fc7c9a9e6579eed63a102abee57c31e2967882f0006c"
     },
     "assets/pgl/pgl-chirpy.css": {
       "sha256": "f3aa53190e41ba7c62d5609dcd1f828ca0ec9d5b8747d32997ef7fe91e4d43c9"
@@ -59,7 +59,7 @@
       "sha256": "4cd345d86a5e6202d8b9cd3a77d57a796e94c71f4c842b48b9223a28580f1d3b"
     },
     "assets/pgl/pgl.js": {
-      "sha256": "ad0477d2569892e5c0c13257d6bec3bdcbc2f27a413553ce9abbe51008451b5f"
+      "sha256": "43f155777a19f2a8d46a73b725ad6fbc2c67c4198b0f8609f78c556bd23d6e76"
     }
   }
 }

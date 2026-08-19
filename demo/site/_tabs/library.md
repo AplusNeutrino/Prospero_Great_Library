@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Library
+title: "PGL Demo大图书馆"
 icon: fas fa-book-open
 order: 6
 permalink: /library/

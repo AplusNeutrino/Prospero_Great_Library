@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from importlib import resources
 from pathlib import Path
 from typing import Iterable
+import yaml
 
 from . import __version__
 
@@ -37,6 +38,36 @@ def _sha256_file(path: Path) -> str:
 def _resource_bytes(relative: str) -> bytes:
     node = resources.files("pgl").joinpath("resources", "chirpy", *relative.split("/"))
     return node.read_bytes()
+
+
+def _site_config(site_root: Path) -> dict:
+    try:
+        data = yaml.safe_load((site_root / "_config.yml").read_text(encoding="utf-8")) or {}
+    except (OSError, yaml.YAMLError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def _library_title(site_root: Path) -> str:
+    config = _site_config(site_root)
+    pgl = config.get("prospero_great_library") or config.get("personal_library") or {}
+    ui = pgl.get("ui") or {} if isinstance(pgl, dict) else {}
+    explicit = ui.get("title") if isinstance(ui, dict) else None
+    if explicit is not None and str(explicit).strip():
+        return str(explicit).strip()
+    site_title = str(config.get("title") or "").strip() or "Personal"
+    lang = str(config.get("lang") or (pgl.get("locale") if isinstance(pgl, dict) else "") or "en")
+    return f"{site_title}大图书馆" if lang.lower().startswith("zh") else f"{site_title} Great Library"
+
+
+def _render_resource(relative: str, site_root: Path) -> bytes:
+    data = _resource_bytes(relative)
+    if relative != "library-page.md":
+        return data
+    text = data.decode("utf-8")
+    # JSON string quoting is valid YAML and safely handles colons/quotes/non-ASCII.
+    rendered_title = json.dumps(_library_title(site_root), ensure_ascii=False)
+    return text.replace("__PGL_LIBRARY_TITLE__", rendered_title).encode("utf-8")
 
 
 def _templates() -> list[tuple[str, str]]:
@@ -105,7 +136,7 @@ def install_chirpy(
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
     for resource_rel, dest_rel in _templates():
-        data = _resource_bytes(resource_rel)
+        data = _render_resource(resource_rel, site)
         desired_hash = _sha256_bytes(data)
         dest = site / dest_rel
         old_entry = previous_managed.get(dest_rel) or {}
