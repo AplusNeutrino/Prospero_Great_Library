@@ -6,44 +6,22 @@
 <article class="pgl-card"
   data-pgl-id="{{ item.id | escape }}"
   data-category="{{ item.category | escape }}"
-  data-category-label="{{ category_label | escape }}"
   data-status="{{ item.status | default: '' | escape }}"
-  data-status-label="{{ status_label | default: '' | escape }}"
-  data-year="{{ item.year | default: '' }}"
-  data-title="{{ item.title | downcase | escape }} {{ item.title_original | downcase | escape }} {{ item.alternate_titles | join: ' ' | downcase | escape }}"
-  data-rating="{{ item.rating.normalized_10 | default: 0 }}"
-  data-playtime="{{ item.telemetry.steam.playtime_minutes | default: 0 }}"
-  data-updated="{{ item.timestamps.canonical_updated_at | default: '' }}"
-  data-sources="{% for pair in item.sources %}{{ pair[0] }} {% endfor %}"
-  {% if pgl_ui.drawer != false %}tabindex="0" role="button" aria-haspopup="dialog"{% endif %}>
+  tabindex="0" role="button" aria-haspopup="dialog">
   <div class="pgl-cover-wrap">
-    {% if item.cover and item.cover.url %}
-      <img class="pgl-cover" src="{{ item.cover.url | escape }}" alt="{{ item.title | escape }}" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-    {% else %}
-      <div class="pgl-cover pgl-cover-placeholder" aria-hidden="true">PGL</div>
-    {% endif %}
+    {% if item.cover and item.cover.url %}<img class="pgl-cover" src="{{ item.cover.url | escape }}" alt="{{ item.title | escape }}" loading="lazy" decoding="async" referrerpolicy="no-referrer">{% else %}<div class="pgl-cover pgl-cover-placeholder" aria-hidden="true">PGL</div>{% endif %}
   </div>
   <div class="pgl-card-body">
     <div class="pgl-card-kickers">
-      <span class="pgl-type">{{ category_label }}</span>
       {% if item.tags contains 'performance' %}<span class="pgl-badge">{{ l.performance }}</span>{% endif %}
+      {% if item.status == 'in_progress' %}<span class="pgl-status pgl-status-active">{{ status_label }}</span>{% endif %}
     </div>
     <h3 class="pgl-card-title">{{ item.title | escape }}</h3>
-    {% if item.title_original and item.title_original != item.title %}<div class="pgl-alt-title">{{ item.title_original | escape }}</div>{% endif %}
     <div class="pgl-meta">
       {% if item.year %}<span>{{ item.year }}</span>{% endif %}
-      {% if item.status %}<span class="pgl-status">{{ status_label }}</span>{% endif %}
       {% if item.rating %}<span>★ {{ item.rating.normalized_10 | pgl_rating }}</span>{% endif %}
-      {% if pgl_ui.show_steam_playtime != false and item.telemetry.steam.playtime_minutes %}<span>Steam {{ item.telemetry.steam.playtime_minutes | pgl_hours }}h</span>{% endif %}
+      {% if pgl_ui.show_steam_playtime != false and item.category == 'game' and item.telemetry.steam.playtime_minutes %}<span>Steam {{ item.telemetry.steam.playtime_minutes | pgl_hours }}h</span>{% endif %}
     </div>
-    {% if item.progress and item.progress.current != nil %}
-      <div class="pgl-progress" title="{{ item.progress.current }} / {{ item.progress.total }}">
-        {% assign pct = item.progress.percent | default: 0 %}<span style="width: {{ pct }}%"></span>
-      </div>
-    {% endif %}
-    {% if pgl_ui.show_sources != false %}<div class="pgl-source-row">
-      {% for pair in item.sources %}<span class="pgl-source" data-source="{{ pair[0] }}">{{ pair[0] }}</span>{% endfor %}
-      {% if item.articles and item.articles.size > 0 %}<span class="pgl-source">{{ l.blog }} ×{{ item.articles.size }}</span>{% endif %}
-    </div>{% endif %}
+    {% if item.progress and item.progress.current != nil %}<div class="pgl-progress" title="{{ item.progress.current }} / {{ item.progress.total }}"><span style="width: {{ item.progress.percent | default: 0 }}%"></span></div>{% endif %}
   </div>
 </article>

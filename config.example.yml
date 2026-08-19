@@ -64,12 +64,33 @@ prospero_great_library:
     stats_only_items: []
 
   ui:
+    # null => "[site.title]大图书馆" / "[site.title] Great Library"
+    title: null
+    subtitle: null
+    page_size: 24
     layout: grid
     allow_grid_list_toggle: true
     drawer: true
+    # Deprecated in alpha.4; retained for config compatibility.
     lazy_render: true
     show_stats: true
     show_timeline: true
     show_sources: true
     show_steam_playtime: true
     show_achievements: true
+    default_statuses: [in_progress, completed]
+    wishlist:
+      enabled: true
+    other_statuses:
+      enabled: true
+      expose_in_primary_navigation: false
+    current:
+      enabled: true
+      include_all_in_progress: true
+      include_steam_recent: true
+    rating_chart:
+      enabled: true
+      bin_size: 0.5
+    search:
+      enabled: true
+      global_scope: true

@@ -1,4 +1,5 @@
 {% assign lib = site.data.prospero_great_library.library %}
+{% assign stats = site.data.prospero_great_library.stats %}
 {% assign l = site.data.pgl_locales[site.lang] | default: site.data.pgl_locales.en %}
 {% assign pgl_ui = site.prospero_great_library.ui %}
 <link rel="stylesheet" href="{{ '/assets/pgl/pgl.css' | relative_url }}">
@@ -6,17 +7,31 @@
 <section id="prospero-great-library" class="pgl"
   data-history-manifest="{{ '/assets/data/prospero_great_library/manifest.json' | relative_url }}"
   data-library-url="{{ '/assets/data/prospero_great_library/library.json' | relative_url }}"
-  data-initial-limit="60"
-  data-lazy-render="{% if pgl_ui.lazy_render == false %}false{% else %}true{% endif %}"
+  data-stats-url="{{ '/assets/data/prospero_great_library/stats.json' | relative_url }}"
+  data-page-size="{{ pgl_ui.page_size | default: 24 }}"
   data-drawer-enabled="{% if pgl_ui.drawer == false %}false{% else %}true{% endif %}"
   data-show-sources="{% if pgl_ui.show_sources == false %}false{% else %}true{% endif %}"
   data-show-steam-playtime="{% if pgl_ui.show_steam_playtime == false %}false{% else %}true{% endif %}"
   data-show-achievements="{% if pgl_ui.show_achievements == false %}false{% else %}true{% endif %}"
-  data-load-more="{{ l.load_more | escape }}"
   data-timeline-unavailable="{{ l.timeline_unavailable | escape }}"
   data-open-source="{{ l.open_source | escape }}"
   data-blog="{{ l.blog | escape }}"
   data-performance="{{ l.performance | escape }}"
+  data-search-results="{{ l.search_results | escape }}"
+  data-search-empty="{{ l.search_empty | escape }}"
+  data-back-to-categories="{{ l.back_to_categories | escape }}"
+  data-wishlist="{{ l.wishlist | escape }}"
+  data-wishlist-summary="{{ l.wishlist_summary | escape }}"
+  data-other-status="{{ l.other_status | escape }}"
+  data-items="{{ l.items | escape }}"
+  data-no-items="{{ l.no_items | escape }}"
+  data-in-progress-section="{{ l.in_progress_section | escape }}"
+  data-completed-section="{{ l.completed_section | escape }}"
+  data-recent-play="{{ l.recent_play | escape }}"
+  data-rating-axis="{{ l.rating_axis | escape }}"
+  data-rating-count="{{ l.rating_count | escape }}"
+  data-previous-page="{{ l.previous_page | escape }}"
+  data-next-page="{{ l.next_page | escape }}"
   data-category-book="{{ l.categories.book | escape }}"
   data-category-comic="{{ l.categories.comic | escape }}"
   data-category-movie="{{ l.categories.movie | escape }}"
@@ -30,32 +45,36 @@
   data-status-on-hold="{{ l.statuses.on_hold | escape }}"
   data-status-dropped="{{ l.statuses.dropped | escape }}"
   {% for pair in l.events %}data-event-{{ pair[0] | replace: '_', '-' }}="{{ pair[1] | escape }}" {% endfor %}>
-  {% if pgl_ui.show_stats != false %}{% include pgl/stats.html %}{% endif %}
-  {% assign pgl_current = lib.items | where: 'status', 'in_progress' %}
-  {% if pgl_current.size > 0 %}
-  <section class="pgl-current" aria-labelledby="pgl-current-title">
-    <h2 id="pgl-current-title">{{ l.current }}</h2>
-    <div class="pgl-current-list">
-      {% for item in pgl_current limit: 8 %}<button type="button" class="pgl-current-item" data-open-pgl="{{ item.id | escape }}">{{ item.title | escape }}</button>{% endfor %}
-    </div>
-  </section>
-  {% endif %}
-  {% include pgl/filters.html %}
-  <p id="pgl-result-count" class="pgl-result-count" aria-live="polite"></p>
-  <div id="pgl-grid" class="pgl-grid{% if pgl_ui.layout == 'list' %} is-list{% endif %}">
-    {% if pgl_ui.lazy_render == false %}
-      {% for item in lib.items %}{% include pgl/card.html item=item %}{% endfor %}
-    {% else %}
-      {% for item in lib.items limit: 60 %}{% include pgl/card.html item=item %}{% endfor %}
+
+  {% include pgl/header.html %}
+
+  <div id="pgl-root-view" class="pgl-root-view">
+    {% if pgl_ui.show_stats != false %}{% include pgl/stats.html %}{% endif %}
+    {% include pgl/current.html %}
+    {% if pgl_ui.rating_chart.enabled != false %}{% include pgl/rating-chart.html %}{% endif %}
+    {% include pgl/category-ledger.html %}
+    {% if pgl_ui.show_timeline != false %}
+    <section class="pgl-timeline-section">
+      <div class="pgl-section-heading"><h2>{{ l.timeline }}</h2></div>
+      <div id="pgl-timeline"><button id="pgl-load-timeline" type="button">{{ l.load_timeline }}</button></div>
+    </section>
     {% endif %}
   </div>
-  <div class="pgl-load-more-wrap"><button id="pgl-load-more" type="button" hidden>{{ l.load_more }}</button></div>
-  {% if pgl_ui.show_timeline != false %}
-  <section class="pgl-timeline-section">
-    <h2>{{ l.timeline }}</h2><div id="pgl-timeline"><button id="pgl-load-timeline" type="button">{{ l.load_timeline }}</button></div>
+
+  <section id="pgl-browser-view" class="pgl-browser-view" hidden aria-live="polite">
+    <div class="pgl-browser-heading">
+      <button id="pgl-back" class="pgl-back" type="button">← {{ l.back_to_categories }}</button>
+      <div class="pgl-browser-title-row"><div><h2 id="pgl-browser-title"></h2><p id="pgl-result-count" class="pgl-result-count"></p></div></div>
+    </div>
+    <div id="pgl-wishlist-ledger" class="pgl-wishlist-ledger" hidden></div>
+    <div id="pgl-card-view" hidden>
+      {% include pgl/view-toolbar.html %}
+      <div id="pgl-grid" class="pgl-grid{% if pgl_ui.layout == 'list' %} is-list{% endif %}"></div>
+      {% include pgl/pagination.html %}
+    </div>
   </section>
-  {% endif %}
+
   {% if pgl_ui.drawer != false %}{% include pgl/drawer.html %}{% endif %}
-  <noscript><p class="pgl-noscript">JavaScript is disabled; the initial library cards remain available.</p></noscript>
+  <noscript><p class="pgl-noscript">JavaScript is required for classified browsing, pagination and search. The dashboard above remains available.</p></noscript>
 </section>
 <script src="{{ '/assets/pgl/pgl.js' | relative_url }}" defer></script>

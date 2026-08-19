@@ -22,6 +22,7 @@ FIXTURES = ROOT / 'demo' / 'fixtures'
 def _reset_demo_site() -> None:
     for path in [
         SITE / '_data' / 'prospero_great_library',
+        SITE / '_data' / 'pgl_locales',
         SITE / 'assets' / 'data' / 'prospero_great_library',
         SITE / '_includes' / 'pgl',
         SITE / 'assets' / 'pgl',
@@ -50,7 +51,11 @@ def _make_previous_fixture_dir() -> Path:
 
 def main() -> int:
     _reset_demo_site()
-    install_chirpy(SITE)
+    install_actions = install_chirpy(SITE)
+    conflicts = [item for item in install_actions if item.action == 'conflict']
+    if conflicts:
+        details = ', '.join(item.path for item in conflicts)
+        raise RuntimeError(f'Demo Chirpy install produced conflicts: {details}')
     cfg = load_config(SITE / '_config.yml')
     previous_dir = _make_previous_fixture_dir()
     try:

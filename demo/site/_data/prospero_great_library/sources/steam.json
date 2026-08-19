@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "source": "steam",
-  "fetched_at": "2026-08-18T08:00:21Z",
-  "last_success_at": "2026-08-18T08:00:21Z",
-  "adapter_version": "0.1.0-alpha.3",
+  "fetched_at": "2026-08-18T09:30:31Z",
+  "last_success_at": "2026-08-18T09:30:31Z",
+  "adapter_version": "0.1.0-alpha.4",
   "record_count": 2,
   "records": [
     {
@@ -32,7 +32,7 @@
           "owned": true,
           "playtime_minutes": 2556,
           "recent_playtime_minutes": 120,
-          "last_played_at": 1786950000,
+          "last_played_at": "2026-08-17T07:00:00Z",
           "achievements": {
             "unlocked": 18,
             "total": 24,

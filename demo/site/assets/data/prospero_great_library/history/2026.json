@@ -3,113 +3,44 @@
   "year": "2026",
   "events": [
     {
-      "id": "evt_0aaf76fa3eae9c10",
-      "observed_at": "2026-08-18T08:00:21Z",
+      "id": "evt_0155dd01c42a954f",
+      "observed_at": "2026-08-18T09:30:31Z",
       "local_date": "2026-08-18",
-      "entity_id": "book:64adad026f",
+      "entity_id": "book:d9f39af2eb",
       "category": "book",
       "event": "entity_first_seen",
       "source": null,
       "data": {
-        "title": "The Left Hand of Darkness"
+        "title": "PGL Demo Catalogue Book 06"
       }
     },
     {
-      "id": "evt_11361ba72cab29e5",
-      "observed_at": "2026-08-18T08:00:21Z",
+      "id": "evt_0a1645189b626313",
+      "observed_at": "2026-08-18T09:30:31Z",
       "local_date": "2026-08-18",
-      "entity_id": "game:bcf7ad2945",
-      "category": "game",
-      "event": "steam_playtime_delta",
-      "source": "steam",
-      "data": {
-        "title": "Hades",
-        "from_minutes": 3000,
-        "to_minutes": 3120,
-        "delta_minutes": 120
-      }
-    },
-    {
-      "id": "evt_3830bf12222b7753",
-      "observed_at": "2026-08-18T08:00:21Z",
-      "local_date": "2026-08-18",
-      "entity_id": "anime:a304a15ec6",
-      "category": "anime",
+      "entity_id": "book:c68933d56d",
+      "category": "book",
       "event": "entity_first_seen",
       "source": null,
       "data": {
-        "title": "Demo Dropped Anime"
+        "title": "PGL Demo Catalogue Book 25"
       }
     },
     {
-      "id": "evt_4535f6755b99a10f",
-      "observed_at": "2026-08-18T08:00:21Z",
+      "id": "evt_1de740a1c9596f0d",
+      "observed_at": "2026-08-18T09:30:31Z",
       "local_date": "2026-08-18",
-      "entity_id": "game:bcf7ad2945",
-      "category": "game",
-      "event": "steam_achievement_progress",
-      "source": "steam",
-      "data": {
-        "title": "Hades",
-        "from_unlocked": 19,
-        "to_unlocked": 20,
-        "total": 49
-      }
-    },
-    {
-      "id": "evt_49f3136dd0ce9542",
-      "observed_at": "2026-08-18T08:00:21Z",
-      "local_date": "2026-08-18",
-      "entity_id": "game:656708c36b",
-      "category": "game",
-      "event": "steam_achievement_progress",
-      "source": "steam",
-      "data": {
-        "title": "FINAL FANTASY",
-        "from_unlocked": 17,
-        "to_unlocked": 18,
-        "total": 24
-      }
-    },
-    {
-      "id": "evt_5f120c7399802429",
-      "observed_at": "2026-08-18T08:00:21Z",
-      "local_date": "2026-08-18",
-      "entity_id": "comic:d1fa9ea524",
-      "category": "comic",
+      "entity_id": "movie:102fa9993f",
+      "category": "movie",
       "event": "entity_first_seen",
       "source": null,
       "data": {
-        "title": "葬送のフリーレン"
+        "title": "Hamlet — National Theatre"
       }
     },
     {
-      "id": "evt_60455faf0adb312b",
-      "observed_at": "2026-08-18T08:00:21Z",
-      "local_date": "2026-08-18",
-      "entity_id": "music:929ade66af",
-      "category": "music",
-      "event": "entity_first_seen",
-      "source": null,
-      "data": {
-        "title": "Kind of Blue"
-      }
-    },
-    {
-      "id": "evt_64ebc1da0e6ec9f3",
-      "observed_at": "2026-08-18T08:00:21Z",
-      "local_date": "2026-08-18",
-      "entity_id": "game:bcf7ad2945",
-      "category": "game",
-      "event": "entity_first_seen",
-      "source": null,
-      "data": {
-        "title": "Hades"
-      }
-    },
-    {
-      "id": "evt_8521768758c1eab0",
-      "observed_at": "2026-08-18T08:00:21Z",
+      "id": "evt_2107ad726b7ae00c",
+      "observed_at": "2026-08-18T09:30:31Z",
       "local_date": "2026-08-18",
       "entity_id": "anime:384f3620e3",
       "category": "anime",
@@ -120,44 +51,32 @@
       }
     },
     {
-      "id": "evt_88a8311bdcde96ab",
-      "observed_at": "2026-08-18T08:00:21Z",
+      "id": "evt_24acfa73faceb7b2",
+      "observed_at": "2026-08-18T09:30:31Z",
       "local_date": "2026-08-18",
-      "entity_id": "drama:9b38c6d76d",
-      "category": "drama",
-      "event": "entity_first_seen",
-      "source": null,
-      "data": {
-        "title": "Sherlock"
-      }
-    },
-    {
-      "id": "evt_8ce308afe2e729a8",
-      "observed_at": "2026-08-18T08:00:21Z",
-      "local_date": "2026-08-18",
-      "entity_id": "book:6ded81eb6c",
+      "entity_id": "book:64adad026f",
       "category": "book",
       "event": "entity_first_seen",
       "source": null,
       "data": {
-        "title": "围城"
+        "title": "The Left Hand of Darkness"
       }
     },
     {
-      "id": "evt_a378ee6e7bc5be72",
-      "observed_at": "2026-08-18T08:00:21Z",
+      "id": "evt_24ff5425b5fc5fad",
+      "observed_at": "2026-08-18T09:30:31Z",
       "local_date": "2026-08-18",
-      "entity_id": "game:656708c36b",
-      "category": "game",
+      "entity_id": "book:a2bd57313f",
+      "category": "book",
       "event": "entity_first_seen",
       "source": null,
       "data": {
-        "title": "FINAL FANTASY"
+        "title": "PGL Demo Catalogue Book 23"
       }
     },
     {
-      "id": "evt_b9484aee47b94d9c",
-      "observed_at": "2026-08-18T08:00:21Z",
+      "id": "evt_272bd779a1c8c114",
+      "observed_at": "2026-08-18T09:30:31Z",
       "local_date": "2026-08-18",
       "entity_id": "game:656708c36b",
       "category": "game",
@@ -171,20 +90,278 @@
       }
     },
     {
-      "id": "evt_c9a703505a9b92eb",
-      "observed_at": "2026-08-18T08:00:21Z",
+      "id": "evt_3141ac30fab2fafd",
+      "observed_at": "2026-08-18T09:30:31Z",
       "local_date": "2026-08-18",
-      "entity_id": "movie:102fa9993f",
-      "category": "movie",
+      "entity_id": "book:6ded81eb6c",
+      "category": "book",
       "event": "entity_first_seen",
       "source": null,
       "data": {
-        "title": "Hamlet — National Theatre"
+        "title": "围城"
       }
     },
     {
-      "id": "evt_d96c688f847f8dec",
-      "observed_at": "2026-08-18T08:00:21Z",
+      "id": "evt_3b781243b76ec5b0",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "anime:a304a15ec6",
+      "category": "anime",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "Demo Dropped Anime"
+      }
+    },
+    {
+      "id": "evt_47f7fd884a9fa8b0",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "comic:d1fa9ea524",
+      "category": "comic",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "葬送のフリーレン"
+      }
+    },
+    {
+      "id": "evt_4d31540d6cfaa93f",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "game:656708c36b",
+      "category": "game",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "FINAL FANTASY"
+      }
+    },
+    {
+      "id": "evt_5475873ced246a0b",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:cc4a61aaef",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 26"
+      }
+    },
+    {
+      "id": "evt_5617787c5da21cfe",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:5ee5d4935c",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 13"
+      }
+    },
+    {
+      "id": "evt_59d1b824dbce79f5",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:27d7e3b985",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 21"
+      }
+    },
+    {
+      "id": "evt_5a1e130859c7bce3",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:6f2106a4fe",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 28"
+      }
+    },
+    {
+      "id": "evt_6050575c22e2ec03",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "game:bcf7ad2945",
+      "category": "game",
+      "event": "steam_playtime_delta",
+      "source": "steam",
+      "data": {
+        "title": "Hades",
+        "from_minutes": 3000,
+        "to_minutes": 3120,
+        "delta_minutes": 120
+      }
+    },
+    {
+      "id": "evt_7106858058ae7666",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:d3b1147578",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 08"
+      }
+    },
+    {
+      "id": "evt_733b80a2a09adfaf",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:66f7f27b0f",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 16"
+      }
+    },
+    {
+      "id": "evt_7859426b054548bc",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:cfd1e583ab",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 05"
+      }
+    },
+    {
+      "id": "evt_799f17bbf8f30f53",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "game:bcf7ad2945",
+      "category": "game",
+      "event": "steam_achievement_progress",
+      "source": "steam",
+      "data": {
+        "title": "Hades",
+        "from_unlocked": 19,
+        "to_unlocked": 20,
+        "total": 49
+      }
+    },
+    {
+      "id": "evt_7cfab95541139562",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:2cdd3b043a",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 17"
+      }
+    },
+    {
+      "id": "evt_90f7391d224088ab",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:10fec021dd",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 07"
+      }
+    },
+    {
+      "id": "evt_9169b03d911da891",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:8c2afd6253",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 11"
+      }
+    },
+    {
+      "id": "evt_9a1df43b10ebaeb7",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:6b4e79ec15",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 03"
+      }
+    },
+    {
+      "id": "evt_9b531bc7c4cdb825",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "drama:9b38c6d76d",
+      "category": "drama",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "Sherlock"
+      }
+    },
+    {
+      "id": "evt_9f7b1c7dedcb4039",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:88ae335a54",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 15"
+      }
+    },
+    {
+      "id": "evt_a2851758c529c58b",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:feda3cadc8",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 09"
+      }
+    },
+    {
+      "id": "evt_aa3b906fa081e6fc",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "game:bcf7ad2945",
+      "category": "game",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "Hades"
+      }
+    },
+    {
+      "id": "evt_b0865fca2dc785a7",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:db35dd2c1f",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 02"
+      }
+    },
+    {
+      "id": "evt_b1407c46dd56ed70",
+      "observed_at": "2026-08-18T09:30:31Z",
       "local_date": "2026-08-18",
       "entity_id": "movie:19ae7b5be7",
       "category": "movie",
@@ -192,6 +369,165 @@
       "source": null,
       "data": {
         "title": "Solaris"
+      }
+    },
+    {
+      "id": "evt_c73630befccdc6be",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "music:929ade66af",
+      "category": "music",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "Kind of Blue"
+      }
+    },
+    {
+      "id": "evt_c84e6ad72e3d8cb6",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:7cf974246c",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 01"
+      }
+    },
+    {
+      "id": "evt_cb433a8672891bec",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:4a98eac6b4",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 20"
+      }
+    },
+    {
+      "id": "evt_cd73ca61058e90a8",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:1c23b32be2",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 24"
+      }
+    },
+    {
+      "id": "evt_d2415cacc19e8800",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:ee17a917dd",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 19"
+      }
+    },
+    {
+      "id": "evt_d70d9bd1d0e1c647",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:c1992b2c02",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 14"
+      }
+    },
+    {
+      "id": "evt_da5c1e9e9b126d61",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:d8a00be26b",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 04"
+      }
+    },
+    {
+      "id": "evt_e3256e87807c5ae1",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:d7299bbe0e",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 12"
+      }
+    },
+    {
+      "id": "evt_e61082a5b6e47ba0",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "game:656708c36b",
+      "category": "game",
+      "event": "steam_achievement_progress",
+      "source": "steam",
+      "data": {
+        "title": "FINAL FANTASY",
+        "from_unlocked": 17,
+        "to_unlocked": 18,
+        "total": 24
+      }
+    },
+    {
+      "id": "evt_f2eb4eeed5470c35",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:e02110f0cf",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 18"
+      }
+    },
+    {
+      "id": "evt_f6bd1e23f209ef53",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:5101315cef",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 27"
+      }
+    },
+    {
+      "id": "evt_f846b05294231ea3",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:725afd778c",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 10"
+      }
+    },
+    {
+      "id": "evt_fc6f9ec49b94adeb",
+      "observed_at": "2026-08-18T09:30:31Z",
+      "local_date": "2026-08-18",
+      "entity_id": "book:47c6534dab",
+      "category": "book",
+      "event": "entity_first_seen",
+      "source": null,
+      "data": {
+        "title": "PGL Demo Catalogue Book 22"
       }
     }
   ]

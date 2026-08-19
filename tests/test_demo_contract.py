@@ -51,6 +51,9 @@ def test_demo_exercises_locked_v1_cases(tmp_path: Path):
     assert any(item['category'] == 'anime' and {'bangumi', 'neodb'} <= set(item.get('sources', {})) for item in items)
     assert any(item['category'] == 'comic' for item in items)
     assert any(item['category'] == 'book' for item in items)
+    assert sum(1 for item in items if item['category'] == 'book' and item.get('status') in {'in_progress','completed'}) > 24
+    assert second['stats']['navigation']['default_by_category']['book'] > 24
+    assert second['stats']['rating_curve_distribution']['scopes']['book']
     assert second['associations']['by_entity']
     assert sum(1 for event in second['events'] if event['event'] == 'steam_playtime_delta') == 2
     assert second['stats']['steam']['observed_playtime_by_year_minutes']

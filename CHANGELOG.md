@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.1.0-alpha.4 — 2026-08-18
+
+### Delivery revision 2 fix
+
+- synchronized Demo locale mirrors with the canonical alpha.4 Jekyll/package locales so `pgl install --adapter chirpy --site-root demo/site --dry-run` no longer reports false local-file conflicts;
+- corrected Demo reset ownership for installer-managed locales and made Demo builds fail on installer conflicts;
+- extended resource-mirror/install regression coverage so future locale drift is caught before packaging.
+
+### Added
+
+- redesigned `/library/` as a classified Great Library index/dashboard instead of a mixed flat card feed;
+- added automatic `[site.title]大图书馆` page title plus localized subtitle and explicit configuration overrides;
+- added a main-site-inspired seven-category ledger and a separate Wishlist ledger;
+- added deterministic default browse semantics: `in_progress` + `completed`, with `in_progress` always sorted first;
+- unified the Chinese Wishlist status label as `计划品鉴`;
+- added 24-item numbered pagination with query-state routing and browser Back/Forward restoration;
+- moved Library search into the page header and made it global across public categories/statuses;
+- added vertical Current Activity rows including all explicit `in_progress` items and Steam recent-only games;
+- added a 0.5-bin SVG Observable Rating Distribution curve with all-domain and per-category switching;
+- added compact Grid/List layouts, local layout preference, and advanced Source/Year/other-status controls;
+- expanded demo fixtures past one full 24-item category page and added UI/stats/router regression coverage.
+
+### Changed
+
+- `stats_schema_version` is now `2` and exposes navigation counts, rating-curve scopes, and Current Activity candidates;
+- identity-bearing navigation/current/ranking data is computed only from public items while `stats_only` records may still contribute anonymous aggregate statistics;
+- removed the old Load More/60-card mixed-feed behavior;
+- removed the Steam lifetime-ranking details from the default UI while retaining compatible backend data;
+- reduced card density and moved secondary metadata toward the detail Drawer;
+- the Chirpy adapter now suppresses Chirpy's default page heading only for the PGL page via a scoped `:has(#prospero-great-library)` selector.
+
+### Compatibility evidence
+
+- the imported alpha.3 baseline has a successful GitHub Actions run covering Python tests, Action smoke, and clean Chirpy Starter builds for `v7.6.0`/`v7.5.0` in both Light and Dark modes;
+- alpha.4 keeps those two Chirpy targets but requires a fresh uploaded CI run before its new UI/runtime contract is promoted to PASS.
+
 ## 0.1.0-alpha.3 — 2026-08-18
 
 ### Added

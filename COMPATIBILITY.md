@@ -1,39 +1,53 @@
-# Compatibility — Prospero Great Library 0.1.0-alpha.3
+# Compatibility — Prospero Great Library 0.1.0-alpha.4
 
-The architecture policy is to support the **two most recent tested Chirpy release lines**, without promising all historical versions.
+The architecture policy is to support the **two most recent tested Chirpy release lines** without promising every historical version.
 
 ## Release matrix
 
-| PGL | Chirpy target | Jekyll requirement from Chirpy | Light | Dark | Current evidence |
-|---|---|---|---|---|---|
-| 0.1.0-alpha.3 | v7.6.0 | `~> 4.3` | CI defined | CI defined | RUN_PENDING |
-| 0.1.0-alpha.3 | v7.5.0 | `~> 4.3` | CI defined | CI defined | RUN_PENDING |
+| PGL code | Chirpy target | Light | Dark | Evidence |
+|---|---|---|---|---|
+| 0.1.0-alpha.3 baseline | v7.6.0 | PASS | PASS | GitHub Actions run `32114762265` |
+| 0.1.0-alpha.3 baseline | v7.5.0 | PASS | PASS | GitHub Actions run `32114762265` |
+| 0.1.0-alpha.4 UI/runtime | v7.6.0 | PASS | PASS | GitHub Actions run `32119375789` |
+| 0.1.0-alpha.4 UI/runtime | v7.5.0 | PASS | PASS | GitHub Actions run `32119375789` |
 
-`RUN_PENDING` means the exact matrix exists in `.github/workflows/ci.yml`, but the packaging environment could not execute Bundler/Jekyll. Do not translate this status into “tested/passed” until GitHub Actions has actually completed those jobs.
+The alpha.3 GitHub run completed successfully and each compatibility cell installed PGL into a clean Chirpy Starter checkout, generated fixture data, verified the theme-variable contract, built Jekyll in production mode, and verified the built Library page.
 
-## Adapter contract
+The first alpha.4 import executed these four compatibility cells successfully in run `32119375789`. That workflow still ended in failure because the separate Python jobs' final Demo Installer dry-run detected stale Demo locale mirrors. Delivery revision 2 fixes that packaging-only conflict; a fresh run is still required before the **overall** alpha.4 workflow is considered all-green.
 
-PGL avoids copying Chirpy layouts. The adapter is limited to:
+## Alpha.4 adapter contract
+
+PGL still avoids copying Chirpy layouts. The adapter is limited to:
 
 - a `/library/` tab starter;
 - PGL includes;
-- one small Ruby helper;
-- isolated JS/CSS;
-- a thin CSS-variable bridge.
+- one small Ruby helper/hook;
+- isolated Vanilla JS/CSS;
+- a thin CSS-variable/theme bridge.
 
-For current Chirpy 7.6, the bridge uses stable public theme variables such as `--main-bg`, `--main-border-color`, `--text-color`, `--text-muted-color`, `--heading-color`, `--link-color`, `--card-bg`, and `--card-shadow`. CI resolves the installed Chirpy gem and checks both `_light.scss` and `_dark.scss` before building.
+Alpha.4 additionally provides its own Library heading/search header. To avoid rendering Chirpy's normal page heading twice, the adapter uses the narrowly scoped selector:
+
+```css
+article:has(#prospero-great-library) > .dynamic-title {
+  display: none;
+}
+```
+
+The supported Chirpy `v7.6.0` and `v7.5.0` `_layouts/page.html` files were checked during development and both currently contain the expected direct `dynamic-title` heading plus `.content` wrapper. CI now verifies that layout contract before building. If Chirpy changes that structure in a future release, the compatibility job should fail instead of silently hiding unrelated headings.
 
 ## CI matrix
 
-The compatibility job checks:
+For each supported Chirpy version and Light/Dark mode, `.github/workflows/ci.yml` is expected to:
 
 ```text
-Chirpy v7.6.0 × light
-Chirpy v7.6.0 × dark
-Chirpy v7.5.0 × light
-Chirpy v7.5.0 × dark
+checkout PGL
+checkout clean Chirpy Starter
+install PGL
+install the Chirpy adapter
+generate fixture data
+verify theme + page-layout contracts
+build Jekyll in production mode
+verify /library/ and static PGL assets
 ```
 
-For each cell it installs PGL into a clean Chirpy Starter checkout, generates fixture data, verifies the theme-variable contract, builds Jekyll in production mode, then verifies that `/library/` and its static PGL assets exist.
-
-This matrix is intentionally version-pinned so a future upstream Chirpy release cannot silently change the meaning of an older PGL release.
+The matrix is version-pinned so upstream changes cannot silently rewrite the evidence attached to an older PGL release.

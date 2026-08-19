@@ -20,7 +20,8 @@ def test_fixture_pipeline(tmp_path):
     result=run_sync(site,cfg,ROOT/'demo'/'fixtures')
     items=result['library']['items']; cats={x['category'] for x in items}
     assert {'book','comic','movie','drama','anime','game','music'} <= cats
-    assert len(items)==11
+    assert len(items) >= 39
+    assert sum(1 for x in items if x['category']=='book') > 24
     anime=next(x for x in items if x['category']=='anime')
     assert anime['links']['primary']=='https://bgm.tv/subject/1'
     comic=next(x for x in items if x['category']=='comic')

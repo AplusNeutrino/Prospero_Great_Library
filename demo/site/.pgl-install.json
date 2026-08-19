@@ -1,47 +1,65 @@
 {
   "schema_version": 1,
-  "pgl_version": "0.1.0-alpha.3",
+  "pgl_version": "0.1.0-alpha.4",
   "adapter": "chirpy",
-  "installed_at": "2026-08-18T08:00:21.869061Z",
+  "installed_at": "2026-08-18T09:30:31.688700Z",
   "managed": {
     "_data/pgl_locales/en.yml": {
-      "sha256": "432bca0395773d685e0d0052e5fd61f95dd990abb269418bdec7d7fcfae8d853"
+      "sha256": "be0a25e255311ab4c0adf7757d32b5013ea2b4d9dcabe78ceac1ed7a158b64ab"
     },
     "_data/pgl_locales/zh-CN.yml": {
-      "sha256": "c3efcd455158a17a91f940796bf7d80c31d3a89b70c5f1c61fbac9ed4dc63846"
+      "sha256": "220f34fa7063c1805c7207c696ea19291ca6de46f09d435285f66a17f52f0bc0"
     },
     "_includes/pgl/card.html": {
-      "sha256": "b861339f87fa9703c091c8339f02e4e317f6f89e0bf4d6f76b3ba543ab59482e"
+      "sha256": "c597080c8ec622fc9ab9c8503c61fa6fde0173bc7a71ffc693ddb8dd69785347"
+    },
+    "_includes/pgl/category-ledger.html": {
+      "sha256": "1c07610239f2b279530010d02c11e232fd3cf014b122ce0f37834fd2b84bc318"
+    },
+    "_includes/pgl/current.html": {
+      "sha256": "164dc0a74aae39311589150f4b9ca7ca5f770c34fce1e48091ac19ce02cb73d1"
     },
     "_includes/pgl/drawer.html": {
       "sha256": "9c430ffe8492f03f934930e0961677a4a8639cbec0706431789d13c3ffc8f450"
     },
     "_includes/pgl/filters.html": {
-      "sha256": "0ac9484c11a88ef5757e4cb3dd8814ad45b19732f5ee1742c26a29252596b704"
+      "sha256": "3e096c3d0aecb05458ec9d15b221e5ac3c3a10f5328fe7f6b89b2113f983cb7e"
+    },
+    "_includes/pgl/header.html": {
+      "sha256": "c7b8d85acb26aa8e9b2caa1237b150c039fd53be80c6cafa316a3de4376aec96"
     },
     "_includes/pgl/library.html": {
-      "sha256": "e9dc3f287554b8598340db006d25a8076ee6a932e93852bc739dbbc537477098"
+      "sha256": "19c0a79d5e9f6ed0bc27272078e8e4dbee5241d86d5ee87db3cf037af7f403a2"
+    },
+    "_includes/pgl/pagination.html": {
+      "sha256": "b6a15f6284c958c4e433c253abf2f559021dc73479157383bec21b13964c7b58"
     },
     "_includes/pgl/post-card.html": {
       "sha256": "79ffa9f454f52ae566c8fe52962e5c5040534bcef87f4298ff9ef97ffc4d6b7d"
     },
+    "_includes/pgl/rating-chart.html": {
+      "sha256": "d2afe31094c70940f0c482b103acd6f2ab5d1cb9dec28e2d2300d6daafe07686"
+    },
     "_includes/pgl/stats.html": {
-      "sha256": "528f10b718f6faca8fa901af9d665e291673863e8e2a22632d9f320fdf5ceedf"
+      "sha256": "058706b1f26080152c9a96b2f26b7ec13c7114d053e9a7c8379caf55de86f559"
+    },
+    "_includes/pgl/view-toolbar.html": {
+      "sha256": "19118e130fd07f6e2f4943b6b11fb8f07412d6ff99c9f2d24bf0577c746ae197"
     },
     "_plugins/prospero_great_library.rb": {
-      "sha256": "f564c224384868c3f1cc5e2eb3ff1db80f03a229c269a31036837b40085921c2"
+      "sha256": "32f205f0c5e0efaf471244812e05973d4afe3136139a3ab1adafc55e33bddb16"
     },
     "_tabs/library.md": {
-      "sha256": "1ef1d4aea0c30a52f40b63086af9bf3f08bd73490a11abca1fb5f279650bd193"
+      "sha256": "1df518b55df944124bb405fd4b53b6453f3905ac44af9b2c6261bf9e3fbb3d4c"
     },
     "assets/pgl/pgl-chirpy.css": {
-      "sha256": "a91b20f8c0d4da4ab46dccb6fe02f103ab769e0703b9e750b7983332ba588093"
+      "sha256": "f3aa53190e41ba7c62d5609dcd1f828ca0ec9d5b8747d32997ef7fe91e4d43c9"
     },
     "assets/pgl/pgl.css": {
-      "sha256": "cf281486f2f9bf0ba755bdde310093d7d291fd794b9e7ab56936181c85ac8cb5"
+      "sha256": "4cd345d86a5e6202d8b9cd3a77d57a796e94c71f4c842b48b9223a28580f1d3b"
     },
     "assets/pgl/pgl.js": {
-      "sha256": "7e2d80274444b6743d63942c7cc8c7240d2896ee4da3a346a5e08189aa4ec18c"
+      "sha256": "ad0477d2569892e5c0c13257d6bec3bdcbc2f27a413553ce9abbe51008451b5f"
     }
   }
 }

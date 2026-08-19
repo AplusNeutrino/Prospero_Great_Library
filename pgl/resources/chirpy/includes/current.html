@@ -1,0 +1,45 @@
+{% assign l = site.data.pgl_locales[site.lang] | default: site.data.pgl_locales.en %}
+{% assign lib = site.data.prospero_great_library.library %}
+{% assign stats = site.data.prospero_great_library.stats %}
+{% assign pgl_ui = site.prospero_great_library.ui %}
+{% if pgl_ui.current.enabled != false and stats.current_activity and stats.current_activity.size > 0 %}
+<section class="pgl-current" aria-labelledby="pgl-current-title">
+  <div class="pgl-section-heading">
+    <h2 id="pgl-current-title">{{ l.current }}</h2>
+    <span class="pgl-section-count">{{ stats.current_activity | size }}</span>
+  </div>
+  <div id="pgl-current-list" class="pgl-current-list">
+    {% for activity in stats.current_activity %}
+      {% assign current_item = nil %}
+      {% for item in lib.items %}
+        {% if item.id == activity.entity_id %}{% assign current_item = item %}{% break %}{% endif %}
+      {% endfor %}
+      {% if current_item %}
+      <button type="button" class="pgl-current-row" data-open-pgl="{{ current_item.id | escape }}">
+        <span class="pgl-current-cover-wrap">
+          {% if current_item.cover and current_item.cover.url %}<img class="pgl-current-cover" src="{{ current_item.cover.url | escape }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">{% else %}<span class="pgl-current-cover pgl-cover-placeholder">PGL</span>{% endif %}
+        </span>
+        <span class="pgl-current-main">
+          <span class="pgl-current-title">{{ current_item.title | escape }}</span>
+          <span class="pgl-current-meta">
+            {{ l.categories[current_item.category] | default: current_item.category }}
+            · {% if activity.reason == 'steam_recent' %}{{ l.recent_play }}{% else %}{{ l.statuses.in_progress }}{% endif %}
+            {% if current_item.rating %} · ★ {{ current_item.rating.normalized_10 | pgl_rating }}{% endif %}
+          </span>
+          {% if current_item.progress and current_item.progress.current != nil %}
+          <span class="pgl-current-progress-line">
+            <span>{{ current_item.progress.current }}{% if current_item.progress.total %} / {{ current_item.progress.total }}{% endif %}{% if current_item.progress.unit and l.units[current_item.progress.unit] %} {{ l.units[current_item.progress.unit] }}{% endif %}</span>
+            <span class="pgl-progress"><span style="width: {{ current_item.progress.percent | default: 0 }}%"></span></span>
+          </span>
+          {% elsif current_item.telemetry.steam.playtime_minutes %}
+          <span class="pgl-current-detail">Steam {{ current_item.telemetry.steam.playtime_minutes | pgl_hours }}h{% if activity.recent_playtime_minutes > 0 %} · +{{ activity.recent_playtime_minutes | pgl_hours }}h{% endif %}</span>
+          {% endif %}
+          {% if current_item.timestamps.canonical_updated_at %}<span class="pgl-current-date">{{ current_item.timestamps.canonical_updated_at | date: '%Y-%m-%d' }}</span>{% endif %}
+        </span>
+        <span class="pgl-current-chevron" aria-hidden="true">›</span>
+      </button>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
