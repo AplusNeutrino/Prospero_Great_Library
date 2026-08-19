@@ -19,9 +19,9 @@
       <span aria-hidden="true">⌕</span>
     </button>
     <label id="pgl-search-box" class="pgl-search-box">
-      <span class="visually-hidden">{{ l.search }}</span>
+      <span class="pgl-sr-only">{{ l.search }}</span>
       <span class="pgl-search-icon" aria-hidden="true">⌕</span>
-      <input id="pgl-search" type="search" placeholder="{{ l.search }}" autocomplete="off" spellcheck="false">
+      <input id="pgl-search" type="search" aria-label="{{ l.search }}" placeholder="{{ l.search }}" autocomplete="off" spellcheck="false">
     </label>
   </div>
 </header>

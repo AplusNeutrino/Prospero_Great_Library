@@ -1,13 +1,23 @@
 {% assign stats = site.data.prospero_great_library.stats %}
+{% assign sync = site.data.prospero_great_library.sync_status %}
 {% assign l = site.data.pgl_locales[site.lang] | default: site.data.pgl_locales.en %}
+{% assign steam_status = sync.sources.steam.status | default: 'disabled' %}
+{% assign steam_known = false %}
+{% if steam_status == 'ok' or steam_status == 'stale' %}{% assign steam_known = true %}{% endif %}
 {% if stats %}
 <section class="pgl-stats-wrap" aria-label="{{ l.statistics }}">
   <div class="pgl-stats">
     <div><strong>{{ stats.total_items }}</strong><span>{{ l.items }}</span></div>
-    <div><strong>{{ stats.steam.lifetime_playtime_minutes | pgl_hours }}h</strong><span>{{ l.steam_lifetime }}</span></div>
+    <div class="pgl-stat-steam{% unless steam_known %} is-unavailable{% endunless %}">
+      <strong>{% if steam_known %}{{ stats.steam.lifetime_playtime_minutes | pgl_hours }}h{% else %}—{% endif %}</strong>
+      <span>{% if steam_known %}{{ l.steam_lifetime }}{% else %}{{ l.steam_unavailable }}{% endif %}</span>
+    </div>
     {% assign y = 'now' | date: '%Y' %}
     {% assign observed = stats.steam.observed_playtime_by_year_minutes[y] | default: 0 %}
-    <div><strong>{{ observed | pgl_hours }}h</strong><span>{{ l.steam_observed_year }}</span></div>
+    <div class="pgl-stat-steam{% unless steam_known %} is-unavailable{% endunless %}">
+      <strong>{% if steam_known %}{{ observed | pgl_hours }}h{% else %}—{% endif %}</strong>
+      <span>{% if steam_known %}{{ l.steam_observed_year }}{% else %}{{ l.steam_unavailable }}{% endif %}</span>
+    </div>
   </div>
 </section>
 {% endif %}

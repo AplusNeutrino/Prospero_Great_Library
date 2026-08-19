@@ -30,10 +30,14 @@ items: Items
 records: Records
 steam_lifetime: Steam lifetime
 steam_observed_year: Steam observed this year
+steam_unavailable: Steam data unavailable
 observable_rating_distribution: Observable Rating Distribution
 all_domains: All
 rating_axis: Rating
 rating_count: Works
+rated_works: rated works
+rating_mean: Mean
+rating_mode: Peak
 wishlist: Wishlist
 wishlist_summary: Planned
 other_status: Other status

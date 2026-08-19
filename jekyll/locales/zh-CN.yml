@@ -30,10 +30,14 @@ items: 条目
 records: 记录
 steam_lifetime: Steam 累计游玩
 steam_observed_year: 本年观测新增 Steam 游玩
+steam_unavailable: Steam 数据暂不可用
 observable_rating_distribution: 可观测评分分布图
 all_domains: 全域
 rating_axis: 评分
 rating_count: 作品数
+rated_works: 个已评分作品
+rating_mean: 均值
+rating_mode: 峰值
 wishlist: 愿望单
 wishlist_summary: 计划品鉴
 other_status: 其他状态
